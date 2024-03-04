@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Filial;
+use App\Models\Admin;
 
 class HomeController extends Controller{
     

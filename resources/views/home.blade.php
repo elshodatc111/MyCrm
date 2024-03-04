@@ -12,7 +12,9 @@
         </ol>
       </nav>
     </div>
-
+    {{ json_decode(request()->cookie('users'))->user_edet  }}
+    
+    
     <section class="section dashboard">
       <div class="row">
         <div class="col-lg-4">

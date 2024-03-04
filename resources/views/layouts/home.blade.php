@@ -63,7 +63,7 @@
                               @if(Auth::user()->type=='SuperAdmin' AND Auth::user()->filial=='NULL')
                                 <a href="{{ route('changeFilial') }}">{{ request()->cookie('filial_name') }} filial</a>
                               @else
-                                {{ request()->cookie('filial_name') }}
+                                {{ request()->cookie('users') }}
                               @endif
                             </span>
                         </li>

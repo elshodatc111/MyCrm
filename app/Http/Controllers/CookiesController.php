@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Filial;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 class CookiesController extends Controller{
     public function changeFilial(){
@@ -12,10 +13,11 @@ class CookiesController extends Controller{
         return view('filial.change',compact("Filial"));
     }
     public function changeFilialEdit($id, $name){
-        
+        $Users = Admin::where('user_id',Auth::user()->id)->get()->first();
         return redirect()
             ->route('home')
             ->withCookie('filial_id', $id, 21600)
+            ->withCookie('users', $Users, 21600)
             ->withCookie('filial_name', $name, 21600); 
     }
     public function setCookie(){
@@ -25,9 +27,11 @@ class CookiesController extends Controller{
             }else{
                 $Filial_id = Auth::user()->filial;
                 $Filial_name = Filial::find($Filial_id)->filial_name;
+                $Users = Admin::where('user_id',Auth::user()->id)->get()->first();
                 return redirect()
                     ->route('home')
                     ->withCookie('filial_id', $Filial_id, 21600)
+                    ->withCookie('users', $Users, 21600)
                     ->withCookie('filial_name', $Filial_name, 21600); 
             }
         }else{
