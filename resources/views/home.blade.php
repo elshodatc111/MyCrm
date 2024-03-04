@@ -12,11 +12,7 @@
         </ol>
       </nav>
     </div>
-    {{ json_decode(request()->cookie('users'))->id  }}
-    {{ json_decode(request()->cookie('users'))->user_id  }}
-    {{ json_decode(request()->cookie('users'))->user_edet  }}
-    {{ json_decode(request()->cookie('users'))->user_delete  }}
-    {{ request()->cookie('users')  }}
+    
     
     
     <section class="section dashboard">

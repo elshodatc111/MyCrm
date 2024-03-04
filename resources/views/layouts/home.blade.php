@@ -38,6 +38,8 @@
             </nav>
         @endif
     @else
+    
+      @if(Auth::user()->type=='Operator' or Auth::user()->type=='Admin' or Auth::user()->type=='SuperAdmin' ) 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item">
@@ -63,7 +65,7 @@
                               @if(Auth::user()->type=='SuperAdmin' AND Auth::user()->filial=='NULL')
                                 <a href="{{ route('changeFilial') }}">{{ request()->cookie('filial_name') }} filial</a>
                               @else
-                                {{ request()->cookie('users') }}
+                                {{ request()->cookie('filial_name') }} filial
                               @endif
                             </span>
                         </li>
@@ -103,39 +105,25 @@
                 </li>
             </ul>
         </nav>
+      @endif
     @endguest
   </header>
 @auth
   <aside id="sidebar" class="sidebar">
     
-    <ul class="sidebar-nav" id="sidebar-nav">    
+    <ul class="sidebar-nav" id="sidebar-nav">   
+      
       <li class="nav-item">
         <a class="nav-link " href="{{ route('home') }}">
           <i class="bi bi-house-door"></i>
           <span>Bosh sahifa</span>
         </a>
       </li>
+      @if(Auth::user()->type=='Operator' or Auth::user()->type=='Admin' or Auth::user()->type=='SuperAdmin') 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-people"></i></i><span>Tashriflar</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-people"></i></i><span>Tashriflar</span>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Tashriflar</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Qarzdorlar</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>To'lovlar</span>
-            </a>
-          </li>
-        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
@@ -144,9 +132,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Hisobotlar</span>
+        <a class="nav-link collapsed" href="pages-blank.html">
+          <i class="bi bi-chat-left-text"></i>
+          <span>Eslatmalar</span>
         </a>
       </li>
       <li class="nav-item">
@@ -161,26 +149,26 @@
           <span>Moliya</span>
         </a>
       </li>
+      @if(Auth::user()->type=='Admin' OR Auth::user()->type=='SuperAdmin')
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-file-earmark"></i>
+          <span>Hisobotlar</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>O'qituvchilar</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-chat-left-text"></i>
-          <span>Eslatmalar</span>
-        </a>
-      </li>
       @if(Auth::user()->type=='SuperAdmin')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
+        <a class="nav-link collapsed" href="{{ route('hodim.index')}}">
           <i class="bi bi-person-arms-up"></i>
           <span>Hodimlar</span>
         </a>
       </li>
-      @if(Auth::user()->filial=='NULL')
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
           <i class="bi bi-door-open"></i>
@@ -193,12 +181,15 @@
           <span>Statistika</span>
         </a>
       </li>
+      @if(Auth::user()->filial=='NULL')
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('filial.index') }}">
             <i class="bi bi-house-check"></i>
             <span>Filiallar</span>
         </a>
       </li>
+      @endif
+      @endif
       @endif
       @endif
     </ul>
@@ -218,5 +209,15 @@
   <script src="https://atko.tech/crm/vendor/tinymce/tinymce.min.js"></script>
   <script src="https://atko.tech/crm/vendor/php-email-form/validate.js"></script>
   <script src="https://atko.tech/crm/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.phone').inputmask('99 999 9999');
+      $('.pasport').inputmask('AA 9999999');
+      $('.pnfl').inputmask('99999999999999');
+      $('.kodes').inputmask('9 9 9 9 9 9');
+    });
+  </script>
 </body>
 </html>

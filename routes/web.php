@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FilialController;
 use App\Http\Controllers\CookiesController;
+use App\Http\Controllers\HodimController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -19,3 +20,5 @@ Route::get('/changeFilial/{id}/{name}', [CookiesController::class, 'changeFilial
 
 
 Route::resource('filial', FilialController::class);
+Route::get('hodim-lock', [HodimController::class, 'hodimLock'])->name('hodimLock');
+Route::resource('hodim', HodimController::class);
