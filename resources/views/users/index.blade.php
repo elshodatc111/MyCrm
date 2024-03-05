@@ -66,7 +66,7 @@
                         <a href="#" class="btn btn-success py-0 px-1"><i class="bi bi-eye"></i></a>
                         @if(Auth::user()->type=='Admin' OR Auth::user()->type=='SuperAdmin')
                         <a href="{{ route('user.edit', $item->id ) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-pencil"></i></a>
-                        <form action="" method="post" style="display:inline">
+                        <form action="{{ route('user.destroy',$item->id ) }}" method="post" style="display:inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>

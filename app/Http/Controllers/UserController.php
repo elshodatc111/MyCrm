@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Talaba;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -77,23 +78,40 @@ class UserController extends Controller{
     }
 
     public function edit(string $id){
-        dd($id);
-        return view('users.update');
+        if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
+            return redirect()->route('setCookie');
+        }else{
+            $user = DB::table('users')->where('id', $id)->first();
+            return view('users.update',compact('user'));
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, string $id){
+        if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
+            return redirect()->route('setCookie');
+        }else{
+            $user = DB::table('users')->where('id', $id);
+            $validated = $request->validate([
+                "name" => ['required'],
+                "address" => ['required'],
+                "phone" => ['required'],
+                "tkun" => ['required']
+            ]);
+            $Cheked = DB::table('users')->where('filial',request()->cookie('filial_id'))
+            ->where('phone',$validated['phone'])->get();
+            if(count($Cheked)>0){
+                return back()->withInput()->with('error', "Telefon raqam band.");
+            }else{
+                $user->update($validated);
+                return redirect()->route('user.index')->with('success','Talaba malumotlari yandilandi.');
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id){
+        dd("Talaba guruhlari mavjud bo'lmasa, To'lovlari mavjud bo'lmas talabani o'chirish mumkun qolgan hollarda o'chirish mumkun emas");
     }
 }

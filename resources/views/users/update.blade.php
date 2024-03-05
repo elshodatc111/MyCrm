@@ -22,35 +22,21 @@
     @endforeach
     <div class="card">
       <div class="card-body pt-4">
-        <form action="{{ route('user.store') }}" method="post">
+        <form action="{{ route('user.update', $user->id ) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-lg-6">
                     <label for="name" class="mt-2">FIO</label>
-                    <input type="text" name="name" value="{{ $Users->name }}" class="form-control" required>
+                    <input type="text" name="name" value="{{ $user->name }}" class="form-control" required>
                     <label for="address" class="mt-2">Manzil</label>
-                    <input type="text" name="address" value="{{ old('address') }}" class="form-control" required>
-                    <label for="phone" class="mt-2">Telefon raqam</label>
-                    <input type="text" name="phone" value="{{ old('phone') }}" class="form-control phone" required>
-                    <label for="tkun" class="mt-2">Tug'ilgan kun</label>
-                    <input type="date" name="tkun" value="{{ old('tkun') }}" class="form-control" required>
+                    <input type="text" name="address" value="{{ $user->address }}" class="form-control" required>
                 </div>
                 <div class="col-lg-6">
-                    <label for="Tanish" class="mt-2">Yaqin tanishi</label>
-                    <input type="text" name="Tanish" value="{{ old('Tanish') }}" class="form-control" required>
-                    <label for="TanishPhone" class="mt-2">Tanish telefon raqami</label>
-                    <input type="text" name="TanishPhone" value="{{ old('TanishPhone') }}" class="form-control phone" required>
-                    <label for="BizHaqimizda" class="mt-2">Biz haqimizda</label>
-                    <select name="BizHaqimizda" class="form-select" required>
-                        <option value="">Tanlang</option>
-                        <option value="Telegram">Telegram</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="Bannerlar">Bannerlar</option>
-                        <option value="Boshqa">Boshqa</option>
-                    </select>
-                    <label for="TalabaHaqida" class="mt-2">Talaba haqida</label>
-                    <input type="text" value="{{ old('TalabaHaqida') }}" name="TalabaHaqida" class="form-control" required>
+                    <label for="phone" class="mt-2">Telefon raqam</label>
+                    <input type="text" name="phone" value="{{ $user->phone }}" class="form-control phone" required>
+                    <label for="tkun" class="mt-2">Tug'ilgan kun</label>
+                    <input type="date" name="tkun" value="{{ $user->tkun }}" class="form-control" required>
                 </div>
                 <script>
                     function button(){
@@ -58,7 +44,7 @@
                     }
                 </script>
                 <div class="col-12 text-center">
-                    <button class="btn btn-primary mt-3" type="submit" id="buttons" ondblclick="button()"> Tashrifni saqlash</button>
+                    <button class="btn btn-primary mt-3" type="submit" id="buttons" ondblclick="button()"> Tashrifni yangilash</button>
                 </div>
             </div>
         </form>
