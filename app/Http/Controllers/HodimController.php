@@ -94,6 +94,7 @@ class HodimController extends Controller{
 
     public function edit(string $id){
         $Users = User::find($id);
+        dd($id);
         return view('hodim.update', compact('Users') );
     }
     public function update(Request $request, string $id){

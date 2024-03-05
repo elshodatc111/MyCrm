@@ -77,8 +77,8 @@ class UserController extends Controller{
     }
 
     public function edit(string $id){
-        $Users = User::find($id)->get()->first();
-        return view('users.update',compact('Users'));
+        dd($id);
+        return view('users.update');
     }
 
     /**

@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label for="name" class="mt-2">FIO</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
+                    <input type="text" name="name" value="{{ $Users->name }}" class="form-control" required>
                     <label for="address" class="mt-2">Manzil</label>
                     <input type="text" name="address" value="{{ old('address') }}" class="form-control" required>
                     <label for="phone" class="mt-2">Telefon raqam</label>
