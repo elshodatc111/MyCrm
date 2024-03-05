@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Filial;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -93,12 +94,21 @@ class HodimController extends Controller{
     }
 
     public function edit(string $id){
-        $Users = User::find($id);
-        dd($id);
+        $Users = DB::table('users')->find($id);
         return view('hodim.update', compact('Users') );
     }
     public function update(Request $request, string $id){
-        
+        $validated = $request->validate([
+            "name" => ['required',  'max:255'],
+            "address" => ['required', 'max:255'],
+            "phone" => ['required', 'max:255'],
+            "tkun" => ['required', 'max:255'],
+            "type" => ['required', 'max:255'],
+            "password" => ['required']
+        ]);
+        $validated['password'] = Hash::make($request['password']);
+        $Users = DB::table('users')->where('id',$id)->update($validated);
+        return redirect()->route('hodim.index')->with('success','Hodim malumotlari yangilandi.');
     }
 
     /**

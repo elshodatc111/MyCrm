@@ -32,19 +32,20 @@
                 <h5 class="card-title pb-0 w-100 text-center">Hodimni taxrirlash</h5>
             </div>
         </div>
-        <form action="" method="post" class="row">
+        <form action="{{ route('hodim.update',$Users->id ) }}" method="post" class="row">
             @csrf
+            @method('put')
             <div class="col-lg-6">
                 <label for="name" class="mt-3">Hodim FIO</label>
-                <input type="text" name="name" value="" class="form-control" required>
+                <input type="text" name="name" value="{{ $Users->name }}" class="form-control" required>
                 <label for="address" class="mt-3">Yashash manzili</label>
-                <input type="text" name="address" class="form-control" required>
+                <input type="text" name="address" value="{{ $Users->address }}" class="form-control" required>
                 <label for="phone" class="mt-3">Telefon raqami</label>
-                <input type="text" name="phone" class="form-control phone" required>
+                <input type="text" name="phone" value="{{ $Users->phone }}" class="form-control phone" required>
             </div>
             <div class="col-lg-6">
                 <label for="tkun" class="mt-3">Tug'ilgan kuni</label>
-                <input type="date" name="tkun" class="form-control" required>
+                <input type="date" name="tkun" value="{{ $Users->tkun }}" class="form-control" required>
                 <label for="filial_name" class="mt-3">Lavozimi</label>
                 <select name="type" class="form-select" required>
                     <option value="">Tanlang</option>
@@ -58,7 +59,7 @@
                 <input type="password" name="password" class="form-control" required>
             </div>
             <div class="col-12 text-center">
-                
+              
             <button type="submit" class="btn btn-primary mt-3">Hodim qo'shish</button>
             </div>
         </form>
