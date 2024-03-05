@@ -11,7 +11,7 @@ return new class extends Migration{
             $table->string('filial', 11);
             $table->string('name', 70);
             $table->string('address', 70);
-            $table->string('phone', 20)->unique();
+            $table->string('phone', 20);
             $table->string('tkun');
             $table->string('type', 10);
             $table->string('status', 10);

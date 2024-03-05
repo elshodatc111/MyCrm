@@ -4,12 +4,12 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Yangi hodim</h1>
+      <h1>Hodimni taxrirlash</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
           <li class="breadcrumb-item"><a href="{{ route('hodim.index') }}">Hodimlar</a></li>
-          <li class="breadcrumb-item active">Yangi hodim</li>
+          <li class="breadcrumb-item active">Hodimni taxrirlash</li>
         </ol>
       </nav>
     </div>
@@ -29,18 +29,14 @@
       <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <h5 class="card-title pb-0 w-100 text-center">Yangi hodim qo'shish</h5>
+                <h5 class="card-title pb-0 w-100 text-center">Hodimni taxrirlash</h5>
             </div>
         </div>
-        <form action="{{ route('hodim.store') }}" method="post" class="row">
+        <form action="" method="post" class="row">
             @csrf
             <div class="col-lg-6">
-                <label for="filial" class="mt-3">Filialni tanlang</label>
-                <select name="filial" class="form-select" required>
-                  <option value="{{ request()->cookie('filial_id') }}">{{ request()->cookie('filial_name') }}</option>
-                </select>
                 <label for="name" class="mt-3">Hodim FIO</label>
-                <input type="text" name="name" class="form-control" required>
+                <input type="text" name="name" value="" class="form-control" required>
                 <label for="address" class="mt-3">Yashash manzili</label>
                 <input type="text" name="address" class="form-control" required>
                 <label for="phone" class="mt-3">Telefon raqami</label>
@@ -58,8 +54,6 @@
                     <option value="SuperAdmin">SuperAdmin</option>
                     @endif
                 </select>
-                <label for="email" class="mt-3">Login</label>
-                <input type="text" name="email" class="form-control" required>
                 <label for="password" class="mt-3">Parol(min: 8)</label>
                 <input type="password" name="password" class="form-control" required>
             </div>

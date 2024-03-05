@@ -24,7 +24,11 @@
             <a href="{{ route('hodim.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi hodim</a>
         </div>
     </div>
-
+    @if(session()->has('success'))
+      <div class="alert alert-success">
+        {{ session()->get('success') }}
+      </div>
+    @endif
     <div class="card">
       <div class="card-body pt-4">
         @if (Session::has('message'))
@@ -47,7 +51,25 @@
                 </tr>
             </thead>
             <tbody>
-                
+              @forelse($Users as $item)
+                <tr>
+                  <td>{{ $loop->index+1 }}</td>
+                  <td>{{ $item->filial_name }}</td>
+                  <td style="text-align:left">{{ $item->name }}</td>
+                  <td>{{ $item->email }}</td>
+                  <td>{{ $item->type }}</td>
+                  <td>{{ $item->phone }}</td>
+                  <td>
+                    <a href="{{ route('hodim.show', $item->id ) }}" class="btn btn-success p-0 px-1"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('hodim.edit', $item->id ) }}" class="btn btn-primary p-0 px-1"><i class="bi bi-pencil"></i></a>
+                    <a href="{{ route('LockClose', $item->id ) }}" class="btn btn-danger p-0 px-1"><i class="bi bi-lock"></i></a>
+                  </td>
+                </tr>
+                @empty
+                    <tr>
+                      <td colspan="7" class="text-center">Hodimlar mavjud emas.</td>
+                    </tr>
+              @endforelse
             </tbody>
         </table>
       </div>

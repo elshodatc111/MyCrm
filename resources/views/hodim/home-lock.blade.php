@@ -48,7 +48,24 @@
                 </tr>
             </thead>
             <tbody>
-                
+                @forelse($Users as $item)
+                    <tr>
+                      <td>{{ $loop->index+1 }}</td>
+                      <td>{{ $item->filial_name }}</td>
+                      <td style="text-align:left">{{ $item->name }}</td>
+                      <td>{{ $item->email }}</td>
+                      <td>{{ $item->type }}</td>
+                      <td>{{ $item->phone }}</td>
+                      <td>
+                        <a href="{{ route('hodim.show', $item->id ) }}" class="btn btn-success p-0 px-1"><i class="bi bi-eye"></i></a>
+                        <a href="{{ route('LockOpen', $item->id ) }}" class="btn btn-danger p-0 px-1"><i class="bi bi-unlock"></i></a>
+                      </td>
+                    </tr>
+                    @empty
+                    <tr>
+                      <td colspan="7" class="text-center">Bloklangan hodimalr mavjud emas.</td>
+                    </tr>
+                  @endforelse
             </tbody>
         </table>
       </div>

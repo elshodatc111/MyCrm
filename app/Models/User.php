@@ -37,8 +37,5 @@ class User extends Authenticatable
         return $this->hasOne(Techer::class);
     }
     
-    public function Admin(){
-        return $this->hasOne(Admin::class);
-    }
     
 }

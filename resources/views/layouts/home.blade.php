@@ -121,7 +121,7 @@
       </li>
       @if(Auth::user()->type=='Operator' or Auth::user()->type=='Admin' or Auth::user()->type=='SuperAdmin') 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="{{ route('user.index') }}">
           <i class="bi bi-people"></i></i><span>Tashriflar</span>
         </a>
       </li>
@@ -209,6 +209,7 @@
   <script src="https://atko.tech/crm/vendor/tinymce/tinymce.min.js"></script>
   <script src="https://atko.tech/crm/vendor/php-email-form/validate.js"></script>
   <script src="https://atko.tech/crm/js/main.js"></script>
+  <script src="https://atko.tech/crm/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
   <script>
@@ -218,6 +219,36 @@
       $('.pnfl').inputmask('99999999999999');
       $('.kodes').inputmask('9 9 9 9 9 9');
     });
+  </script>
+  <script>
+        (function($, undefined) {
+            "use strict";
+            $(function() {
+                var $form1 = $( "#form" );
+                var $input1 = $form1.find( "#summa" );
+                $input1.on( "keyup", function( event ) {
+                    var selection = window.getSelection().toString();
+                    if ( selection !== '' ) {return;}
+                    if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                    var $this = $( this );
+                    var input1 = $this.val();
+                    var input1 = input1.replace(/[\D\s\._\-]+/g, "");
+                    input1 = input1 ? parseInt( input1, 10 ) : 0;
+                    $this.val( function() {return ( input1 === 0 ) ? "" : input1.toLocaleString( "en-US" );} );
+                } );
+                var $input2 = $form1.find( "#summa2" );
+                $input2.on( "keyup", function( event ) {
+                    var selection = window.getSelection().toString();
+                    if ( selection !== '' ) {return;}
+                    if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                    var $this = $( this );
+                    var input2 = $this.val();
+                    var input2 = input2.replace(/[\D\s\._\-]+/g, "");
+                    input2 = input2 ? parseInt( input2, 10 ) : 0;
+                    $this.val( function() {return ( input2 === 0 ) ? "" : input2.toLocaleString( "en-US" );} );
+                } );
+            });
+        })(jQuery);
   </script>
 </body>
 </html>

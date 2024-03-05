@@ -41,44 +41,20 @@
         @elseif(Session::has('delete'))
           <div class="alert alert-danger">{{ Session::get('delete') }}</div>
         @endif
-        <table class="table datatable">
+        <table class="table table-bordered text-center">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Talaba</th>
+                    <th>Filial</th>
+                    <th>Hodim ismi</th>
+                    <th>Login</th>
+                    <th>Lavozimi</th>
                     <th>Telefon raqami</th>
-                    <th>Yashash manzil</th>
-                    <th>Tug'ilgan kuni</th>
-                    <th>Guruhlar soni</th>
                     <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-              @forelse($Users as $item)
-                <tr>
-                    <td class="text-center">{{ $loop->index+1 }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td class="text-center">{{ $item->phone }}</td>
-                    <td>{{ $item->address }}</td>
-                    <td class="text-center">{{ $item->tkun }}</td>
-                    <td class="text-center">0</td>
-                    <td class="text-center">
-                        <a href="#" class="btn btn-success py-0 px-1"><i class="bi bi-eye"></i></a>
-                        @if(Auth::user()->type=='Admin' OR Auth::user()->type=='SuperAdmin')
-                        <a href="{{ route('user.edit', $item->id ) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-pencil"></i></a>
-                        <form action="" method="post" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
-                        </form>
-                        @endif
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan='7' class="text-center">Talabalar mavjud emas</td>
-                </tr>
-              @endforelse
+              
             </tbody>
         </table>
       </div>
