@@ -72,9 +72,8 @@ class UserController extends Controller{
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(string $id){
+        return view('users.show');
     }
 
     public function edit(string $id){
@@ -98,8 +97,8 @@ class UserController extends Controller{
                 "tkun" => ['required']
             ]);
             $Cheked = DB::table('users')->where('filial',request()->cookie('filial_id'))
-            ->where('phone',$validated['phone'])->get();
-            if(count($Cheked)>0){
+            ->where('phone',$validated['phone'])->where('type','user')->get();
+            if(count($Cheked)>1){
                 return back()->withInput()->with('error', "Telefon raqam band.");
             }else{
                 $user->update($validated);

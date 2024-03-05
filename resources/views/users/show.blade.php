@@ -1,0 +1,1 @@
+Talaba haqida malumotlar
