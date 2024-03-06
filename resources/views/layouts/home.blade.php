@@ -170,7 +170,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
+        <a class="nav-link collapsed" href="{{ route('room.index') }}">
           <i class="bi bi-door-open"></i>
           <span>Xonalar</span>
         </a>

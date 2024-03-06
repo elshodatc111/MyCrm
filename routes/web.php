@@ -7,6 +7,7 @@ use App\Http\Controllers\CookiesController;
 use App\Http\Controllers\HodimController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TecherController;
+use App\Http\Controllers\RoomController;
 
 Route::get('/', [TecherController::class, 'index']);
 
@@ -32,3 +33,5 @@ Route::get('techerLock', [TecherController::class, 'techerLock'])->name('techerL
 Route::get('techerLockopen/{id}', [TecherController::class, 'techerLockopen'])->name('techerLockopen');
 Route::get('techerLockClose/{id}', [TecherController::class, 'techerLockClose'])->name('techerLockClose');
 Route::resource('techer', TecherController::class);
+
+Route::resource('room', RoomController::class);
