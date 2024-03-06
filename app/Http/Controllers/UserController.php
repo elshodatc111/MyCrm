@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Talaba;
+use App\Models\UserHistory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -23,13 +25,23 @@ class UserController extends Controller{
     public function create(){
         return view('users.create');
     }
+    public function UserHistory($id){
+        $History = new UserHistory();
+        $History->admin_id = Auth::user()->id;
+        $History->status = "Tashrif";
+        $History->summa = 0;
+        $History->type = 0;
+        $History->student_id = $id;
+        $History->save();
+        return true;
+    }
     public function store2($phone, $validated){
         $Users = User::where('filial',request()->cookie('filial_id'))
         ->where('phone',$phone)
         ->where('type','user')->get()->first();
         $validated['user_id'] = $Users->id;
         Talaba::create($validated);
-        return true;
+        return $this->UserHistory($Users->id);
     }
     public function store(Request $request){
         $validated = $request->validate([
