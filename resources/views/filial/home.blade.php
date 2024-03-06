@@ -49,13 +49,7 @@
                     <td>{{ $item->filial_name }}</td>
                     <td>{{ $item->filial_addres }}</td>
                     <td>{{ $item->created_at }}</td>
-                    <td>
-                      @foreach($Users as $user)
-                      @if($item->user_id = $user->id)
-                        {{ $user->email }}
-                      @endif
-                      @endforeach
-                    </td>
+                    <td>{{ $item->email }}</td>
                     <td>
                       <a href="{{route('filial.edit', $item->id )}}" class="btn btn-primary py-0 px-1"><i class="bi bi-pencil"></i></a>
                       <form action="{{ route('filial.destroy', $item->id ) }}" method="post" style="display:inline">
