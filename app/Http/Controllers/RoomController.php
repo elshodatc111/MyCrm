@@ -32,9 +32,6 @@ class RoomController extends Controller{
         return redirect()->route('room.index')->with('success','Yangi xona qo\'shildi.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Room $room){
         return view('room.show',compact('room'));
     }
