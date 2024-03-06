@@ -24,20 +24,6 @@ class HodimController extends Controller{
         }
     }
 
-    public function create(){
-        if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
-            return redirect()->route('setCookie');
-        }else{
-            if(Auth::user()->filial == 'NULL'){
-                $Filial = Filial::get();
-                return view('hodim.create', compact('Filial'));
-            }else{
-                $Filial = Filial::find(Auth::user()->filial)->get()->first();
-                return view('hodim.create', compact('Filial'));
-            }
-        }
-    }
-
     public function hodimLock(){
         if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
             return redirect()->route('setCookie');
@@ -66,6 +52,20 @@ class HodimController extends Controller{
         $User->update();
         return redirect()->route('hodim.index')->with('success','Hodim bloklandi.');
     }
+
+    public function create(){
+        if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
+            return redirect()->route('setCookie');
+        }else{
+            if(Auth::user()->filial == 'NULL'){
+                $Filial = Filial::get();
+                return view('hodim.create', compact('Filial'));
+            }else{
+                $Filial = Filial::find(Auth::user()->filial)->get()->first();
+                return view('hodim.create', compact('Filial'));
+            }
+        }
+    }
     
     public function store(Request $request){
         if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
@@ -79,7 +79,7 @@ class HodimController extends Controller{
                 "tkun" => ['required', 'max:255'],
                 "type" => ['required', 'max:255'],
                 "email" => ['required','unique:users', 'max:255'],
-                "password" => ['required']
+                "password" => ['required','min:8']
             ]);
             $validated['status'] = 'true';
             $validated['password'] = Hash::make($request['password']);
@@ -104,7 +104,7 @@ class HodimController extends Controller{
             "phone" => ['required', 'max:255'],
             "tkun" => ['required', 'max:255'],
             "type" => ['required', 'max:255'],
-            "password" => ['required']
+            "password" => ['required','min:8']
         ]);
         $validated['password'] = Hash::make($request['password']);
         $Users = DB::table('users')->where('id',$id)->update($validated);

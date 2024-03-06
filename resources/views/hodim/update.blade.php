@@ -25,6 +25,11 @@
             <a href="{{ route('hodim.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi hodim</a>
         </div>
     </div>
+    @if ($errors->any())
+      <div class="alert alert-danger">
+        Parol 8 belgidan kam bo'lmasigi kerak.
+      </div>
+    @endif
     <div class="card">
       <div class="card-body">
         <div class="row">
@@ -56,7 +61,7 @@
                     @endif
                 </select>
                 <label for="password" class="mt-3">Parol(min: 8)</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
             </div>
             <div class="col-12 text-center">
               

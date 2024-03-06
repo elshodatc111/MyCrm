@@ -30,12 +30,14 @@ class TecherController extends Controller{
     public function techerLockopen(string $id){
         $Techer = User::find($id);
         $Techer->status = 'false';
+        $Techer->password = Hash::make("12345678");
         $Techer->update();
         return redirect()->route('techer.index')->with('success','O\'qituvchi bloklandi.');
     }
     public function techerLockClose(string $id){
         $Techer = User::find($id);
         $Techer->status = 'true';
+        $Techer->password = 'NULL';
         $Techer->update();
         return redirect()->route('techer.index')->with('success','O\'qituvchi aktivlashtirildi.');
     }
