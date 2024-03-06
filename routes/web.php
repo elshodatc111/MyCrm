@@ -8,6 +8,7 @@ use App\Http\Controllers\HodimController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TecherController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ProfelController;
 
 Route::get('/', [TecherController::class, 'index']);
 
@@ -35,3 +36,7 @@ Route::get('techerLockClose/{id}', [TecherController::class, 'techerLockClose'])
 Route::resource('techer', TecherController::class);
 
 Route::resource('room', RoomController::class);
+
+Route::get('profel-statistik', [ProfelController::class, "Statistika"])->name('Statistika');
+Route::get('profel-ish-haqi', [ProfelController::class, "IshHaqi"])->name('IshHaqi');
+Route::resource('profel', ProfelController::class);
