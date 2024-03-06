@@ -52,7 +52,7 @@ class TecherController extends Controller{
             "phone" => ['required'],
             "tkun" => ['required'],
             "email" => ['required','unique:users'],
-            "password" => ['required','max:8'],
+            "password" => ['required','min:8'],
         ]);
         $validated['password'] = Hash::make($request['password']);
         $validated['status'] = 'true';
@@ -85,7 +85,7 @@ class TecherController extends Controller{
             "address" => ['required'],
             "phone" => ['required'],
             "tkun" => ['required'],
-            "password" => ['required','max:8'],
+            "password" => ['required','min:8'],
         ]);
         $validated2 = $request->validate([
             "TecherAbout" => ['required'],

@@ -19,6 +19,18 @@
             {{ session()->get('success') }}
         </div>
     @endif
+
+    @if ($errors->any())
+      <div class="alert alert-danger">
+              @foreach ($errors->all() as $error)
+                @if($error=='The email has already been taken.')
+                  Login band. Boshqa login kiriting.
+                @else
+                  Parol 8 belgidan kam bo'lmasigi kerak.
+                @endif
+              @endforeach
+      </div>
+    @endif
     <div class="card">
         <div class="card-body pt-4">
             <form action="{{ route('techer.update',$Techer->user_id ) }}" method="post" class="row">
@@ -35,8 +47,8 @@
                     <input type="date" value="{{ $Techer->tkun }}" name="tkun" class="form-control" required>
                 </div>
                 <div class="col-lg-6">
-                    <label for="password" class="mt-3">Parol</label>
-                    <input type="password" name="password" class="form-control" required>
+                    <label for="password" class="mt-3">Parol (min:8)</label>
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
                     <label for="TecherAbout" class="mt-3">O'qituvchi haqida</label>
                     <input type="text" value="{{ $Techer->TecherAbout }}" name="TecherAbout" class="form-control" required>
                     <label for="Mutahasisligi" class="mt-3">Mutahasisligi</label>
