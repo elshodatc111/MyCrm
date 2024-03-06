@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_histories', function (Blueprint $table) {
+        Schema::create('studen_histories', function (Blueprint $table) {
             $table->id();
             $table->integer('filial_id');
-            $table->string('admin_id');
+            $table->integer('student_id');
             $table->string('status');
             $table->integer('summa');
             $table->string('type');
-            $table->integer('student_id');
+            $table->string('admin_id');
+            $table->string('guruh_id');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_histories');
+        Schema::dropIfExists('studen_histories');
     }
 };

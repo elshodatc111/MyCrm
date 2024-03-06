@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Talaba;
 use App\Models\UserHistory;
+use App\Models\StudenHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,15 +26,28 @@ class UserController extends Controller{
     public function create(){
         return view('users.create');
     }
+    public function StudentHistory($id){
+        $History = new StudenHistory();
+        $History->filial_id = request()->cookie('filial_id');
+        $History->student_id = $id;
+        $History->status = "Tashrif";
+        $History->summa = 0;
+        $History->type = 0;
+        $History->admin_id = Auth::user()->id;
+        $History->guruh_id = 0;
+        $History->save();
+        return true;
+    }
     public function UserHistory($id){
         $History = new UserHistory();
+        $History->filial_id = request()->cookie('filial_id');
         $History->admin_id = Auth::user()->id;
         $History->status = "Tashrif";
         $History->summa = 0;
         $History->type = 0;
         $History->student_id = $id;
         $History->save();
-        return true;
+        return $this->StudentHistory($id);
     }
     public function store2($phone, $validated){
         $Users = User::where('filial',request()->cookie('filial_id'))
