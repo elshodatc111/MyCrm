@@ -157,7 +157,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
+        <a class="nav-link collapsed" href="{{ route('techer.index') }}">
           <i class="bi bi-dash-circle"></i>
           <span>O'qituvchilar</span>
         </a>

@@ -8,7 +8,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
-          <li class="breadcrumb-item active">O'qituvchilar</li>
+          <li class="breadcrumb-item"><a href="{{ route('techer.index') }}">O'qituvchilar</a></li>
+          <li class="breadcrumb-item active">Bloklangan o'qituvchilar</li>
         </ol>
       </nav>
     </div>
@@ -31,13 +32,6 @@
     @endif
     <div class="card">
       <div class="card-body pt-4">
-        @if (Session::has('message'))
-            <div class="alert alert-success">{{ Session::get('message') }}</div>
-        @elseif(Session::has('update'))
-          <div class="alert alert-primary">{{ Session::get('update') }}</div>
-        @elseif(Session::has('delete'))
-          <div class="alert alert-danger">{{ Session::get('delete') }}</div>
-        @endif
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
@@ -61,13 +55,12 @@
                   <td style="text-align:left;">{{ $item->email }}</td>
                   <td>
                     <a href="{{ route('techer.show', $item->id ) }}" class="btn btn-success py-0 px-1"><i class="bi bi-eye"></i></a>
-                    <a href="{{ route('techer.edit', $item->id ) }}" class="btn btn-primary py-0 px-1"><i class="bi bi-pencil"></i></a>
-                    <a href="{{ route('techerLockopen', $item->id ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-lock"></i></a>
+                    <a href="{{ route('techerLockClose', $item->id ) }}" class="btn btn-danger py-0 px-1"><i class="bi bi-lock"></i></a>
                   </td>
                 </tr>
               @empty
                 <tr>
-                  <td colspan='7'>Aktiv o'qituvchilar mavjud emas</td>
+                  <td colspan='7'>Bloklangan o'qituvchilar mavjud emas</td>
                 </tr>
               @endforelse
             </tbody>

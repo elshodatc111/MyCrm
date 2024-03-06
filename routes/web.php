@@ -6,8 +6,9 @@ use App\Http\Controllers\FilialController;
 use App\Http\Controllers\CookiesController;
 use App\Http\Controllers\HodimController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TecherController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [TecherController::class, 'index']);
 
 Auth::routes();
 
@@ -26,3 +27,8 @@ Route::resource('hodim', HodimController::class);
 Route::get('userDebet', [UserController::class, 'userDebet'])->name('userDebet');
 Route::get('userPay', [UserController::class, 'userPay'])->name('userPay');
 Route::resource('user', UserController::class);
+
+Route::get('techerLock', [TecherController::class, 'techerLock'])->name('techerLock');
+Route::get('techerLockopen/{id}', [TecherController::class, 'techerLockopen'])->name('techerLockopen');
+Route::get('techerLockClose/{id}', [TecherController::class, 'techerLockClose'])->name('techerLockClose');
+Route::resource('techer', TecherController::class);
