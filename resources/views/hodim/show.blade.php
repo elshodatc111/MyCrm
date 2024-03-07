@@ -69,7 +69,17 @@
         </div>
       </div>
     </div>
-
+    <div class="card">
+        <div class="card-body pt-4">
+            <h5 class="w-100 text-center">SMS habar yuborish</h5>
+            <form action="{{ route('sendmes') }}" method="post" id="form">
+                @csrf
+                <input type="hidden" name="phone" value="{{ $phone }}">
+                <textarea name="text" class="form-control" required></textarea>
+                <button class="btn btn-primary mt-3">Send Messege</button>
+            </form>
+        </div>
+    </div>
     @if($Users->status == 'true')
     <div class="card">
         <div class="card-body pt-4">

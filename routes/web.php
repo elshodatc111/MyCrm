@@ -22,6 +22,7 @@ Route::get('/changeFilial/{id}/{name}', [CookiesController::class, 'changeFilial
 
 Route::resource('filial', FilialController::class);
 Route::get('hodim-lock', [HodimController::class, 'hodimLock'])->name('hodimLock');
+Route::post('sendmes', [HodimController::class, 'sendMessege'])->name('sendmes');
 Route::get('hodim-open/{id}', [HodimController::class, 'LockOpen'])->name('LockOpen');
 Route::get('hodim-colse/{id}', [HodimController::class, 'LockClose'])->name('LockClose');
 Route::resource('hodim', HodimController::class);

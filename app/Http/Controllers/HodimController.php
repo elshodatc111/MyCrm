@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+
 class HodimController extends Controller{
     public function index(){
         if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
@@ -90,7 +92,12 @@ class HodimController extends Controller{
 
     public function show(string $id){
         $Users = User::find($id);
-        return view('hodim.show',compact("Users"));
+        $phone = "998".str_replace(" ","",$Users->phone);
+        return view('hodim.show',compact("Users","phone"));
+    }
+
+    public function sendMessege(Request $request){
+        return redirect('https://atko.tech/getsms/public/sendMessege/'.$request->phone."/".$request->text);
     }
 
     public function edit(string $id){
