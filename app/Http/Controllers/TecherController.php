@@ -52,13 +52,11 @@ class TecherController extends Controller{
         $Techer->status = 'true';
         $pass = rand(10000000,99999999);
         $Techer->password = Hash::make($pass);
-
         $phone = str_replace(" ","",$Techer->phone);
         $login = $Techer->email;
         $parol = $pass;
         $text = $Techer->name." ".request()->cookie('filial_name')." o'quv markaziga ish faoliyatingiz qaytadan tiklandi. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: ".$parol."\n".config('api.messege_text');
         $this->SendMessege($phone, $text);
-
         $Techer->update();
         return redirect()->route('techer.index')->with('success','O\'qituvchi bloklandi.');
     }
@@ -126,12 +124,10 @@ class TecherController extends Controller{
             "TecherAbout" => ['required'],
             "Mutahasisligi" => ['required']
         ]);
-
         $phone = str_replace(" ","",$request->phone);
         $parol = $request->password;
         $text = $request->name." ".request()->cookie('filial_name')." o'quv markazi. Ma'lumotlaringiz yangilandi. Shaxsiy kabinetga kirish uchun sizning\nParol: ".$parol."\n".config('api.messege_text');
         $this->SendMessege($phone, $text);
-
         $Techer = DB::table('users')->where('id',$id)->update($validated);
         $About = DB::table('techers')->where('user_id',$id)->update($validated2);
         return redirect()->route('techer.index')->with('success','O\'qituvchi malumotlari yangilandi.');

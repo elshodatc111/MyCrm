@@ -126,7 +126,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="{{ route('guruh.index') }}">
           <i class="bi bi-list-columns-reverse"></i>
           <span>Guruhlar</span>
         </a>

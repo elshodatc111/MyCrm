@@ -1,14 +1,14 @@
 @extends('layouts.home')
-@section('title',"Guruhlar")
+@section('title',"Yangi guruhlar")
 @section('content')
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Guruhlar</h1>
+      <h1>Yangi guruhlar</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
-          <li class="breadcrumb-item active">Guruhlar</li>
+          <li class="breadcrumb-item active">Yangi guruhlar</li>
         </ol>
       </nav>
     </div>
@@ -31,7 +31,7 @@
                 
         <div class="card">
             <div class="card-body pt-4 text-center">
-                <h5>Barcha guruhlar</h5>
+                <h5>Yangi guruhlar</h5>
                 <div class="table-responsive">
                     <table class="table datatable table-bordered table-striped text-center">
                         <thead>

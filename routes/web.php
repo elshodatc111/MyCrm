@@ -11,6 +11,7 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfelController;
 use App\Http\Controllers\SendMessgeController; 
 use App\Http\Controllers\SettingController; 
+use App\Http\Controllers\GuruhController; 
 
 Route::get('/', [TecherController::class, 'index']);
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
@@ -49,3 +50,9 @@ Route::post('setting-setting', [SettingController::class, 'testCreate'])->name('
 Route::get('test-false/{id}', [SettingController::class, 'testFalse'])->name('testFalse');
 Route::get('test-edit/{id}', [SettingController::class, 'edit'])->name('testEdit');
 Route::resource('setting', SettingController::class);
+
+Route::get('guruh_activ', [GuruhController::class, 'indexActiv'])->name('indexActiv');
+Route::get('guruh_new', [GuruhController::class, 'indexNew'])->name('indexNew');
+Route::get('guruh_create2/{id}', [GuruhController::class, 'create2'])->name('create2');
+Route::post('guruh_store2', [GuruhController::class, 'store2'])->name('store2');
+Route::resource('guruh', GuruhController::class);

@@ -24,7 +24,8 @@ class Guruh extends Model
         'techer_tulov',
         'techer_bonus',
         'admin_id',
-        'admin_chegirma'
+        'admin_chegirma',
+        'status'
     ];
 }
 
