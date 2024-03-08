@@ -114,7 +114,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">   
       
       <li class="nav-item">
-        <a class="nav-link " href="{{ route('home') }}">
+        <a class="nav-link collapsed" href="{{ route('home') }}">
           <i class="bi bi-house-door"></i>
           <span>Bosh sahifa</span>
         </a>

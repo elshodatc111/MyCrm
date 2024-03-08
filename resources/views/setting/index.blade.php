@@ -94,8 +94,44 @@
           </div>
           <div class="tab-pane fade" id="bordered-justified-testlar" role="tabpanel" aria-labelledby="Testlar">
             <div class="table-responsive">
-                Testlar
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Test nomi</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($Test as $item)
+                        <tr>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td>{{ $item->test_name }}</td>
+                            <td>
+                                <a href="{{ route('testEdit',$item->id ) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-pencil"></i></a>
+                                <form action="{{ route('testFalse',$item->id ) }}" method="get" style="display:inline">
+                                    @csrf
+                                    <button class="btn btn-danger py-0 px-1"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                            <tr>
+                                <td colspan=3 class='text-center'>Testlar mavjud emas</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+            <form action="{{ route('testCreate') }}" method="post" style="border:1px solid #000;" class="p-3">
+                @csrf
+                <h5 class="w-100 text-center">Yangi test kiritish</h5>
+                <label for="test_name" class="mt-2">Test nomi</label>
+                <input type="text" name="test_name" required class="form-control">
+                <div class="w-100 text-center">
+                    <button class="btn btn-primary mt-3" type="submit">Testni saqlash</button>
+                </div>
+            </form>
           </div>
           
         </div>

@@ -45,4 +45,7 @@ Route::get('profel-statistik', [ProfelController::class, "Statistika"])->name('S
 Route::get('profel-ish-haqi', [ProfelController::class, "IshHaqi"])->name('IshHaqi');
 Route::resource('profel', ProfelController::class);
 
+Route::post('setting-setting', [SettingController::class, 'testCreate'])->name('testCreate');
+Route::get('test-false/{id}', [SettingController::class, 'testFalse'])->name('testFalse');
+Route::get('test-edit/{id}', [SettingController::class, 'edit'])->name('testEdit');
 Route::resource('setting', SettingController::class);

@@ -12,7 +12,8 @@ class Setting extends Model
         'summa',
         'days',
         'chegirma',
-        'admin_chegirma'
+        'admin_chegirma',
+        'filial_id',
     ];
     
 }
