@@ -80,7 +80,7 @@
                         @if(Auth::user()->type=='SuperAdmin')
                         <hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('setting.index') }}">
                                 <i class="bi bi-gear"></i>
                                 <span>Sozlamalar</span>
                             </a>
@@ -246,6 +246,18 @@
                     var input2 = input2.replace(/[\D\s\._\-]+/g, "");
                     input2 = input2 ? parseInt( input2, 10 ) : 0;
                     $this.val( function() {return ( input2 === 0 ) ? "" : input2.toLocaleString( "en-US" );} );
+                } );
+                
+                var $input3 = $form1.find( "#summa3" );
+                $input3.on( "keyup", function( event ) {
+                    var selection = window.getSelection().toString();
+                    if ( selection !== '' ) {return;}
+                    if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                    var $this = $( this );
+                    var input3 = $this.val();
+                    var input3 = input3.replace(/[\D\s\._\-]+/g, "");
+                    input3 = input3 ? parseInt( input3, 10 ) : 0;
+                    $this.val( function() {return ( input3 === 0 ) ? "" : input3.toLocaleString( "en-US" );} );
                 } );
             });
         })(jQuery);

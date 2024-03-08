@@ -10,6 +10,7 @@ use App\Http\Controllers\TecherController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfelController;
 use App\Http\Controllers\SendMessgeController; 
+use App\Http\Controllers\SettingController; 
 
 Route::get('/', [TecherController::class, 'index']);
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
@@ -43,3 +44,5 @@ Route::resource('room', RoomController::class);
 Route::get('profel-statistik', [ProfelController::class, "Statistika"])->name('Statistika');
 Route::get('profel-ish-haqi', [ProfelController::class, "IshHaqi"])->name('IshHaqi');
 Route::resource('profel', ProfelController::class);
+
+Route::resource('setting', SettingController::class);
