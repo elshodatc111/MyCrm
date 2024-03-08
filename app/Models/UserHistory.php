@@ -15,5 +15,6 @@ class UserHistory extends Model
         'summa',
         'type',
         'student_id',
+        'izoh',
     ];
 }

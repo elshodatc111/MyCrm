@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('summa');
             $table->string('type');
             $table->integer('student_id');
+            $table->string('izoh');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Filial;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller{
     
@@ -20,9 +21,9 @@ class HomeController extends Controller{
         }
         $user = Auth::user();
         if($user->type=='user'){
-            return view('users.index');
-        }elseif ($user->type=='techer') {
-            return view('techers.index');
+            return "Talaba profeli ishlab chiqilmoqda";
+        }elseif ($user->type=='Techer') {
+            return "O'qituvchi profeli tayyor emas";
         }else{
             return view('home');
         }

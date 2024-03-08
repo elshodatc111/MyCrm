@@ -9,8 +9,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TecherController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfelController;
+use App\Http\Controllers\SendMessgeController; 
 
 Route::get('/', [TecherController::class, 'index']);
+Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
 
 Auth::routes();
 

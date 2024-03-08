@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use mrmuminov\eskizuz\Eskiz;
+use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 
 class HodimController extends Controller{
+    
     public function index(){
         if((!request()->cookie('filial_id')) OR (!request()->cookie('filial_name'))){
             return redirect()->route('setCookie');
@@ -39,11 +42,32 @@ class HodimController extends Controller{
             return view('hodim.home-lock',compact('Users'));
         }
     }
-
+    public function SendMessege(string $phone, string $text){
+        $eskiz = new Eskiz(config('api.eskiz_email'),config('api.eskiz_password'));
+        $eskiz->requestAuthLogin();
+        $from='4546';
+        $mobile_phone = "+998".$phone;
+        $message = $text;
+        $user_sms_id = 1;
+        $callback_url = '';
+        $singleSmsType = new SmsSingleSmsType(from: $from,message: $message,mobile_phone: $mobile_phone,user_sms_id:$user_sms_id,callback_url:$callback_url);
+        $result = $eskiz->requestSmsSend($singleSmsType);
+        if($result->getResponse()->isSuccess == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function LockOpen($id){
         $User = User::find($id);
         $User->status = "true";
-        $User->password = Hash::make("12345678");
+        $pass = rand(10000000,99999999);
+        $User->password = Hash::make($pass);
+        $phone = str_replace(" ","",$User->phone);
+        $login = $User->email;
+        $parol = $pass;
+        $text = $User->name." ".request()->cookie('filial_name')." o'quv markaziga ish faoliyatingi qaytadan tiklandi. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: ".$parol."\n".config('api.messege_text');
+        $this->SendMessege($phone, $text);
         $User->update();
         return redirect()->route('hodim.index')->with('success','Hodim blokdan chiqazildi.');
     }
@@ -51,6 +75,9 @@ class HodimController extends Controller{
         $User = User::find($id);
         $User->status = "false";
         $User->password = "";
+        $phone = str_replace(" ","",$User->phone);
+        $text = "Xurmatli ".$User->name." sizni ".request()->cookie('filial_name')." o'quv markazidagi ish faoliyatingiz yakunlandi.";
+        $this->SendMessege($phone, $text);
         $User->update();
         return redirect()->route('hodim.index')->with('success','Hodim bloklandi.');
     }
@@ -85,6 +112,11 @@ class HodimController extends Controller{
             ]);
             $validated['status'] = 'true';
             $validated['password'] = Hash::make($request['password']);
+            $phone = str_replace(" ","",$request->phone);
+            $login = $request->email;
+            $parol = $request->password;
+            $text = $request->name." ".request()->cookie('filial_name')." o'quv markaziga ishga olindingiz. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: ".$parol."\n".config('api.messege_text');
+            $this->SendMessege($phone, $text);
             User::create($validated);
             return redirect()->route('hodim.index')->with('success','Yangi hodim qo\'shildi.');
         }
@@ -94,10 +126,6 @@ class HodimController extends Controller{
         $Users = User::find($id);
         $phone = "998".str_replace(" ","",$Users->phone);
         return view('hodim.show',compact("Users","phone"));
-    }
-
-    public function sendMessege(Request $request){
-        return redirect('https://atko.tech/getsms/public/sendMessege/'.$request->phone."/".$request->text);
     }
 
     public function edit(string $id){
@@ -113,6 +141,12 @@ class HodimController extends Controller{
             "type" => ['required', 'max:255'],
             "password" => ['required','min:8']
         ]);
+
+        $phone = str_replace(" ","",$request->phone);
+        $parol = $request->password;
+        $text = $request->name." ".request()->cookie('filial_name')." o'quv markazi. Ma'lumotlaringiz yangilandi. Shaxsiy kabinetga kirish uchun sizning\nParol: ".$parol."\n".config('api.messege_text');
+        $this->SendMessege($phone, $text);
+
         $validated['password'] = Hash::make($request['password']);
         $Users = DB::table('users')->where('id',$id)->update($validated);
         return redirect()->route('hodim.index')->with('success','Hodim malumotlari yangilandi.');

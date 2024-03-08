@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use mrmuminov\eskizuz\Eskiz;
+use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 
 class UserController extends Controller{
     public function index(){
@@ -46,6 +48,7 @@ class UserController extends Controller{
         $History->summa = 0;
         $History->type = 0;
         $History->student_id = $id;
+        $History->izoh = 'Yangi talaba';
         $History->save();
         return $this->StudentHistory($id);
     }
@@ -56,6 +59,22 @@ class UserController extends Controller{
         $validated['user_id'] = $Users->id;
         Talaba::create($validated);
         return $this->UserHistory($Users->id);
+    }
+    public function SendMessege(string $phone, string $text){
+        $eskiz = new Eskiz(config('api.eskiz_email'),config('api.eskiz_password'));
+        $eskiz->requestAuthLogin();
+        $from='4546';
+        $mobile_phone = "+998".$phone;
+        $message = $text;
+        $user_sms_id = 1;
+        $callback_url = '';
+        $singleSmsType = new SmsSingleSmsType(from: $from,message: $message,mobile_phone: $mobile_phone,user_sms_id:$user_sms_id,callback_url:$callback_url);
+        $result = $eskiz->requestSmsSend($singleSmsType);
+        if($result->getResponse()->isSuccess == true){
+            return true;
+        }else{
+            return false;
+        }
     }
     public function store(Request $request){
         $validated = $request->validate([
@@ -74,11 +93,12 @@ class UserController extends Controller{
         if(count($Users)>0){
             return back()->withInput()->with('error', "Telefon raqam oldin ro'yhatdan o'tgan.");
         }else{
+            $login = time()+1;
             $validated['filial'] = request()->cookie('filial_id');
             $validated['type'] = 'user';
             $validated['status'] = 'true';
-            $validated['email'] = time()+1;
-            $validated['password'] = Hash::make($request['password']);
+            $validated['email'] = $login;
+            $validated['password'] = Hash::make('12345678');
             $repet = User::where('name', $validated['name'])
             ->where('address',$validated['address'])
             ->where('type',$validated['type'])
@@ -88,6 +108,8 @@ class UserController extends Controller{
             if(count($repet)){
                 return $this->index();
             }else{
+                $text = $request->name." ".request()->cookie('filial_name')." o'quv markazidan ro'yhatdan o'tdingiz. Markazimizga tashrifingizdan mamnunmiz!!!. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: 12345678\n".config('api.messege_text');
+                $this->SendMessege(str_replace(" ","",$request->phone),$text);
                 User::create($validated);
                 $this->store2($validated['phone'],$validated);
                 return redirect()->route('user.index')->with('success','Yangi tashrif qo\'shildi.');
