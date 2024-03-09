@@ -6,6 +6,7 @@ use App\Models\Guruh;
 use App\Models\Test;
 use App\Models\Room;
 use App\Models\Setting;
+use App\Models\GuruhUser;
 use App\Models\User;
 use App\Models\GuruhJadval;
 use Illuminate\Support\Facades\DB;
@@ -284,8 +285,103 @@ class GuruhController extends Controller{
         return redirect()->route('guruh.index')->with('success',"Yangi guruh qo'shildi.");
     }
 
-    public function show(Guruh $guruh){
-        return view('guruh.show', compact('guruh'));
+    public function show($id){
+        $Guruh = array();
+        $Guruh_about = Guruh::find($id);
+        $guruh_techer = User::find($Guruh_about->techer_id)->name;
+        $guruh_admin = User::find($Guruh_about->admin_id)->email;
+        $guruh_start = $Guruh_about->guruh_start;
+        $guruh_end = $Guruh_about->guruh_end;
+        $this_data = date('Y-m-d');
+        $room_name = Room::find($Guruh_about->room_id)->room_name;
+        if($this_data>=$guruh_start AND $this_data<=$guruh_end){
+            $guruh_xolati = "Guruh aktiv";
+        }elseif($this_data>$guruh_end){
+            $guruh_xolati = "Guruh yakunlangan";
+        }else{
+            $guruh_xolati = "Yangi guruh";
+        }
+        $GuruhJadval = GuruhJadval::where('guruh_id',$Guruh_about->id)->get();
+        $dars_kunlar = array();
+        foreach($GuruhJadval as $item){
+            array_push($dars_kunlar,$item->days);
+        }
+        $activ_student = 0;
+        $end_student = 0;
+        $student = GuruhUser::where('guruh_users.guruh_id',$id)->get();
+        foreach($student as $item){
+            if($item->status=='true'){
+                $activ_student = $activ_student + 1;
+            }else{
+                $end_student = $end_student + 1;
+            }
+        }
+        #dd($dars_kunlar);
+        $Guruh['guruh_about']['guruh_name'] = $Guruh_about->guruh_name;
+        $Guruh['guruh_about']['guruh_price'] = $Guruh_about->guruh_price;
+        $Guruh['guruh_about']['techer_tulov'] = $Guruh_about->techer_tulov;
+        $Guruh['guruh_about']['techer_bonus'] = $Guruh_about->techer_bonus;
+        $Guruh['guruh_about']['created_at'] = $Guruh_about->created_at;
+        $Guruh['guruh_about']['updated_at'] = $Guruh_about->updated_at;
+        $Guruh['guruh_about']['guruh_techer'] = $guruh_techer;
+        $Guruh['guruh_about']['guruh_admin'] = $guruh_admin;
+        $Guruh['guruh_about']['guruh_xolati'] = $guruh_xolati;
+        $Guruh['guruh_about']['room_name'] = $room_name;
+        $Guruh['guruh_about']['activ_student'] = $activ_student;
+        $Guruh['guruh_about']['end_student'] = $end_student;
+        $Guruh['guruh_about']['guruh_start'] = $Guruh_about->guruh_start;
+        $Guruh['guruh_about']['guruh_end'] = $Guruh_about->guruh_end;
+        $Guruh['guruh_about']['guruh_dars_kun'] = $dars_kunlar;
+        $Guruh['guruh_about']['guruh_dars_vaqt'] = $Guruh_about->guruh_dars_vaqt;
+
+        #dd($Guruh['guruh_about']['guruh_dars_kun']);
+        $GuruhActivUser = GuruhUser::where('guruh_users.guruh_id',$id)
+        ->where('guruh_users.status','true')
+        ->JOIN('users', 'users.id','guruh_users.user_id')
+        ->select('guruh_users.guruh_id','users.id','users.name','guruh_users.start_data','guruh_users.start_commit','guruh_users.start_meneger')
+        ->get();
+        
+        
+            foreach ($GuruhActivUser as $key => $value) {
+                $Guruh['activTalaba'][$key]['user_id'] = $value->id;
+                $Guruh['activTalaba'][$key]['user_name'] = $value->name;
+                $Guruh['activTalaba'][$key]['guruh_id'] = $value->guruh_id;
+                $Guruh['activTalaba'][$key]['start_data'] = $value->start_data;
+                $Guruh['activTalaba'][$key]['start_commit'] = $value->start_commit;
+                $Guruh['activTalaba'][$key]['balans'] = 0;   #### Talaba balansini xisoblash kerak
+                $MyAdmin = User::where('id', $value->start_meneger)->get()->first();
+                $Guruh['activTalaba'][$key]['admin_email'] = $MyAdmin->email;
+            }
+        
+        
+
+        $GuruhEndUser = GuruhUser::where('guruh_users.guruh_id',$id)
+        ->where('guruh_users.status','false')
+        ->JOIN('users', 'users.id','guruh_users.user_id')
+        ->select('guruh_users.guruh_id','users.id','users.name','guruh_users.start_data','guruh_users.start_commit','guruh_users.start_meneger')
+        ->get();
+        foreach ($GuruhEndUser as $key => $value) {
+            $Guruh['endTalaba'][$key]['user_id'] = $value->id;
+            $Guruh['endTalaba'][$key]['user_name'] = $value->name;
+            $Guruh['endTalaba'][$key]['guruh_id'] = $value->guruh_id;
+            $Guruh['endTalaba'][$key]['start_data'] = $value->start_data;
+            $Guruh['endTalaba'][$key]['start_commit'] = $value->start_commit;
+            $Guruh['endTalaba'][$key]['end_commit'] = $value->end_commit;
+            $Guruh['endTalaba'][$key]['end_data'] = $value->end_data;
+            $MyAdmin = User::where('id', $value->start_meneger)->get()->first();
+            $Guruh['endTalaba'][$key]['admin_email'] = $MyAdmin->email;
+            $MyEndAdmin = User::where('id', $value->end_meneger)->get()->first();
+            $Guruh['endTalaba'][$key]['end_meneger'] = $MyEndAdmin->email;
+            $Guruh['endTalaba'][$key]['jarima'] = 0;  ### Talaba guruhdan chiqazilgandagi jarima summasini
+        }
+        if(empty($Guruh['endTalaba'])){
+            $Guruh['endTalaba'] = 0;
+        }
+        if(empty($Guruh['activTalaba'])){
+            $Guruh['activTalaba'] = 0;
+        }
+        #dd($Guruh);
+        return view('guruh.show', compact('Guruh'));
     }
 
     public function edit(Guruh $guruh){
