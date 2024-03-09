@@ -23,8 +23,6 @@
         <div class="card">
             <div class="card-body pt-4 text-center">
                 <h5>Yangi guruh</h5>
-                
-                
                 <form action="{{ route('store2') }}" method="post" id="form">
                     @csrf
                     <div class="row">
@@ -84,7 +82,6 @@
                             </form>
                         </div>
                     </div>
-                    
             </div>
         </div>
         

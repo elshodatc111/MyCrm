@@ -14,7 +14,33 @@ use Illuminate\Http\Request;
 
 class GuruhController extends Controller{
     public function index(){
-        return view('guruh.index');
+        $endDay = date('Y-m-d',strtotime("-10 days", strtotime(date("Y-m-d"))));
+        $Guruh = Guruh::where('status','true')
+        ->where('guruh_end','>=',$endDay)->orderby('guruh_start','DESC')
+        ->where('filial', request()->cookie('filial_id'))->get();
+        
+        $i=1;
+        $items = array();
+        foreach ($Guruh as $value) {
+            $Guruhlar = array();
+            $Guruhlar['id'] = $value['id'];
+            $Guruhlar['guruh_name'] = $value['guruh_name'];
+            $Guruhlar['start'] = $value['guruh_start'];
+            $Guruhlar['end'] = $value['guruh_end'];
+            $Guruhlar['student'] = 0; // GURUHDAGI TALABALAR SONINI QO"YISH KERAK
+            $Guruhlar['summa'] = number_format(($value['guruh_price']), 0, '.', ' ');
+            if($value['guruh_start']>date('Y-m-d')){
+                $Guruhlar['status'] = "new";
+            }else if(date('Y-m-d')>=$value['guruh_start'] AND date('Y-m-d')<=$value['guruh_end']){
+                $Guruhlar['status'] = "activ";
+            }else{
+                $Guruhlar['status'] = "end";
+            }
+            $items[$i] = $Guruhlar;
+            $i++;
+        }
+        #dd($items);
+        return view('guruh.index',compact('items'));
     }
 
     public function indexNew(){
@@ -169,17 +195,19 @@ class GuruhController extends Controller{
         }
         $guruh_end = $kunlar[12];
         $dars_vaqti = array(1,2,3,4,5,6,7,8,9);
-        $i=0;
+        $room_id = $Guruh->room_id;
         foreach ($dars_vaqti as $value) {
-            $i = $i+1;
+            $K = 0;
             foreach($kunlar as $item){
-                $GuruhJadval = GuruhJadval::where('room_id',$Guruh->room_id)
-                    ->where('guruh_id',$Guruh->id)
-                    ->where('days',$item)
-                    ->where('times',$value)->get();
+                $GuruhJadval = GuruhJadval::where('room_id',$room_id)
+                ->where('days',$item)
+                ->where('times',$value)->get();
                 if(count($GuruhJadval)>0){
-                    unset($dars_vaqti[$i]);
+                    $K++;
                 }
+            }
+            if($K>0){
+                unset($dars_vaqti[$value-1]);
             }
         }
         $boshSoatlar = $this->boshSoatlar($dars_vaqti);
@@ -253,36 +281,42 @@ class GuruhController extends Controller{
             $Kunlar->times = $request->guruh_dars_vaqt;
             $Kunlar->save();
         }
-        return redirect()->route('guruh.index')->with('succes',"Yangi guruh qo'shildi.");
+        return redirect()->route('guruh.index')->with('success',"Yangi guruh qo'shildi.");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Guruh $guruh)
-    {
-        //
+    public function show(Guruh $guruh){
+        return view('guruh.show', compact('guruh'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Guruh $guruh)
-    {
-        //
+    public function edit(Guruh $guruh){
+        $Test = Test::where('status','true')->get();
+        $Room = Room::where('status','true')->where('filial_id',request()->cookie('filial_id'))->get();
+        $Setting = Setting::where('filial_id',request()->cookie('filial_id'))->get();
+        $Techer = User::where('filial',request()->cookie('filial_id'))->where('type','Techer')->where('status','true')->get();
+        return view('guruh.edit',compact('guruh','Test','Room','Setting','Techer'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Guruh $guruh)
-    {
-        //
+    public function update(Request $request, Guruh $guruh){
+        $validated = $request->validate([
+            "guruh_name" => ['required'],
+            "test_id" => ['required'],
+            "guruh_price" => ['required'],
+            "techer_id" => ['required'],
+            "techer_tulov" => ['required'],
+            "techer_bonus" => ['required'],
+        ]);
+        $Setting = Setting::find($request->guruh_price);
+        $validated['guruh_price'] = $Setting->summa;
+        $validated['guruh_chegirma'] = $Setting->chegirma;
+        $validated['guruh_chegirma_day'] = $Setting->days;
+        $validated['admin_chegirma'] = $Setting->admin_chegirma;
+        $guruh->update($validated);
+        return redirect()->route('guruh.index')->with('success', 'Guruh yanfilandi.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function distroy2($id){
+        dd($id." Guruh tarixi mavjud bo'lmasa delete aks holda status=false bo'lsin");
+    }
     public function destroy($id){
         Guruh::find($id)->delete();
         return redirect()->route('guruh.index')->with('success', 'Bekor qilindi');
