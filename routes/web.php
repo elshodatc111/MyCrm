@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfelController;
 use App\Http\Controllers\SendMessgeController; 
 use App\Http\Controllers\SettingController; 
 use App\Http\Controllers\GuruhController; 
+use App\Http\Controllers\GuruhUserController; 
 
 Route::get('/', [TecherController::class, 'index']);
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
@@ -57,3 +58,5 @@ Route::get('guruh_create2/{id}', [GuruhController::class, 'create2'])->name('cre
 Route::post('guruh_store2', [GuruhController::class, 'store2'])->name('store2');
 Route::delete('guruh_delete/{id}', [GuruhController::class, 'distroy2'])->name('distroy2');
 Route::resource('guruh', GuruhController::class);
+
+Route::resource('guruh_setting', GuruhUserController::class);

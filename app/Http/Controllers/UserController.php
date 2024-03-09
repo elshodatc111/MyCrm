@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\Talaba;
 use App\Models\UserHistory;
 use App\Models\StudenHistory;
+use App\Models\Guruh;
+use App\Models\GuruhUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -121,7 +123,40 @@ class UserController extends Controller{
      * Display the specified resource.
      */
     public function show(string $id){
-        return view('users.show');
+        $thisDay = date('Y-m-d');
+        $oldDay = date('Y-m-d',strtotime("-7 days", strtotime($thisDay)));
+        ### Guruhga qo'shish uchun guruhlar chiqazish
+        $Guruhlar = Guruh::where('guruh_start','>=',$oldDay)
+        ->where('filial','=',request()->cookie('filial_id'))
+        ->where('status','=','true')->get();
+        $Guruh_plus = array();
+        $i=1;
+        foreach ($Guruhlar as $value) {
+            $guruh_id = $value['id'];
+            $guruh_name = $value['guruh_name'];
+            $user_id = $id;
+            $GuruhUser = GuruhUser::where('guruh_id','=',$guruh_id)->where('user_id','=',$user_id)->get();
+            $guruh = array();
+            if(count($GuruhUser)==0){
+                $guruh['guruh_id'] = $guruh_id;
+                $guruh['guruh_name'] = $guruh_name;
+                $Guruh_plus['guruh_plus'][$i] = $guruh;
+            }
+            $i++;
+        }
+        if(empty($Guruh_plus)){
+            $Guruh_plus['guruh_plus'][0] = '';
+        }
+        #Talaba haqida malumotlar
+        $User = User::where('users.id','=',$id)->join('talabas','talabas.user_id','users.id')
+        ->join('user_histories','user_histories.student_id','users.id')->where('user_histories.status','=','Tashrif')
+        ->select('users.id','users.name','users.address','users.phone','users.tkun','users.email','users.created_at','talabas.Tanish','talabas.TanishPhone','talabas.BizHaqimizda','user_histories.admin_id','talabas.TalabaHaqida')->get()->first();
+        $Guruh_plus['user'] = $User;
+        $Users = User::where('id','=',$Guruh_plus['user']->admin_id)->get()->first();
+        $Guruh_plus['create_admin'] = $Users->email;
+        #dd($Guruh_plus);
+
+        return view('users.show', compact('Guruh_plus'));
     }
 
     public function edit(string $id){
