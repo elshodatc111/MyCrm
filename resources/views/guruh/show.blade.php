@@ -397,12 +397,15 @@
                         <hr>
                         @if(Auth::user()->type!='Operator')
                         @if($Guruh['guruh_about']['guruh_xolati']!='Guruh yakunlangan')
-                        <form action="" method="post" id="form">
+                        <form action="{{ route('guruh_setting.update',$Guruh['guruh_about']['id']) }}" method="post" id="form">
+                            @csrf
+                            @method('put')
                             <h5 class="text-center mt-3">Guruhdan talabani o'chirish</h5>
                             <div class="row text-center">
+                                <input type="hidden" name="guruh_summa" value="{{ $Guruh['guruh_about']['guruh_price'] }}">
                                 <div class="col-lg-6">
-                                    <label for="" class="mb-1 mt-2">Talabani tanlang</label>
-                                    <select name="" class="form-select" required>
+                                    <label for="user_id" class="mb-1 mt-2">Talabani tanlang</label>
+                                    <select name="user_id" class="form-select" required>
                                         <option value="">Tanlang</option>
                                         @if($Guruh['activTalaba']!=0)
                                             @foreach( $Guruh['activTalaba'] as $key => $item)
@@ -412,12 +415,12 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="" class="mb-1 mt-2">Guruhdan o'chirishga sabab</label>
-                                    <input type="text" class="form-control" required>
+                                    <label for="end_commit" class="mb-1 mt-2">Guruhdan o'chirishga sabab</label>
+                                    <input type="text" name="end_commit" class="form-control" required>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="" class="mb-1 mt-2">Jarima summasi(Guruh narxidan baland bo'lmasin.)</label>
-                                    <input type="number" id="summa3" class="form-control" required>
+                                    <label for="summa_jarima" class="mb-1 mt-2">Jarima summasi(Guruh narxidan baland bo'lmasin.)</label>
+                                    <input type="number" name="summa_jarima" id="summa3" class="form-control" required>
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="" class="mb-1 mt-2">.</label>

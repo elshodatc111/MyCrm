@@ -317,6 +317,7 @@ class GuruhController extends Controller{
             }
         }
         #dd($dars_kunlar);
+        $Guruh['guruh_about']['id'] = $Guruh_about->id;
         $Guruh['guruh_about']['guruh_name'] = $Guruh_about->guruh_name;
         $Guruh['guruh_about']['guruh_price'] = $Guruh_about->guruh_price;
         $Guruh['guruh_about']['techer_tulov'] = $Guruh_about->techer_tulov;
@@ -360,6 +361,7 @@ class GuruhController extends Controller{
         ->JOIN('users', 'users.id','guruh_users.user_id')
         ->select('guruh_users.guruh_id','users.id','users.name','guruh_users.start_data','guruh_users.start_commit','guruh_users.start_meneger')
         ->get();
+        dd(count($GuruhEndUser));
         foreach ($GuruhEndUser as $key => $value) {
             $Guruh['endTalaba'][$key]['user_id'] = $value->id;
             $Guruh['endTalaba'][$key]['user_name'] = $value->name;
@@ -371,6 +373,7 @@ class GuruhController extends Controller{
             $MyAdmin = User::where('id', $value->start_meneger)->get()->first();
             $Guruh['endTalaba'][$key]['admin_email'] = $MyAdmin->email;
             $MyEndAdmin = User::where('id', $value->end_meneger)->get()->first();
+            dd($MyEndAdmin);
             $Guruh['endTalaba'][$key]['end_meneger'] = $MyEndAdmin->email;
             $Guruh['endTalaba'][$key]['jarima'] = 0;  ### Talaba guruhdan chiqazilgandagi jarima summasini
         }
