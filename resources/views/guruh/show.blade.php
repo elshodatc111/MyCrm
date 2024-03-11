@@ -13,7 +13,7 @@
         </ol>
       </nav>
     </div>
-    @if(session()->has('error'))
+    @if(session()->has('error')) 
       <div class="alert alert-danger">
         {{ session()->get('error') }}
       </div>
@@ -22,38 +22,38 @@
                 
         <div class="card">
             <div class="card-body pt-4 text-center">
-                <h5 class="w-100 text-center">{{ $Guruh['guruh_about']['guruh_name'] }}</h5>
+                <h5 class="w-100 text-center">{{ $guruh['guruh_name'] }}</h5>
                 <hr>
                 <div class="row">
                     <div class="col-lg-4">
                         <table class="table">
                             <tr>
                                 <th style="text-align:left">Guruh summasi:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_price'] }}</td>
+                                <td style="text-align:right">{{ $guruh['guruh_price'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">O'qituvchi:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_name'] }}</td>
+                                <td style="text-align:right">{{ $guruh['techer'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">O'qituvchiga to'lov:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['techer_tulov'] }}</td>
+                                <td style="text-align:right">{{ $guruh['techer_tulov'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">O'qituvchiga bonus:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['techer_bonus'] }}</td>
+                                <td style="text-align:right">{{ $guruh['techer_bonus'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Meneger:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_admin'] }}</td>
+                                <td style="text-align:right">{{ $guruh['admin'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Guruh holati:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_xolati'] }}</td>
+                                <td style="text-align:right">{{  $guruh['status'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Guruh ochildi:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['created_at'] }}</td>
+                                <td style="text-align:right">{{ $guruh['created_at'] }}</td>
                             </tr>
                         </table>
                     </div>
@@ -61,62 +61,62 @@
                         <table class="table">
                             <tr>
                                 <th style="text-align:left">Darslar xonasi:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['room_name'] }}</td>
+                                <td style="text-align:right">{{ $guruh['room'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Boshlanish vaqti:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_start'] }}</td>
+                                <td style="text-align:right">{{ $guruh['guruh_start'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Tugash vaqti:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_end'] }}</td>
+                                <td style="text-align:right">{{ $guruh['guruh_end'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Dars vaqti:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['guruh_dars_vaqt'] }}</td>
+                                <td style="text-align:right">{{ $guruh['guruh_dars_vaqt'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Aktiv talabalar:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['activ_student'] }}</td>
+                                <td style="text-align:right">{{ $guruh['activ_user'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Guruhdan o'chirilgan:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['end_student'] }}</td>
+                                <td style="text-align:right">{{ $guruh['nd_activ_user'] }}</td>
                             </tr>
                             <tr>
                                 <th style="text-align:left">Guruh yangilandi:</th>
-                                <td style="text-align:right">{{ $Guruh['guruh_about']['updated_at'] }}</td>
+                                <td style="text-align:right">{{ $guruh['updated_at'] }}</td>
                             </tr>
                         </table>
                     </div>
                     <div class="col-lg-4">
                         <table class="table">
                             <tr>
-                                <th style="text-align:left">1-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][0] }}</th>
-                                <th style="text-align:right">2-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][1] }}</th>
+                                <th style="text-align:left">1-dars. {{  $guruh['jadval'][0] }}</th>
+                                <th style="text-align:right">8-dars. {{  $guruh['jadval'][7] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">3-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][2] }}</th>
-                                <th style="text-align:right">4-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][3] }}</th>
+                                <th style="text-align:left">2-dars. {{  $guruh['jadval'][1] }}</th>
+                                <th style="text-align:right">9-dars. {{  $guruh['jadval'][8] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">5-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][4] }}</th>
-                                <th style="text-align:right">6-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][5] }}</th>
+                                <th style="text-align:left">3-dars. {{  $guruh['jadval'][2] }}</th>
+                                <th style="text-align:right">10-dars. {{  $guruh['jadval'][9] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">7-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][6] }}</th>
-                                <th style="text-align:right">8-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][7] }}</th>
+                                <th style="text-align:left">4-dars. {{  $guruh['jadval'][3] }}</th>
+                                <th style="text-align:right">11-dars. {{  $guruh['jadval'][10] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">9-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][8] }}</th>
-                                <th style="text-align:right">10-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][9] }}</th>
+                                <th style="text-align:left">5-dars. {{  $guruh['jadval'][4] }}</th>
+                                <th style="text-align:right">12-dars. {{  $guruh['jadval'][11] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">11-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][10] }}</th>
-                                <th style="text-align:right">12-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][11] }}</th>
+                                <th style="text-align:left">6-dars. {{  $guruh['jadval'][5] }}</th>
+                                <th style="text-align:right">13-dars. {{  $guruh['jadval'][12] }}</th>
                             </tr>
                             <tr>
-                                <th style="text-align:left">13-dars.{{ $Guruh['guruh_about']['guruh_dars_kun'][12] }}</th>
+                                <th style="text-align:left">7-dars. {{  $guruh['jadval'][6] }}</th>
                                 <th style="text-align:right"></th>
                             </tr>
                         </table>
@@ -129,6 +129,7 @@
                                 <th style="width:33.33333%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#guruh_next">Guruhni davom ettirish</button></th>
                             </tr>
                         </table>
+                        ##### SMS yuborish
                         <div class="modal fade" id="sendmessege" tabindex="-1">
                             <form action="" method="post">
                                 <div class="modal-dialog">
@@ -186,7 +187,7 @@
                                 </div>
                             </form>
                         </div>
-                        
+                        ##### Guruhni davom ettirish
                         <div class="modal fade" id="guruh_next" tabindex="-1">
                             <form action="" method="post" id="form">
                                 <div class="modal-dialog modal-xl">
@@ -333,24 +334,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($Guruh['activTalaba']==0)
-                                        <tr>
-                                            <td class="text-center" colspan=6>Talabalar mavjud emas.</td>
-                                        </tr>
-                                    @else
-                                        @foreach( $Guruh['activTalaba'] as $key => $item)
-                                            <tr>
-                                                <td>{{ $loop->index+1 }}</td>
-                                                <td style="text-align:left">
-                                                    <a href="{{ route('user.show', $item['user_id'] ) }}">
-                                                        {{ $item['user_name'] }}</a></td>
-                                                <td>{{ $item['start_data'] }}</td>
-                                                <td>{{ $item['start_commit'] }}</td>
-                                                <td>{{ $item['admin_email'] }}</td>
-                                                <td>{{ $item['balans'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
+                                    foreach
+                                    <tr>
+                                        <td>s</td>
+                                        <td style="text-align:left">
+                                            <a href="s">
+                                                dd</a></td>
+                                        <td>sdc</td>
+                                        <td>sdc</td>
+                                        <td>sdc</td>
+                                        <td>sdc</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -373,45 +367,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($Guruh['endTalaba']==0)
                                     <tr>
-                                        <td class="text-center" colspan=9>Guruhdan o'chirilgan talabalar mavjud emas.</td>
+                                        <th>#</th>
+                                        <th>Talaba</th>
+                                        <th>Guruhga qo'shildi</th>
+                                        <th>Izoh</th>
+                                        <th>Meneger</th>
+                                        <th>Guruhdan o'chirildi</th>
+                                        <th>Izoh</th>
+                                        <th>Meneger</th>
+                                        <th>Jarima</th>
                                     </tr>
-                                @else
-                                    @foreach( $Guruh['endTalaba'] as $key => $item)
-                                        <tr>
-                                            <td>{{ $loop->index+1 }}</td>
-                                            <td style="text-align:left">
-                                                <a href="{{ route('user.show', $item['user_id'] ) }}">
-                                                    {{ $item['user_name'] }}</a></td>
-                                            <td>{{ $item['start_data'] }}</td>
-                                            <td>{{ $item['start_commit'] }}</td>
-                                            <td>{{ $item['admin_email'] }}</td>
-                                            <td>{{ $item['balans'] }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
                                 </tbody>
                             </table>
                         </div>
                         <hr>
-                        @if(Auth::user()->type!='Operator')
-                        @if($Guruh['guruh_about']['guruh_xolati']!='Guruh yakunlangan')
-                        <form action="{{ route('guruh_setting.update',$Guruh['guruh_about']['id']) }}" method="post" id="form">
+                        <form action="{{ route('guruh_setting.update',1" method="post" id="form">
                             @csrf
                             @method('put')
                             <h5 class="text-center mt-3">Guruhdan talabani o'chirish</h5>
                             <div class="row text-center">
-                                <input type="hidden" name="guruh_summa" value="{{ $Guruh['guruh_about']['guruh_price'] }}">
+                                <input type="hidden" name="guruh_summa" value="">
                                 <div class="col-lg-6">
                                     <label for="user_id" class="mb-1 mt-2">Talabani tanlang</label>
                                     <select name="user_id" class="form-select" required>
                                         <option value="">Tanlang</option>
-                                        @if($Guruh['activTalaba']!=0)
-                                            @foreach( $Guruh['activTalaba'] as $key => $item)
-                                                <option value="{{ $item['user_id'] }}">{{ $item['user_name'] }}</option>
-                                            @endforeach
-                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
@@ -428,8 +408,7 @@
                                 </div>
                             </div>
                         </form>
-                        @endif
-                        @endif
+                        
                     </div>
                     <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="table-responsive">
