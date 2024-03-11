@@ -317,7 +317,6 @@ class GuruhController extends Controller{
         $Room = Room::where('id',$Guruhlar->room_id);
         $guruh['room'] = $Room->get()->first()->room_name;
         $AktivUser = GuruhUser::where('guruh_id',$id)->where('status','true')->get();
-        $guruh['ActivUsers'] = $AktivUser;
         $guruh['activ_user'] = count($AktivUser);
         $NeAktivUser = GuruhUser::where('guruh_id',$id)->where('status','false')->get();
         $guruh['nd_activ_user'] = count($NeAktivUser);
