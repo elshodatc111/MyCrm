@@ -322,6 +322,7 @@ class GuruhController extends Controller{
         $guruh['nd_activ_user'] = count($NeAktivUser);
 
         
+        
 
 
         return view('guruh.show', compact('guruh'));
