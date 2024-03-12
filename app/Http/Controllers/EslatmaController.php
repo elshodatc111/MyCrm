@@ -24,9 +24,18 @@ class EslatmaController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function EslatmaUser(Request $request){
+        $validated = $request->validate([
+            'user_guruh_id' => 'required',
+            'text' => 'required',
+        ]);
+        $validated['filial_id'] = intval(request()->cookie('filial_id'));
+        $validated['admin_id'] = Auth::user()->id;
+        $validated['status'] = 'true';
+        $validated['type'] = 'user';
+        $Eslatma = Eslatma::create($validated);
+        return back()->withInput()->with('success', "Eslatma saqlandi.");
+    }
     public function store(Request $request){
         $validated = $request->validate([
             'user_guruh_id' => 'required',

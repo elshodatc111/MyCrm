@@ -64,4 +64,5 @@ Route::post('guruh_setting/sendMessege', [GuruhUserController::class, 'sendMesse
 Route::resource('guruh_setting', GuruhUserController::class);
 
 
+Route::post('eslatma/EslatmaUser', [EslatmaController::class,"EslatmaUser"])->name('EslatmaUser');
 Route::resource('eslatma', EslatmaController::class);

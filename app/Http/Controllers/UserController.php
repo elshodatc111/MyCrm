@@ -7,6 +7,7 @@ use App\Models\UserHistory;
 use App\Models\StudenHistory;
 use App\Models\Guruh;
 use App\Models\GuruhUser;
+use App\Models\Eslatma;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,18 @@ class UserController extends Controller{
         $Users = User::where('filial',request()->cookie('filial_id'))
         ->join('talabas', 'users.id', 'talabas.user_id')->orderBy('users.id', 'DESC')
         ->select('users.name','users.phone','users.address','users.tkun','users.id')->get();
-        return view('users.index',compact('Users'));
+        $User = array();
+        foreach ($Users as $key => $value) {
+            $User[$key]['name'] = $value->name;
+            $User[$key]['phone'] = $value->phone;
+            $User[$key]['address'] = $value->address;
+            $User[$key]['tkun'] = $value->tkun;
+            $User[$key]['id'] = $value->id;
+            $GuruhUser = GuruhUser::where('user_id',$value->id)->where('status','true')->get();
+            $User[$key]['guruh'] = count($GuruhUser);
+        }
+        #dd($User);
+        return view('users.index',compact('User'));
     }
     public function userDebet(){
         return view('users.debit');
@@ -154,9 +166,55 @@ class UserController extends Controller{
         $Guruh_plus['user'] = $User;
         $Users = User::where('id','=',$Guruh_plus['user']->admin_id)->get()->first();
         $Guruh_plus['create_admin'] = $Users->email;
-        #dd($Guruh_plus);
+        
+        $Eslatma = Eslatma::where('eslatmas.user_guruh_id',$id)
+        ->join('users','users.id','eslatmas.admin_id')
+        ->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')
+        ->orderby('eslatmas.created_at','DESC')
+        ->get();
 
-        return view('users.show', compact('Guruh_plus'));
+        $ActivGuruhUser = GuruhUser::where('guruh_users.user_id', $id)
+        ->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')
+        ->where('guruh_users.status','true')
+        ->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data',
+        'guruh_users.start_commit','guruh_users.start_meneger')
+        ->get();
+        $Activ_guruh = array();
+        foreach($ActivGuruhUser as $key => $item){
+            $Activ_guruh[$key]['guruh_name'] = $item->guruh_name;
+            $Activ_guruh[$key]['created_at'] = $item->created_at;
+            $Activ_guruh[$key]['start_data'] = $item->start_data;
+            $Activ_guruh[$key]['start_commit'] = $item->start_commit;
+            $Activ_guruh[$key]['guruh_id'] = $item->id;
+            $Userssss = User::where('id',$item->start_meneger)->get()->first()->email;
+            $Activ_guruh[$key]['start_meneger'] = $Userssss;
+        }
+
+        $EndGuruhUser = GuruhUser::where('guruh_users.user_id', $id)
+        ->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')
+        ->where('guruh_users.status','false')
+        ->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data',
+        'guruh_users.start_commit','guruh_users.start_meneger','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data')
+        ->get();
+        $End_guruh = array();
+        foreach($EndGuruhUser as $key => $item){
+            $End_guruh[$key]['guruh_name'] = $item->guruh_name;
+            $End_guruh[$key]['created_at'] = $item->created_at;
+            $End_guruh[$key]['start_data'] = $item->start_data;
+            $End_guruh[$key]['end_data'] = $item->end_data;
+            $End_guruh[$key]['end_commit'] = $item->end_commit;
+            $UserEnd = User::where('id',$item->end_meneger)->get()->first()->email;
+            $End_guruh[$key]['end_meneger'] = $UserEnd;
+            $End_guruh[$key]['start_commit'] = $item->start_commit;
+            $End_guruh[$key]['guruh_id'] = $item->id;
+            $Userssss = User::where('id',$item->start_meneger)->get()->first()->email;
+            $End_guruh[$key]['start_meneger'] = $Userssss;
+        }
+        
+        #dd($End_guruh);
+
+
+        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh'));
     }
 
     public function edit(string $id){

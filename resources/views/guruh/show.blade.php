@@ -321,7 +321,7 @@
                 </div>
             </div>
         </div>
- 
+        #### Qarzdorlarga SMS yuborish #### <br> #### Guruhni davom ettirish #### <br> #### Talaba Davomadlari ####
         <div class="card">
             <div class="card-body mt-3">
               <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -412,7 +412,7 @@
                                     </tr>
                                     @empty
                                         <tr>
-                                            <td colspan=6 class=text-center>Aktiv talabalar mavjud emas.</td>
+                                            <td colspan=9 class=text-center>Aktiv talabalar mavjud emas.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -476,7 +476,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="contact-eslatma" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="table-responsive">
+                        <div class="table-responsive">
                             <table class="table table-bordered text-center">
                                 <thead>
                                     <tr>
@@ -504,7 +504,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <hr>
                     </div>
                 </div>
               

@@ -8,7 +8,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
-          <li class="breadcrumb-item"><a href="{{ route('home') }}">Tashriflar</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('user.index') }}">Tashriflar</a></li>
           <li class="breadcrumb-item active">Tashrif</li>
         </ol>
       </nav>
@@ -140,25 +140,25 @@
                 <div class="col-lg-3 pb-2">
                     <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#send_messege">SMS yuborish</button>                    
                 </div>
-<div class="modal fade" id="send_messege" tabindex="-1">
-    <form action="" method="post">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Basic Modal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal fade" id="send_messege" tabindex="-1">
+                    <form action="" method="post">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Basic Modal</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                
+                                    <div class="div">
+                                        <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <button type="submit" class="btn btn-primary" style="width:48%;">Guruhga qo'shish</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                
-                    <div class="div">
-                        <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
-                        <button type="submit" class="btn btn-primary" style="width:48%;">Guruhga qo'shish</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
                 @if(Auth::user()->type!='Operator')
                 <div class="col-lg-3 pb-2">
                     <button class="btn btn-info text-white w-100">Chegirma kiritish</button>                    
@@ -205,10 +205,12 @@
         <div class="col-lg-4">
             <div class="card" style="min-height:260px;">
                 <div class="card-body pt-4">
-                    <form action="" method="post">
+                    <form action="{{ route('EslatmaUser') }}" method="post">
+                        @csrf
                         <h5>Eslatma qoldirish</h5>
-                        <label for="">Eslatma matni</label>
-                        <textarea name="" class="form-control" required></textarea>
+                        <input type="hidden" name="user_guruh_id" value="{{ $Guruh_plus['user']->id }}">
+                        <label for="text">Eslatma matni</label>
+                        <textarea name="text" class="form-control" required></textarea>
                         <button type="submit" class="w-100 btn btn-primary mt-3">Eslatma qoldirish</button>
                     </form>
                 </div>
@@ -253,13 +255,98 @@
                     talaba_tulovlariNesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
                 </div>
                 <div class="tab-pane fade" id="activ_guruhlar" role="tabpanel" aria-labelledby="contact-tab">
-                    activ_guruhlar Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                    <table class="table bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Guruh</th>
+                                <th>Guruhga qoshildi</th>
+                                <th>Izoh</th>
+                                <th>Operator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($Activ_guruh as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td style='text-align:left'>
+                                    <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
+                                        {{ $item['guruh_name'] }}</a></td>
+                                <td>{{ $item['start_data'] }}</td>
+                                <td style='text-align:left'>{{ $item['start_commit'] }}</td>
+                                <td>{{ $item['start_meneger'] }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="delete_guruhlar" role="tabpanel" aria-labelledby="contact-tab">
-                    delete_guruhlar Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                <table class="table bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Guruh</th>
+                                <th>Guruhga qoshildi</th>
+                                <th>Izoh</th>
+                                <th>Operator</th>
+                                <th>Guruhdan o'chirildi</th>
+                                <th>Guruhdan o'chirish haqida</th>
+                                <th>Operator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($End_guruh as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td style='text-align:left'>
+                                    <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
+                                        {{ $item['guruh_name'] }}</a></td>
+                                <td>{{ $item['start_data'] }}</td>
+                                <td style='text-align:left'>{{ $item['start_commit'] }}</td>
+                                <td>{{ $item['start_meneger'] }}</td>
+                                <td>{{ $item['end_data'] }}</td>
+                                <td>{{ $item['end_commit'] }}</td>
+                                <td>{{ $item['end_meneger'] }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="eslatmalar" role="tabpanel" aria-labelledby="contact-tab">
-                 eslatmalar Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+                    <table class="table bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Operator</th>
+                                <th>Eslatma matni</th>
+                                <th>Eslatma vaqti</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($Eslatma as $item)
+                            <tr>
+                                <td>{{ $loop->index+1 }}</td>
+                                <td style="text-align:left">{{ $item->email }}</td>
+                                <td style="text-align:left">{{ $item->text }}</td>
+                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->status }}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
