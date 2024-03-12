@@ -67,4 +67,5 @@ Route::resource('guruh_setting', GuruhUserController::class);
 
 
 Route::post('eslatma/EslatmaUser', [EslatmaController::class,"EslatmaUser"])->name('EslatmaUser');
+Route::get('eslatma/arxiv', [EslatmaController::class,"arxivEslatma"])->name('arxivEslatma');
 Route::resource('eslatma', EslatmaController::class);

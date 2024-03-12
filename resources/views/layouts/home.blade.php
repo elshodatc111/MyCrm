@@ -43,7 +43,7 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#sss">
+                    <a class="nav-link nav-icon" href="{{ route('eslatma.index') }}">
                         <i class="bi bi-bell"></i>
                         <span class="badge bg-primary badge-number">4</span>
                     </a>
@@ -132,7 +132,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
+        <a class="nav-link collapsed" href="{{ route('eslatma.index') }}">
           <i class="bi bi-chat-left-text"></i>
           <span>Eslatmalar</span>
         </a>
