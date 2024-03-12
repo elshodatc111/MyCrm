@@ -13,6 +13,7 @@ use App\Http\Controllers\SendMessgeController;
 use App\Http\Controllers\SettingController; 
 use App\Http\Controllers\GuruhController; 
 use App\Http\Controllers\GuruhUserController; 
+use App\Http\Controllers\EslatmaController; 
 
 Route::get('/', [TecherController::class, 'index']);
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
@@ -61,3 +62,6 @@ Route::resource('guruh', GuruhController::class);
 
 Route::post('guruh_setting/sendMessege', [GuruhUserController::class, 'sendMessege'])->name('sendMessege');
 Route::resource('guruh_setting', GuruhUserController::class);
+
+
+Route::resource('eslatma', EslatmaController::class);

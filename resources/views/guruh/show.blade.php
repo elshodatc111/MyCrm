@@ -193,7 +193,8 @@
                         </div>
                         <!-- Guruh uchun eslatma qoldirish -->
                         <div class="modal fade" id="eslatmaplus" tabindex="-1">
-                            <form action="" method="post" id="form">
+                            <form action="{{ route('eslatma.store') }}" method="post" id="form">
+                                @csrf
                                 <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -202,8 +203,9 @@
                                         </div>
                                         <div class="modal-body row">
                                             <div class="col-lg-12">
-                                                <label for="guruh_name">Eslatma matni</label>
-                                                <textarea type="text" name="guruh_name" class="form-control mb-3" required></textarea>
+                                                <input type="hidden" name="user_guruh_id" value="{{ $guruh['id'] }}">
+                                                <label for="text">Eslatma matni</label>
+                                                <textarea type="text" name="text" class="form-control mb-3" required></textarea>
                                                 <button type="button" class="btn btn-secondary" style="width:48.5%" 
                                                 data-bs-dismiss="modal">Bekor qilish</button>
                                                 <button type="submit" class="btn btn-primary" style="width:48.5%">Eslatmani saqlash</button>
@@ -446,7 +448,6 @@
                                 </div>
                             </div>
                         </form>
-                        
                     </div>
                     <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="table-responsive">
@@ -480,45 +481,30 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Talaba</th>
-                                        <th>Guruhga qo'shildi</th>
-                                        <th>Izoh</th>
-                                        <th>Meneger</th>
-                                        <th>Guruhdan o'chirildi</th>
-                                        <th>Izoh</th>
-                                        <th>Meneger</th>
-                                        <th>Jarima</th>
+                                        <th>Operator</th>
+                                        <th>Eslatma matni</th>
+                                        <th>Eslatma vaqti</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($eslatma as $item)
                                     <tr>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td style="text-align:left">{{ $item->email }}</td>
+                                        <td style="text-align:left">{{ $item->text }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ $item->status }}</td>
                                     </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan=5 class="text-center">Eslatmalar mavjud emas</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                         <hr>
-                        <form action="" method="post">
-                            <h5 class="text-center mt-3">Eslatma qoldirish</h5>
-                            <div class="row text-center">
-                                <div class="col-lg-8">
-                                    <label for="" class="mb-1 mt-2">Eslatma izohi</label>
-                                    <input type="text" class="form-control" required>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label for="" class="mb-1 mt-2">.</label>
-                                    <button class="btn btn-primary w-100">Eslatma qoldirish</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
               

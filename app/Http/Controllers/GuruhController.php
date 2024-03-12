@@ -6,6 +6,7 @@ use App\Models\Guruh;
 use App\Models\Test;
 use App\Models\Room;
 use App\Models\Setting;
+use App\Models\Eslatma;
 use App\Models\GuruhUser;
 use App\Models\User;
 use App\Models\GuruhJadval;
@@ -369,7 +370,15 @@ class GuruhController extends Controller{
             }
             $EndStudent[$key]['jarima'] = number_format($JarimaSumma, 0, '.', ' ');
         }
-        return view('guruh.show', compact('guruh','AktivStudent','EndStudent'));
+
+        
+        $eslatma = Eslatma::where('eslatmas.type','guruh')
+        ->join('users','users.id','eslatmas.admin_id')
+        ->where('eslatmas.user_guruh_id',$id)
+        ->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')
+        ->orderBy('eslatmas.id', 'DESC')->get();
+        #dd($eslatma[0]['name']);
+        return view('guruh.show', compact('guruh','AktivStudent','EndStudent','eslatma'));
     }
 
     public function edit(Guruh $guruh){
