@@ -114,25 +114,25 @@
     <ul class="sidebar-nav" id="sidebar-nav">   
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('home') }}">
+        <a class="nav-link {{ request()->is('home') ? '':'collapsed' }} " href="{{ route('home') }}">
           <i class="bi bi-house-door"></i>
           <span>Bosh sahifa</span>
         </a>
       </li>
       @if(Auth::user()->type=='Operator' or Auth::user()->type=='Admin' or Auth::user()->type=='SuperAdmin') 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('user.index') }}">
+        <a class="nav-link {{ request()->is('user') ? '':'collapsed' }}"  href="{{ route('user.index') }}">
           <i class="bi bi-people"></i></i><span>Tashriflar</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('guruh.index') }}">
+        <a class="nav-link {{ request()->is('guruh') ? '':'collapsed' }}" href="{{ route('guruh.index') }}">
           <i class="bi bi-list-columns-reverse"></i>
           <span>Guruhlar</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('eslatma.index') }}">
+        <a class="nav-link {{ request()->is('eslatma') ? '':'collapsed' }}" href="{{ route('eslatma.index') }}">
           <i class="bi bi-chat-left-text"></i>
           <span>Eslatmalar</span>
         </a>
@@ -157,20 +157,20 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('techer.index') }}">
+        <a class="nav-link {{ request()->is('techer') ? '':'collapsed' }}" href="{{ route('techer.index') }}">
           <i class="bi bi-dash-circle"></i>
           <span>O'qituvchilar</span>
         </a>
       </li>
       @if(Auth::user()->type=='SuperAdmin')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('hodim.index')}}">
+        <a class="nav-link {{ request()->is('hodim') ? '':'collapsed' }}" href="{{ route('hodim.index')}}">
           <i class="bi bi-person-arms-up"></i>
           <span>Hodimlar</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('room.index') }}">
+        <a class="nav-link {{ request()->is('room') ? '':'collapsed' }}" href="{{ route('room.index') }}">
           <i class="bi bi-door-open"></i>
           <span>Xonalar</span>
         </a>
@@ -183,7 +183,7 @@
       </li>
       @if(Auth::user()->filial=='NULL')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route('filial.index') }}">
+        <a class="nav-link {{ request()->is('filial') ? '':'collapsed' }}" href="{{ route('filial.index') }}">
             <i class="bi bi-house-check"></i>
             <span>Filiallar</span>
         </a>
