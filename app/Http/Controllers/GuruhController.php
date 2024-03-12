@@ -23,13 +23,15 @@ class GuruhController extends Controller{
         
         $i=1;
         $items = array();
-        foreach ($Guruh as $value) {
+        foreach ($Guruh as $key=>  $value) {
             $Guruhlar = array();
             $Guruhlar['id'] = $value['id'];
             $Guruhlar['guruh_name'] = $value['guruh_name'];
             $Guruhlar['start'] = $value['guruh_start'];
             $Guruhlar['end'] = $value['guruh_end'];
-            $Guruhlar['student'] = 0; // GURUHDAGI TALABALAR SONINI QO"YISH KERAK
+            $GuruhUser = GuruhUser::where('guruh_id',$value['id'])->where('status','true')->get();
+
+            $Guruhlar['student'] = count($GuruhUser);
             $Guruhlar['summa'] = number_format(($value['guruh_price']), 0, '.', ' ');
             if($value['guruh_start']>date('Y-m-d')){
                 $Guruhlar['status'] = "new";
@@ -43,6 +45,8 @@ class GuruhController extends Controller{
         }
         #dd($items);
         return view('guruh.index',compact('items'));
+
+        
     }
 
     public function indexNew(){

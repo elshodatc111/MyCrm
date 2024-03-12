@@ -164,7 +164,7 @@
                                                     </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan=1 class='text-center'>
+                                                            <td colspan=2 class='text-center'>
                                                                 Talabalar guruhda mavjud emas.
                                                             </td>
                                                         </tr>
