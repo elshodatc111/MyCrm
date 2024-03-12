@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\GuruhUser;
 use App\Models\User;
 use App\Models\GuruhJadval;
+use App\Models\StudenHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -295,6 +296,7 @@ class GuruhController extends Controller{
         }
         $guruh=array();
         $guruh['guruh_price'] = number_format(($Guruhlar->guruh_price), 0, '.', ' ');
+        $guruh['guruh_price2'] = $Guruhlar->guruh_price;
         $guruh['guruh_name'] = $Guruhlar->guruh_name;
         $guruh['techer_bonus'] = number_format(($Guruhlar->techer_bonus), 0, '.', ' ');
         $guruh['techer_tulov'] = number_format(($Guruhlar->techer_tulov), 0, '.', ' ');
@@ -303,6 +305,7 @@ class GuruhController extends Controller{
         $guruh['guruh_dars_vaqt'] = $Guruhlar->guruh_dars_vaqt;
         $guruh['guruh_start'] = $Guruhlar->guruh_start;
         $guruh['guruh_end'] = $Guruhlar->guruh_end;
+        $guruh['id'] = $id;
         $GuruhJadval = GuruhJadval::where('guruh_id',$id)->get();
         $Jadval = array();
         foreach ($GuruhJadval as $key => $value){
@@ -321,11 +324,48 @@ class GuruhController extends Controller{
         $NeAktivUser = GuruhUser::where('guruh_id',$id)->where('status','false')->get();
         $guruh['nd_activ_user'] = count($NeAktivUser);
 
-        
-        
-
-
-        return view('guruh.show', compact('guruh'));
+        $AUser = GuruhUser::where('guruh_id',$id)
+            ->join('users', 'users.id', 'guruh_users.user_id')
+            ->where('guruh_users.status','true')
+            ->select('users.name','users.id','guruh_users.start_data',
+                'guruh_users.start_commit','guruh_users.start_meneger')
+            ->get();
+        $AktivStudent = array();
+        foreach ($AUser as $key => $value) {
+            $Meneger = User::where('id',$value->start_meneger)->get()->first()->email;
+            $AktivStudent[$key]['student_id'] = $AUser[$key]->id;
+            $AktivStudent[$key]['student_name'] = $AUser[$key]->name;
+            $AktivStudent[$key]['start_data'] = $AUser[$key]->start_data;
+            $AktivStudent[$key]['start_commit'] = $AUser[$key]->start_commit;
+            $AktivStudent[$key]['meneger_email'] = $Meneger;
+            $AktivStudent[$key]['student_balans'] = number_format(1000, 0, '.', ' ');
+        }
+        $DUser = GuruhUser::where('guruh_id',$id)
+            ->join('users', 'users.id', 'guruh_users.user_id')
+            ->where('guruh_users.status','false')
+            ->select('users.name','users.id','guruh_users.start_data',
+                'guruh_users.start_commit','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data','guruh_users.start_meneger')
+            ->get();
+        $EndStudent = array();
+        foreach ($DUser as $key => $value) {
+            $Meneger = User::where('id',$value->start_meneger)->get()->first()->email;
+            $EndMeneger = User::where('id',$value->end_meneger)->get()->first()->email;
+            $EndStudent[$key]['student_id'] = $DUser[$key]->id;
+            $EndStudent[$key]['student_name'] = $DUser[$key]->name;
+            $EndStudent[$key]['start_data'] = $DUser[$key]->start_data;
+            $EndStudent[$key]['start_commit'] = $DUser[$key]->start_commit;
+            $EndStudent[$key]['end_data'] = $DUser[$key]->end_data;
+            $EndStudent[$key]['end_commit'] = $DUser[$key]->end_commit;
+            $EndStudent[$key]['meneger_email'] = $Meneger;
+            $EndStudent[$key]['meneger_end_email'] = $EndMeneger;
+            $Jarima = StudenHistory::where('student_id',$DUser[$key]->id)->where('guruh_id',$id)->where('status','GuruhDeleteJarima')->get();
+            $JarimaSumma = 0;
+            foreach ($Jarima as $value) {
+                $JarimaSumma = $JarimaSumma + $value['summa'];
+            }
+            $EndStudent[$key]['jarima'] = number_format($JarimaSumma, 0, '.', ' ');
+        }
+        return view('guruh.show', compact('guruh','AktivStudent','EndStudent'));
     }
 
     public function edit(Guruh $guruh){

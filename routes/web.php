@@ -59,4 +59,5 @@ Route::post('guruh_store2', [GuruhController::class, 'store2'])->name('store2');
 Route::delete('guruh_delete/{id}', [GuruhController::class, 'distroy2'])->name('distroy2');
 Route::resource('guruh', GuruhController::class);
 
+Route::post('guruh_setting/sendMessege', [GuruhUserController::class, 'sendMessege'])->name('sendMessege');
 Route::resource('guruh_setting', GuruhUserController::class);

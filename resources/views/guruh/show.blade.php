@@ -13,6 +13,11 @@
         </ol>
       </nav>
     </div>
+    @if(session()->has('success')) 
+      <div class="alert alert-success">
+        {{ session()->get('success') }}
+      </div>
+    @endif
     @if(session()->has('error')) 
       <div class="alert alert-danger">
         {{ session()->get('error') }}
@@ -124,14 +129,17 @@
                     <div class="col-12">
                         <table class="table">
                             <tr>
-                                <th style="width:33.33333%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#sendmessege">SMS yuborish</button></th>
-                                <th style="width:33.33333%;"><button class="btn btn-primary text-white w-100">Qarzdorlarga SMS yuborish</button></th>
-                                <th style="width:33.33333%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#guruh_next">Guruhni davom ettirish</button></th>
+                                <th style="width:25%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#sendmessege">SMS yuborish</button></th>
+                                <th style="width:25%;"><button class="btn btn-primary text-white w-100">Qarzdorlarga SMS yuborish</button></th>
+                                <th style="width:25%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#guruh_next">Guruhni davom ettirish</button></th>
+                                <th style="width:25%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#eslatmaplus">Eslatma qoldirish</button></th>
                             </tr>
                         </table>
-                        ##### SMS yuborish
+                        <!-- SMS yuborish tayyorlandi -->
                         <div class="modal fade" id="sendmessege" tabindex="-1">
-                            <form action="" method="post">
+                            <form action="{{ route('sendMessege') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="guruh_id" value="{{ $guruh['id'] }}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -147,27 +155,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @forelse($AktivStudent as $item)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="">
+                                                            <input type="checkbox" name="{{ $item['student_id'] }}">
                                                         </td>
-                                                        <td style="text-align:left">Elshod Musurmonov</td>
+                                                        <td style="text-align:left">{{ $item['student_name'] }}</td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" name="">
-                                                        </td>
-                                                        <td style="text-align:left">Elshod Musurmonov</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" name="">
-                                                        </td>
-                                                        <td style="text-align:left">Elshod Musurmonov</td>
-                                                    </tr>
+                                                    @empty
+                                                        <tr>
+                                                            <td colspan=1 class='text-center'>
+                                                                Talabalar guruhda mavjud emas.
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
                                                     <tr>
                                                         <td colspan='2'>
-                                                            <textarea name="" class="form-control" required placeholder="SMS matni..."></textarea>
+                                                            <textarea name="text" class="form-control" required placeholder="SMS matni..."></textarea>
                                                         </td>
                                                     </tr>
                                                     <table class="table">
@@ -187,7 +191,29 @@
                                 </div>
                             </form>
                         </div>
-                        ##### Guruhni davom ettirish
+                        <!-- Guruh uchun eslatma qoldirish -->
+                        <div class="modal fade" id="eslatmaplus" tabindex="-1">
+                            <form action="" method="post" id="form">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Guruh uchun eslatma qoldirish</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+                                                <label for="guruh_name">Eslatma matni</label>
+                                                <textarea type="text" name="guruh_name" class="form-control mb-3" required></textarea>
+                                                <button type="button" class="btn btn-secondary" style="width:48.5%" 
+                                                data-bs-dismiss="modal">Bekor qilish</button>
+                                                <button type="submit" class="btn btn-primary" style="width:48.5%">Eslatmani saqlash</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Guruhni davom ettirish -->
                         <div class="modal fade" id="guruh_next" tabindex="-1">
                             <form action="" method="post" id="form">
                                 <div class="modal-dialog modal-xl">
@@ -293,7 +319,7 @@
                 </div>
             </div>
         </div>
-
+ 
         <div class="card">
             <div class="card-body mt-3">
               <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
@@ -334,17 +360,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    foreach
+                                    @forelse($AktivStudent as $item)
                                     <tr>
-                                        <td>s</td>
-                                        <td style="text-align:left">
-                                            <a href="s">
-                                                dd</a></td>
-                                        <td>sdc</td>
-                                        <td>sdc</td>
-                                        <td>sdc</td>
-                                        <td>sdc</td>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td style="text-align:left"><a href="{{ route('user.show', $item['student_id'] ) }}">{{ $item['student_name'] }}</a></td>
+                                        <td>{{ $item['start_data'] }}</td>
+                                        <td>{{ $item['start_commit'] }}</td>
+                                        <td>{{ $item['meneger_email'] }}</td>
+                                        <td>{{ $item['student_balans'] }}</td>
                                     </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan=6 class=text-center>Aktiv talabalar mavjud emas.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -367,31 +396,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($EndStudent as $item)
                                     <tr>
-                                        <th>#</th>
-                                        <th>Talaba</th>
-                                        <th>Guruhga qo'shildi</th>
-                                        <th>Izoh</th>
-                                        <th>Meneger</th>
-                                        <th>Guruhdan o'chirildi</th>
-                                        <th>Izoh</th>
-                                        <th>Meneger</th>
-                                        <th>Jarima</th>
+                                        <td>{{ $loop->index+1 }}</td>
+                                        <td style="text-align:left"><a href="{{ route('user.show', $item['student_id'] ) }}">{{ $item['student_name'] }}</a></td>
+                                        <td>{{ $item['start_data'] }}</td>
+                                        <td>{{ $item['start_commit'] }}</td>
+                                        <td>{{ $item['meneger_email'] }}</td>
+                                        <td>{{ $item['end_data'] }}</td>
+                                        <td>{{ $item['end_commit'] }}</td>
+                                        <td>{{ $item['meneger_end_email'] }}</td>
+                                        <td>{{ $item['jarima'] }}</td>
                                     </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan=6 class=text-center>Aktiv talabalar mavjud emas.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                         <hr>
-                        <form action="{{ route('guruh_setting.update',1" method="post" id="form">
+                        <form action="{{ route('guruh_setting.update',$guruh['id']) }}" method="post" id="form">
                             @csrf
                             @method('put')
                             <h5 class="text-center mt-3">Guruhdan talabani o'chirish</h5>
                             <div class="row text-center">
-                                <input type="hidden" name="guruh_summa" value="">
+                                <input type="hidden" name="guruh_summa" value="{{ $guruh['guruh_price2'] }}">
                                 <div class="col-lg-6">
                                     <label for="user_id" class="mb-1 mt-2">Talabani tanlang</label>
                                     <select name="user_id" class="form-select" required>
                                         <option value="">Tanlang</option>
+                                        @foreach($AktivStudent as $item)
+                                            <option value="{{ $item['student_id'] }}">{{ $item['student_name'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-6">
@@ -399,8 +437,8 @@
                                     <input type="text" name="end_commit" class="form-control" required>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="summa_jarima" class="mb-1 mt-2">Jarima summasi(Guruh narxidan baland bo'lmasin.)</label>
-                                    <input type="number" name="summa_jarima" id="summa3" class="form-control" required>
+                                    <label for="summa" class="mb-1 mt-2">Jarima summasi(Guruh narxidan baland bo'lmasin.)</label>
+                                    <input type="number" name="summa" id="summa3" class="form-control" required>
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="" class="mb-1 mt-2">.</label>

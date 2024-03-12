@@ -8,6 +8,8 @@ use App\Models\StudenHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use mrmuminov\eskizuz\Eskiz;
+use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 class GuruhUserController extends Controller
 {
     /**
@@ -73,12 +75,44 @@ class GuruhUserController extends Controller
     {
         //
     }
+    
+    
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(GuruhUser $guruhUser)
-    {
+    public function sendMessege(Request $request){
+        $GuruhUser = GuruhUser::where('guruh_users.guruh_id',$request->guruh_id)
+        ->join('users','users.id','guruh_users.user_id')
+        ->select('users.phone','users.id','users.name')
+        ->where('guruh_users.status','true')->get();
+        $phone = array();
+        $i = 0;
+        foreach ($GuruhUser as $key => $value) {
+            $req_id = $value->id;
+            if($request[$req_id]=='on'){
+                $Phone = "+998".str_replace(" ","",$value->phone);
+                $phone[$key]['mobile_phone'] = $Phone;
+                $phone[$key]['message'] = $request->text;
+                $i++;
+            }
+        }
+        foreach ($phone as $key => $value) {
+            echo $value['mobile_phone']."<br>";
+            $eskiz = new Eskiz(config('api.eskiz_email'),config('api.eskiz_password'));
+            $eskiz->requestAuthLogin();
+            $singleSmsType = new SmsSingleSmsType(
+                from: '4546',
+                message: $value['message'],
+                mobile_phone: $value['mobile_phone'],
+                user_sms_id: $key+1,
+                callback_url: ''
+            );
+            $result = $eskiz->requestSmsSend($singleSmsType);
+            if($result->getResponse()->isSuccess == true){
+                echo "Send ";
+            }else{ echo "Error "; }
+        }
+        return back()->withInput()->with('success', $i." Talabaga sms xabar yuborildi.");
+    }
+    public function edit(GuruhUser $guruhUser){
         //
     }
 
@@ -88,6 +122,8 @@ class GuruhUserController extends Controller
     public function update(Request $request, $id){
         $validated = $request->validate([
             "end_commit" => ['required'],
+            "user_id" => ['required'],
+            "summa" => ['required'],
         ]);
         $validated['end_data']=date('Y-m-d');
         $validated['status']='false';
@@ -95,7 +131,6 @@ class GuruhUserController extends Controller
         $GuruhUser = GuruhUser::where('guruh_id',$id)
         ->where('user_id',$request->user_id)->get()->first();
         $GuruhUser->update($validated);
-
         $validated2 = array();
         $validated2['filial_id']=request()->cookie('filial_id');
         $validated2['student_id']=$request->user_id;
@@ -104,12 +139,11 @@ class GuruhUserController extends Controller
         $validated2['type']=0;
         $validated2['admin_id']=Auth::user()->id;
         $validated2['guruh_id']=$id;
-
         $validated3 = array();
         $validated3['filial_id']=request()->cookie('filial_id');
         $validated3['student_id']=$request->user_id;
-        $validated3['status']='GuruhDelete';
-        $validated3['summa']=-$request->summa_jarima;
+        $validated3['status']='GuruhDeleteJarima';
+        $validated3['summa']=-$validated['summa'];
         $validated3['type']=0;
         $validated3['admin_id']=Auth::user()->id;
         $validated3['guruh_id']=$id;
@@ -117,6 +151,7 @@ class GuruhUserController extends Controller
         StudenHistory::create($validated2);
         StudenHistory::create($validated3);
         return redirect()->route('guruh.show',$id)->with('success','Guruhdan talaba o\'chirildi.');
+        
     }
 
     /**
