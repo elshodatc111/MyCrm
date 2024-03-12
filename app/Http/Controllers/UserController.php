@@ -131,9 +131,24 @@ class UserController extends Controller{
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function userPasswordUpdate(Request $request){
+        $rand = rand(10000000,99999999);
+        $User = User::where('id',$request->id)->get()->first();
+        $User->password = Hash::make($rand);
+        $User->update();
+        $phone = str_replace(" ","",$User->phone);
+        $text = $request->name." ".request()->cookie('filial_name')." o'quv markazidan shaxsiy kabinetingiz paroli yangilansi. \nParol: ".$rand."\n".config('api.messege_text');
+        $this->SendMessege($phone,$text);
+        return redirect()->route('user.show',$request->id)->with('success','Talaba paroli yangilandi.');
+    }
+
+    public function userSendMessge(Request $request){
+        $phone = str_replace(" ","",User::where('id',$request->id)->get()->first()->phone);
+        $text = $request->text;
+        $this->SendMessege($phone,$text);
+        return redirect()->route('user.show',$request->id)->with('success','Talabaga sms xabar yuborildi.');
+    }
+
     public function show(string $id){
         $thisDay = date('Y-m-d');
         $oldDay = date('Y-m-d',strtotime("-7 days", strtotime($thisDay)));
@@ -210,9 +225,6 @@ class UserController extends Controller{
             $Userssss = User::where('id',$item->start_meneger)->get()->first()->email;
             $End_guruh[$key]['start_meneger'] = $Userssss;
         }
-        
-        #dd($End_guruh);
-
 
         return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh'));
     }

@@ -141,18 +141,21 @@
                     <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#send_messege">SMS yuborish</button>                    
                 </div>
                 <div class="modal fade" id="send_messege" tabindex="-1">
-                    <form action="" method="post">
+                    <form action="{{ route('userSendMessge') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $Guruh_plus['user']->id }}">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Basic Modal</h5>
+                                    <h5 class="modal-title">Talabaga sms yuborish</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                
+                                    <label for="text">SMS matni</label>
+                                    <textarea name="text" class="form-control mb-3"></textarea>
                                     <div class="div">
                                         <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
-                                        <button type="submit" class="btn btn-primary" style="width:48%;">Guruhga qo'shish</button>
+                                        <button type="submit" class="btn btn-primary" style="width:48%;">SMS yuborish</button>
                                     </div>
                                 </div>
                             </div>
@@ -165,8 +168,9 @@
                 </div>
                 @endif
                 <div class="col-lg-3 pb-2">
-                    <form action="" method="post">
+                    <form action="{{ route('userPasswordUpdate') }}" method="post">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $Guruh_plus['user']->id }}">
                         <button class="btn btn-info text-white w-100">Parolini yangish</button>                    
                     </form>
                 </div>
@@ -232,19 +236,13 @@
                     aria-selected="false">Talaba to'lovlari</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
-                    data-bs-target="#activ_guruhlar" type="button" role="tab" aria-controls="contact" 
-                    aria-selected="false">Aktiv guruhlari</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#activ_guruhlar" type="button" role="tab" aria-controls="contact" aria-selected="false">Aktiv guruhlari</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
-                    data-bs-target="#delete_guruhlar" type="button" role="tab" aria-controls="contact" 
-                    aria-selected="false">O'chirilgan guruhlari</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#delete_guruhlar" type="button" role="tab" aria-controls="contact" aria-selected="false">O'chirilgan guruhlari</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" 
-                    data-bs-target="#eslatmalar" type="button" role="tab" aria-controls="contact" 
-                    aria-selected="false">Eslatmalar</button>
+                    <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#eslatmalar" type="button" role="tab" aria-controls="contact" aria-selected="false">Eslatmalar</button>
                 </li>
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
@@ -278,14 +276,14 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                                <td colspan=5 class='text-center'>Talaba guruhlari mavjud emas.</td>
                             </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="delete_guruhlar" role="tabpanel" aria-labelledby="contact-tab">
-                <table class="table bordered text-center">
+                    <table class="table bordered text-center">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -314,7 +312,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                                <td colspan=8 class='text-center'>Talaba guruhlardan o'chirilmagan.</td>
                             </tr>
                             @endforelse
                         </tbody>
