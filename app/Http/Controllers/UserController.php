@@ -226,7 +226,28 @@ class UserController extends Controller{
             $End_guruh[$key]['start_meneger'] = $Userssss;
         }
 
-        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh'));
+        $Guruxx = GuruhUser::where('guruh_users.user_id',$id)
+            ->join('guruhs','guruhs.id','guruh_users.guruh_id')
+            ->join('users','users.id','guruhs.techer_id')
+            ->where('guruh_users.status','true')
+            ->join('settings','settings.summa','guruhs.guruh_price')->get();
+        $chegirmaGuruh = array();
+        foreach($Guruxx as $key=>$value){
+            $day = $value->days;
+            $thisDay = date("Y-m-d");
+            $nextDay = date('Y-m-d',strtotime("+".$day." days", strtotime($value->guruh_start)));
+            echo "Bugun ".$thisDay." Muddat ".$nextDay."<br>";
+            if($thisDay<=$nextDay){
+                $Guruh_Name = $value->guruh_name."(".$value->name.")";
+                $Guruh_id = $value->guruh_id;
+                $chegirmaGuruh[$key]['name'] = $Guruh_Name;
+                $chegirmaGuruh[$key]['guruh_id'] = $Guruh_id;
+            }
+        }
+        #dd($chegirmaGuruh);
+            
+
+        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh'));
     }
 
     public function edit(string $id){

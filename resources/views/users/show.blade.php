@@ -178,26 +178,37 @@
         </div>
       </div>
     </div>
-
+    @if(session()->has('error'))
+      <div class="alert alert-success">
+        {{ session()->get('error') }}
+      </div>
+    @endif
     <div class="row">
         <div class="col-lg-8">
             <div class="card" style="min-height:260px;">
                 <div class="card-body pt-4">
                     <h5>To'lov qilish</h5>
-                    <form action="" method="post" id="form" class="row">
+                    <form action="{{ route('tulov.store') }}" method="post" id="form" class="row">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $Guruh_plus['user']->id }}">
                         <div class="col-lg-6">
-                            <label for="" class="mt-1">Naqt to'lov summasi</label>
-                            <input type="text" id="summa" value="0" class="form-control">
-                            <label for="" class="mt-1">Chegirma uchun guruh</label>
-                            <select name="" class="form-select">
-                                <option value="">Tanlang...</option>
+                            <label for="naqtSumma" class="mt-1">Naqt to'lov summasi</label>
+                            <input type="text" name="naqtSumma" id="summa" value="0" class="form-control">
+                            <label for="guruh_id" class="mt-1">Chegirma uchun guruh</label>
+                            <select name="guruh_id" class="form-select">
+                                <option value="null">Tanlang...</option>
+                                @forelse($chegirmaGuruh as $item)
+                                    <option value="{{ $item['guruh_id'] }}">{{ $item['name'] }}</option>
+                                @empty
+
+                                @endforelse
                             </select>
                         </div>
                         <div class="col-lg-6">
-                            <label for="" class="mt-1">Plastik to'lov summasi</label>
-                            <input type="text" id="summa2" value="0" class="form-control">
-                            <label for="" class="mt-1">To'lov haqida izoh</label>
-                            <input type="text" class="form-control">
+                            <label for="plastikSumma" class="mt-1">Plastik to'lov summasi</label>
+                            <input type="text" name="plastikSumma" id="summa2" value="0" class="form-control">
+                            <label for="commit" class="mt-1">To'lov haqida izoh</label>
+                            <input type="text" name="commit" class="form-control">
                         </div>
                         <div class="col-12 text-center mt-3">
                             <button class="btn btn-primary w-50">To'lovni saqlash</button>
