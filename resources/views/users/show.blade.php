@@ -13,12 +13,18 @@
         </ol>
       </nav>
     </div>
-    
     @if(session()->has('success'))
       <div class="alert alert-success">
         {{ session()->get('success') }}
       </div>
     @endif
+    
+    @if(session()->has('error'))
+      <div class="alert alert-success">
+        {{ session()->get('error') }}
+      </div>
+    @endif
+    
     <div class="card">
       <div class="card-body pt-4">
         <div class="row text-center">
@@ -178,11 +184,6 @@
         </div>
       </div>
     </div>
-    @if(session()->has('error'))
-      <div class="alert alert-success">
-        {{ session()->get('error') }}
-      </div>
-    @endif
     <div class="row">
         <div class="col-lg-8">
             <div class="card" style="min-height:260px;">
@@ -196,7 +197,7 @@
                             <input type="text" name="naqtSumma" id="summa" value="0" class="form-control">
                             <label for="guruh_id" class="mt-1">Chegirma uchun guruh</label>
                             <select name="guruh_id" class="form-select">
-                                <option value="null">Tanlang...</option>
+                                <option value="NULL">Tanlang...</option>
                                 @forelse($chegirmaGuruh as $item)
                                     <option value="{{ $item['guruh_id'] }}">{{ $item['name'] }}</option>
                                 @empty
@@ -208,7 +209,7 @@
                             <label for="plastikSumma" class="mt-1">Plastik to'lov summasi</label>
                             <input type="text" name="plastikSumma" id="summa2" value="0" class="form-control">
                             <label for="commit" class="mt-1">To'lov haqida izoh</label>
-                            <input type="text" name="commit" class="form-control">
+                            <input type="text" name="commit" class="form-control" required>
                         </div>
                         <div class="col-12 text-center mt-3">
                             <button class="btn btn-primary w-50">To'lovni saqlash</button>
