@@ -6,6 +6,7 @@ use App\Models\Talaba;
 use App\Models\UserHistory;
 use App\Models\StudenHistory;
 use App\Models\Guruh;
+use App\Models\Tolov;
 use App\Models\GuruhUser;
 use App\Models\Eslatma;
 use Illuminate\Support\Facades\DB;
@@ -151,6 +152,47 @@ class UserController extends Controller{
         return redirect()->route('user.show',$request->id)->with('success','Talabaga sms xabar yuborildi.');
     }
 
+    public function userAdminChegirma(Request $request){
+        #dd($request);
+        $Tolov = Tolov::where('user_id',$request->user_id)
+        ->where('guruh_id',$request->guruh_id)
+        ->where('type',"Chegirma")->get();
+        if(count($Tolov)==0){
+            $MaxChegirma = Guruh::where('guruhs.id', $request->guruh_id)
+                ->join('settings','guruhs.guruh_price', 'settings.summa')
+                ->select('settings.admin_chegirma')->get()->first()->admin_chegirma;
+            #dd($MaxChegirma);
+            if($MaxChegirma>=str_replace(',','',$request->summa)){
+                $Tulov = new Tolov();
+                $Tulov->filial_id = intval(request()->cookie('filial_id'));
+                $Tulov->user_id = $request->user_id;
+                $Tulov->guruh_id = $request->guruh_id;
+                $Tulov->summa = str_replace(',','',$request->summa);
+                $Tulov->type = 'Chegirma';
+                $Tulov->comment = $request->text;
+                $Tulov->admin_id = Auth::User()->id;
+                $Tulov->chegirma_id = 0;
+                $Tulov->save();
+                $tulov_id = $Tulov->id;
+                $StudenHistory = new StudenHistory();
+                $StudenHistory->filial_id = intval(request()->cookie('filial_id'));
+                $StudenHistory->student_id = $request->user_id;
+                $StudenHistory->status = "Tulov";
+                $StudenHistory->summa = str_replace(',','',$request->summa);
+                $StudenHistory->type = 'Chegirma';
+                $StudenHistory->admin_id = Auth::User()->id;
+                $StudenHistory->guruh_id = $request->guruh_id;
+                $StudenHistory->tulov_id = $tulov_id;
+                $StudenHistory->save();
+                return back()->withInput()->with('success',"Chegirma kiritildi.");
+            }else{
+                return back()->withInput()->with('success',"Guruh uchun chegirma max summandan yuqori. Chegirma tasdiqlanmadi.");
+            }
+        }else{
+            return back()->withInput()->with('error',"Talaba siz tanlangan guruh uchun chegirma olgan.");
+        }
+    }
+
     public function show(string $id){
         $thisDay = date('Y-m-d');
         $oldDay = date('Y-m-d',strtotime("-7 days", strtotime($thisDay)));
@@ -238,7 +280,6 @@ class UserController extends Controller{
             $day = $value->days;
             $thisDay = date("Y-m-d");
             $nextDay = date('Y-m-d',strtotime("+".$day." days", strtotime($value->guruh_start)));
-            echo "Bugun ".$thisDay." Muddat ".$nextDay."<br>";
             if($thisDay<=$nextDay){
                 $Guruh_Name = $value->guruh_name."(".$value->name.")";
                 $Guruh_id = $value->guruh_id;
@@ -246,10 +287,17 @@ class UserController extends Controller{
                 $chegirmaGuruh[$key]['guruh_id'] = $Guruh_id;
             }
         }
-        #dd($chegirmaGuruh);
+
+        $Admin_chegirma_guruh = GuruhUser::where('guruh_users.user_id',$id)
+        ->join('guruhs','guruh_users.guruh_id','guruhs.id')
+        ->join('settings','settings.summa','guruhs.guruh_price')
+        ->where('guruh_users.status','true')
+        ->select('settings.admin_chegirma','guruhs.id','guruhs.guruh_name')
+        ->get();
+        #dd($Admin_chegirma_guruh);
             
 
-        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh'));
+        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
     }
 
     public function edit(string $id){

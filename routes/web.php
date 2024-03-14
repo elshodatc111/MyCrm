@@ -38,6 +38,7 @@ Route::get('userDebet', [UserController::class, 'userDebet'])->name('userDebet')
 Route::get('userPay', [UserController::class, 'userPay'])->name('userPay');
 Route::post('changePassword', [UserController::class, 'userPasswordUpdate'])->name('userPasswordUpdate');
 Route::post('userSmsSenf', [UserController::class, 'userSendMessge'])->name('userSendMessge');
+Route::post('userAdminChegirma', [UserController::class, 'userAdminChegirma'])->name('userAdminChegirma');
 Route::resource('user', UserController::class);
 
 Route::get('techerLock', [TecherController::class, 'techerLock'])->name('techerLock');

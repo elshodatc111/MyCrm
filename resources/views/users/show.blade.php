@@ -135,7 +135,7 @@
                                         <textarea name="start_commit" class="form-control" required></textarea>
                                         <div class="div pt-3">
                                             <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
-                                            <button type="submit" class="btn btn-primary" style="width:48%;">Guruhga qo'shish</button>
+                                            <button type="submit" class="btn btn-primary" id="guruh_plus" onclick="document.getElementById('guruh_plus').sytle.display='none'" style="width:48%;">Guruhga qo'shish</button>
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +170,41 @@
                 </div>
                 @if(Auth::user()->type!='Operator')
                 <div class="col-lg-3 pb-2">
-                    <button class="btn btn-info text-white w-100">Chegirma kiritish</button>                    
+                    <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#admin_chegirma">Chegirma kiritish</button>                    
+                </div>
+                
+                <div class="modal fade" id="admin_chegirma" tabindex="-1">
+                    <form action="{{ route('userAdminChegirma') }}" id="form1" method="post">
+                        @csrf
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Talabaga chegirma kiritish</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="user_id" value="{{ $Guruh_plus['user']->id }}">
+                                    <label for="chegirma_summasi">Chegirma uchun guruhni tanlang</label>
+                                    <select name="guruh_id" id="" class="form-select mb-1">
+                                        <option value="">Tanlang</option>
+                                        @forelse($Admin_chegirma_guruh as $item)
+                                            <option value="{{ $item->id }}">{{ $item->guruh_name }}(max: {{ $item->admin_chegirma }})</option>
+                                        @empty
+
+                                        @endforelse
+                                    </select>
+                                    <label for="summa">Chegirma summasi</label>
+                                    <input type='text' id="summa1" name="summa" class="form-control mb-1"></textarea>
+                                    <label for="text">Chegirma haqida izoh</label>
+                                    <textarea name="text" required class="form-control mb-1"></textarea>
+                                    <div class="div">
+                                        <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <button type="submit" class="btn btn-primary" style="width:48%;">Chegirmani saqlash</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 @endif
                 <div class="col-lg-3 pb-2">
@@ -209,10 +243,10 @@
                             <label for="plastikSumma" class="mt-1">Plastik to'lov summasi</label>
                             <input type="text" name="plastikSumma" id="summa2" value="0" class="form-control">
                             <label for="commit" class="mt-1">To'lov haqida izoh</label>
-                            <input type="text" name="commit" class="form-control" required>
+                            <input type="text" name="commit" value="Izoh" class="form-control" required>
                         </div>
                         <div class="col-12 text-center mt-3">
-                            <button class="btn btn-primary w-50">To'lovni saqlash</button>
+                            <button class="btn btn-primary w-50" id="paybutton" onclick="document.getElementById('paybutton').style.display='none'">To'lovni saqlash</button>
                         </div>
                     </form>
                 </div>

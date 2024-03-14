@@ -259,6 +259,19 @@
                     input3 = input3 ? parseInt( input3, 10 ) : 0;
                     $this.val( function() {return ( input3 === 0 ) ? "" : input3.toLocaleString( "en-US" );} );
                 } );
+
+                var $form2 = $( "#form1" );
+                var $input2 = $form2.find( "#summa1" );
+                $input2.on( "keyup", function( event ) {
+                    var selection = window.getSelection().toString();
+                    if ( selection !== '' ) {return;}
+                    if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                    var $this = $( this );
+                    var input2 = $this.val();
+                    var input2 = input2.replace(/[\D\s\._\-]+/g, "");
+                    input2 = input2 ? parseInt( input2, 10 ) : 0;
+                    $this.val( function() {return ( input2 === 0 ) ? "" : input2.toLocaleString( "en-US" );} );
+                } );
             });
         })(jQuery);
   </script>
