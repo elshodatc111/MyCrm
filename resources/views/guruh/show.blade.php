@@ -129,10 +129,11 @@
                     <div class="col-12">
                         <table class="table">
                             <tr>
-                                <th style="width:25%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#sendmessege">SMS yuborish</button></th>
-                                <th style="width:25%;"><button class="btn btn-primary text-white w-100">Qarzdorlarga SMS yuborish</button></th>
-                                <th style="width:25%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#guruh_next">Guruhni davom ettirish</button></th>
-                                <th style="width:25%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#eslatmaplus">Eslatma qoldirish</button></th>
+                                <th style="width:20%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#sendmessege">SMS yuborish</button></th>
+                                <th style="width:20%;"><button class="btn btn-primary text-white w-100">Qarzdorlarga SMS</button></th>
+                                <th style="width:20%;"><button class="btn btn-primary text-white w-100" data-bs-toggle="modal" data-bs-target="#eslatmaplus">Eslatma qoldirish</button></th>
+                                <th style="width:20%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#tulov_qaytar">To'lovni qaytarish</button></th>
+                                <th style="width:20%;"><button class="btn btn-danger text-white w-100" data-bs-toggle="modal" data-bs-target="#guruh_next">Guruhning davomi </button></th>
                             </tr>
                         </table>
                         <!-- SMS yuborish tayyorlandi -->
@@ -317,11 +318,52 @@
                                 </div>
                             </form>
                         </div>
+                        <!-- To'lovni qaytarish -->
+                        <div class="modal fade" id="tulov_qaytar" tabindex="-1">
+                            <form action="#" method="post" id="form1">
+                                @csrf
+                                <input type="hidden" name="guruh_id" value="{{ $guruh['id'] }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">To'lovni qaytarish</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label for="user_id">Talabani tanlang</label>
+                                            <select name="" class="form-control" required>
+                                                <option value="">Tanlang</option>
+                                                @forelse($AktivStudent as $item)
+                                                    <option value="{{ $item['student_id'] }}">{{ $item['student_name'] }}</option>
+                                                @empty
+
+                                                @endforelse
+                                            </select>
+                                            <label for="summa" class="mt-2">Qaytariladiga summa</label>
+                                            <p class="p-0 m-0 text-danger">Kassada mavjud naqt summa: 1 000 585 so'm</p>
+                                            <input type="text" name="summa" id="summa1" class="form-control mb-2" required>
+                                            <label for="summa" class="mt-1">To'lovni qaytarish haqida izoh</label>
+                                            <textarea name="" class="form-control mb-2" required></textarea>
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Bekor qilish</button>
+                                                    </td>
+                                                    <td style="text-align:right">
+                                                        <button type="submit" class="btn btn-primary w-100">To'lovni qaytarish</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        #### Qarzdorlarga SMS yuborish #### <br> #### Guruhni davom ettirish #### <br> #### Talaba Davomadlari ####
+        #### Qarzdorlarga SMS yuborish #### <br> #### Guruhni davom ettirish #### <br> #### Talaba Davomadlari #### <br> ### To'lovni qaytarish ###
         <div class="card">
             <div class="card-body mt-3">
               <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">

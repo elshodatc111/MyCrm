@@ -10,49 +10,13 @@ use Illuminate\Http\Request;
 
 class EslatmaController extends Controller{
     public function index(){
-        $Eslatma = Eslatma::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
-        $ActivEslatma = array();
-        foreach ($Eslatma as $key => $value) {
-            $ActivEslatma[$key]['id'] = $value->id;
-            $ActivEslatma[$key]['type'] = $value->type;
-            $ActivEslatma[$key]['text'] = $value->text;
-            $ActivEslatma[$key]['user_guruh_id'] = $value->user_guruh_id;
-            $ActivEslatma[$key]['created_at'] = $value->created_at;
-            $UserAdmin = User::where('id',$value->admin_id)->get()->first()->email;
-            $ActivEslatma[$key]['admin'] = $UserAdmin;
-            if($value->type=='guruh'){
-                $StudentEmail = Guruh::where('id',$value->user_guruh_id)->get()->first()->guruh_name;
-                $ActivEslatma[$key]['userGuruh'] = $StudentEmail;
-            }else{
-                $StudentEmail = User::where('id',$value->user_guruh_id)->get()->first()->name;
-                $ActivEslatma[$key]['userGuruh'] = $StudentEmail;
-            }
-        }
-        #dd($ActivEslatma);
+        
+        dd("Eslatmalar");
         return view('eslatma.index',compact('ActivEslatma'));
     }
 
     public function arxivEslatma(){
-        $Eslatma = Eslatma::where('filial_id',request()->cookie('filial_id'))->where('status','false')->get();
-        $ActivEslatma = array();
-        foreach ($Eslatma as $key => $value) {
-            $ActivEslatma[$key]['id'] = $value->id;
-            $ActivEslatma[$key]['type'] = $value->type;
-            $ActivEslatma[$key]['text'] = $value->text;
-            $ActivEslatma[$key]['user_guruh_id'] = $value->user_guruh_id;
-            $ActivEslatma[$key]['created_at'] = $value->created_at;
-            $ActivEslatma[$key]['updated_at'] = $value->updated_at;
-            $UserAdmin = User::where('id',$value->admin_id)->get()->first()->email;
-            $ActivEslatma[$key]['admin'] = $UserAdmin;
-            if($value->type=='guruh'){
-                $StudentEmail = Guruh::where('id',$value->user_guruh_id)->get()->first()->guruh_name;
-                $ActivEslatma[$key]['userGuruh'] = $StudentEmail;
-            }else{
-                $StudentEmail = User::where('id',$value->user_guruh_id)->get()->first()->name;
-                $ActivEslatma[$key]['userGuruh'] = $StudentEmail;
-            }
-        }
-        #dd($ActivEslatma);
+        dd("Arxiv Eslatmalar");
         return view('eslatma.arxiv',compact('ActivEslatma'));
     }
     

@@ -298,7 +298,7 @@ class GuruhController extends Controller{
         }
         if($Guruhlar['status']==false){
             return back()->withInput();
-        }
+        }   
         $guruh=array();
         $guruh['guruh_price'] = number_format(($Guruhlar->guruh_price), 0, '.', ' ');
         $guruh['guruh_price2'] = $Guruhlar->guruh_price;

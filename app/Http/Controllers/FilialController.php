@@ -13,7 +13,8 @@ class FilialController extends Controller{
         if(Auth::user()->type!=='SuperAdmin'){
             return redirect()->route('home');
         }else{
-            $Filial = DB::table('filials')->join('users','filials.user_id','users.id')
+            $Filial = DB::table('filials')
+            ->join('users','filials.user_id','users.id')
             ->select('filials.filial_name','filials.filial_addres','filials.created_at','users.email','filials.id')->get();
             return view('filial.home', compact('Filial'));
         }
