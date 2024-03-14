@@ -15,6 +15,7 @@ use App\Http\Controllers\GuruhController;
 use App\Http\Controllers\GuruhUserController; 
 use App\Http\Controllers\EslatmaController; 
 use App\Http\Controllers\TolovController; 
+use App\Http\Controllers\MoliyaController; 
 
 Route::get('/', [TecherController::class, 'index']);
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege');
@@ -73,3 +74,5 @@ Route::get('eslatma/arxiv', [EslatmaController::class,"arxivEslatma"])->name('ar
 Route::resource('eslatma', EslatmaController::class);
 
 Route::resource('tulov', TolovController::class);
+
+Route::resource('moliya', MoliyaController::class);

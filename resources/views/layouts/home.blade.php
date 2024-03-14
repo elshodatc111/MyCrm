@@ -144,7 +144,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+        <a class="nav-link {{ request()->is('moliya') ? '':'collapsed' }}" href="{{ route('moliya.index') }}">
           <i class="bi bi-cash-coin"></i>
           <span>Moliya</span>
         </a>
