@@ -16,5 +16,6 @@ class StudenHistory extends Model
         'type',
         'admin_id',
         'guruh_id',
+        'tulov_id',
     ];
 }

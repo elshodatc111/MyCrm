@@ -16,5 +16,6 @@ class UserHistory extends Model
         'type',
         'student_id',
         'izoh',
+        'tulov_id',
     ];
 }

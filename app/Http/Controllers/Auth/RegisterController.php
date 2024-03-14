@@ -28,12 +28,12 @@ class RegisterController extends Controller{
 
     protected function create(array $data){
         return User::create([
-            'filial' => 'markaziy',
+            'filial' => 'NULL',
             'name' => $data['name'],
-            'address' => 'Addres',
+            'address' => 'Qarshi shaxar',
             'phone' => '998908830450',
             'tkun' => '02.01.1997',
-            'type' => 'user',
+            'type' => 'SuperAdmin',
             'status' => 'status',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),

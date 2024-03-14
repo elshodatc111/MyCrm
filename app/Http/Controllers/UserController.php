@@ -51,6 +51,7 @@ class UserController extends Controller{
         $History->type = 0;
         $History->admin_id = Auth::user()->id;
         $History->guruh_id = 0;
+        $History->tulov_id = 'NULL';
         $History->save();
         return true;
     }
@@ -63,6 +64,7 @@ class UserController extends Controller{
         $History->type = 0;
         $History->student_id = $id;
         $History->izoh = 'Yangi talaba';
+        $History->tulov_id = 'NULL';
         $History->save();
         return $this->StudentHistory($id);
     }

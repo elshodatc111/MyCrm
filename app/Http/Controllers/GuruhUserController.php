@@ -63,6 +63,7 @@ class GuruhUserController extends Controller
             $historys->admin_id = $admin_id;
             $historys->student_id = $student_id;
             $historys->filial_id = $filial_id;
+            $historys->tulov_id = 'NULL';
             $historys-> save();
             return redirect()->route('user.show',$request->user_id)->with('success','Yangi guruhga qo\'shildi.');
         }
@@ -139,6 +140,7 @@ class GuruhUserController extends Controller
         $validated2['type']=0;
         $validated2['admin_id']=Auth::user()->id;
         $validated2['guruh_id']=$id;
+        $validated2['tulov_id']="NULL";
         $validated3 = array();
         $validated3['filial_id']=request()->cookie('filial_id');
         $validated3['student_id']=$request->user_id;
@@ -147,6 +149,7 @@ class GuruhUserController extends Controller
         $validated3['type']=0;
         $validated3['admin_id']=Auth::user()->id;
         $validated3['guruh_id']=$id;
+        $validated3['tulov_id']="NULL";
         #dd($request);
         StudenHistory::create($validated2);
         StudenHistory::create($validated3);
