@@ -75,4 +75,5 @@ Route::resource('eslatma', EslatmaController::class);
 
 Route::resource('tulov', TolovController::class);
 
+Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya');
 Route::resource('moliya', MoliyaController::class);
