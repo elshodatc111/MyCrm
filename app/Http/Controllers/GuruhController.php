@@ -18,8 +18,7 @@ use Illuminate\Http\Request;
 class GuruhController extends Controller{
     public function index(){
         $endDay = date('Y-m-d',strtotime("-10 days", strtotime(date("Y-m-d"))));
-        $Guruh = Guruh::where('status','true')
-        ->where('guruh_end','>=',$endDay)->orderby('guruh_start','DESC')
+        $Guruh = Guruh::where('guruh_end','>=',$endDay)->orderby('guruh_start','DESC')
         ->where('filial', request()->cookie('filial_id'))->get();
         
         $i=1;

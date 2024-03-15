@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->integer('student_id');
             $table->string('izoh');
+            $table->string('tulov_id');
             $table->timestamps();
         });
     }

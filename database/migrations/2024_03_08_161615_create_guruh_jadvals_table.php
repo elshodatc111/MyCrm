@@ -13,6 +13,7 @@ return new class extends Migration{
             $table->integer('guruh_id');
             $table->string('days');
             $table->string('times');
+            $table->timestamps();
         });
     }
 

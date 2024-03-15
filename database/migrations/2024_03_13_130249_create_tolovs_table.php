@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('guruh_id');
             $table->integer('summa');
-            $table->integer('type');
+            $table->string('type');
             $table->string('comment');
             $table->integer('admin_id');
             $table->integer('chegirma_id');

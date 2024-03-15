@@ -29,7 +29,7 @@
             <div class="card-body pt-4 text-center">
                 <h5 class="w-100 text-center">{{ $guruh['guruh_name'] }}</h5>
                 <hr>
-                <div class="row">
+                <div class="row"  style="font-size:14px">
                     <div class="col-lg-4">
                         <table class="table">
                             <tr>

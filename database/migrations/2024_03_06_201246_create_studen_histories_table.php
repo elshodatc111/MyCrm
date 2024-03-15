@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('type');
             $table->string('admin_id');
             $table->string('guruh_id');
-            $table->string('status');
             $table->string('tulov_id');
             $table->timestamps();
         });

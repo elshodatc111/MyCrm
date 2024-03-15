@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('guruh_start');
             $table->string('guruh_end');
             $table->integer('guruh_price');
+            $table->string('status');
             $table->integer('guruh_chegirma');
             $table->integer('guruh_chegirma_day');
             $table->integer('techer_id');
