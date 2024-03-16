@@ -133,7 +133,6 @@ class UserController extends Controller{
             }
         }
     }
-
     public function userPasswordUpdate(Request $request){
         $rand = rand(10000000,99999999);
         $User = User::where('id',$request->id)->get()->first();
@@ -144,14 +143,12 @@ class UserController extends Controller{
         $this->SendMessege($phone,$text);
         return redirect()->route('user.show',$request->id)->with('success','Talaba paroli yangilandi.');
     }
-
     public function userSendMessge(Request $request){
         $phone = str_replace(" ","",User::where('id',$request->id)->get()->first()->phone);
         $text = $request->text;
         $this->SendMessege($phone,$text);
         return redirect()->route('user.show',$request->id)->with('success','Talabaga sms xabar yuborildi.');
     }
-
     public function userAdminChegirma(Request $request){
         #dd($request);
         $Tolov = Tolov::where('user_id',$request->user_id)
@@ -192,7 +189,6 @@ class UserController extends Controller{
             return back()->withInput()->with('error',"Talaba siz tanlangan guruh uchun chegirma olgan.");
         }
     }
-
     public function show(string $id){
         $thisDay = date('Y-m-d');
         $oldDay = date('Y-m-d',strtotime("-7 days", strtotime($thisDay)));
@@ -295,11 +291,37 @@ class UserController extends Controller{
         ->select('settings.admin_chegirma','guruhs.id','guruhs.guruh_name')
         ->get();
         #dd($Admin_chegirma_guruh);
-            
+        
+        $TalabaTulovlari = Tolov::where('tolovs.user_id',$id)
+        ->join('user_histories','user_histories.tulov_id','tolovs.id')
+        ->join('users','users.id','tolovs.admin_id')
+        ->orderby('tolovs.id','DESC')
+        ->select('users.email','user_histories.type','tolovs.guruh_id','tolovs.summa',
+        'tolovs.type as tulov_type','tolovs.id as tulov_id','tolovs.comment','tolovs.created_at')->get();
+        $TalabaTulov = array();
+        foreach ($TalabaTulovlari as $key => $value) {
+            if($value->guruh_id=='NULL'){
+                $TalabaTulov[$key]['guruh'] = "Guruh Tanlanmagan";
+            }else{
+                $Guruhss = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                $TalabaTulov[$key]['guruh'] = $Guruhss;
+            }
+            $TalabaTulov[$key]['email'] = $value->email;
+            if($value->type=='true'){
+                $TalabaTulov[$key]['tulov_xolati'] = "Tasdiqlangan";
+            }else{
+                $TalabaTulov[$key]['tulov_xolati'] = "Kutulmoqda";
+            }
+            $TalabaTulov[$key]['tulov_summa'] = number_format(($value->summa), 0, '.', ' ');
+            $TalabaTulov[$key]['tulov_type'] = $value->tulov_type;
+            $TalabaTulov[$key]['id'] = $value->tulov_id;
+            $TalabaTulov[$key]['comment'] = $value->comment;
+            $TalabaTulov[$key]['created_at'] = $value->created_at;
+        } 
+        #dd($TalabaTulov);
 
-        return view('users.show', compact('Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
+        return view('users.show', compact('TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
     }
-
     public function edit(string $id){
         if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
             return redirect()->route('setCookie');
@@ -308,7 +330,6 @@ class UserController extends Controller{
             return view('users.update',compact('user'));
         }
     }
-
     public function update(Request $request, string $id){
         if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
             return redirect()->route('setCookie');
@@ -330,11 +351,29 @@ class UserController extends Controller{
             }
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+    public function chegirmadestroy(Request $request){
+        $UserHistory = UserHistory::where('tulov_id',$request->tulov_id)->get()->first();
+        $StudenHistory = StudenHistory::where('tulov_id',$request->tulov_id)->get()->first();
+        $Tolov = Tolov::where('id',$request->tulov_id)->get()->first();
+        $UserHistory->delete();
+        $StudenHistory->delete();
+        $Tolov->delete();
+        return $this->show($UserHistory->student_id)->with('success',"Chegirma o'chirildi.");
+    }
     public function destroy(string $id){
-        dd("Talaba guruhlari mavjud bo'lmasa, To'lovlari mavjud bo'lmas talabani o'chirish mumkun qolgan hollarda o'chirish mumkun emas");
+        $StudenHistory = StudenHistory::where('student_id',$id)->get();
+        if(count($StudenHistory)==1){
+            $User = User::where('id',$id)->get()->first();
+            $StudenHistory = StudenHistory::where('student_id',$id)->get()->first();
+            $UserHistory = UserHistory::where('student_id',$id)->get()->first();
+            echo "O'chirish mumkun";
+            $User->delete();
+            $StudenHistory->delete();
+            $UserHistory->delete();
+            return redirect()->route('user.index')->with('success','Talabani o\'chirildi.');
+        }else{
+            return redirect()->route('user.index')->with('success','Talabani o\'chirib bo\'lmaydi. Talaba tarixi mavjud.');
+        }
+        #dd("Talaba guruhlari mavjud bo'lmasa, To'lovlari mavjud bo'lmas talabani o'chirish mumkun qolgan hollarda o'chirish mumkun emas");
     }
 }

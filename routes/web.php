@@ -35,6 +35,7 @@ Route::get('hodim-open/{id}', [HodimController::class, 'LockOpen'])->name('LockO
 Route::get('hodim-colse/{id}', [HodimController::class, 'LockClose'])->name('LockClose');
 Route::resource('hodim', HodimController::class);
 
+Route::post('tulov/chegirma/destroy', [UserController::class,"chegirmadestroy"])->name('chegirmadestroy');
 Route::get('userDebet', [UserController::class, 'userDebet'])->name('userDebet');
 Route::get('userPay', [UserController::class, 'userPay'])->name('userPay');
 Route::post('changePassword', [UserController::class, 'userPasswordUpdate'])->name('userPasswordUpdate');

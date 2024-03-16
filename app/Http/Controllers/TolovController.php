@@ -216,9 +216,8 @@ class TolovController extends Controller{
     public function update(Request $request, Tolov $tolov){
         //
     }
-
-    public function destroy(Tolov $tolov)
-    {
-        //
+    
+    public function destroy(string $tolov){
+        
     }
 }

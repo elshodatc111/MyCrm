@@ -32,79 +32,85 @@
                 <h4>{{ $Guruh_plus['user']->name }}</h4>
                 <div class="row">
                     <div class="col-lg-6">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th style="text-align:left">Yashash manzili:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->address }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Telefon raqami:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->phone }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Tug'ilgan kuni:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->tkun }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Login:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->email }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Meneger:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['create_admin'] }}</td>
-                            </tr>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="text-align:left">Yashash manzili:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->address }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Telefon raqami:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Tug'ilgan kuni:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->tkun }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Login:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->email }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Meneger:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['create_admin'] }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th style="text-align:left">Yaqin tanishi:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->Tanish }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Tanishi telefoni:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->TanishPhone }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Biz haqimizda:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->BizHaqimizda }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Talaba haqida:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->TalabaHaqida }}</td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left">Tashrif vaqti:</th>
-                                <td style="text-align:right">{{ $Guruh_plus['user']->created_at }}</td>
-                            </tr>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th style="text-align:left">Yaqin tanishi:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->Tanish }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Tanishi telefoni:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->TanishPhone }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Biz haqimizda:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->BizHaqimizda }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Talaba haqida:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->TalabaHaqida }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left">Tashrif vaqti:</th>
+                                    <td style="text-align:right">{{ $Guruh_plus['user']->created_at }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div> 
             <div class="col-lg-4">
                 <h4><b>Balans:</b> 144 000 so'm</h4>
-                <table class="table table-bordered">
-                    <tr>
-                        <th style="text-align:left">To'lovlar:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:left">Chegirmalar:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:left">Qaytarildi:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:left">Aktiv guruhlar:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:left">Guruhdan o'chirildi:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="text-align:left">To'lovlar:</th>
+                            <td style="text-align:right">sd</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left">Chegirmalar:</th>
+                            <td style="text-align:right">sd</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left">Qaytarildi:</th>
+                            <td style="text-align:right">sd</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left">Aktiv guruhlar:</th>
+                            <td style="text-align:right">sd</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left">Guruhdan o'chirildi:</th>
+                            <td style="text-align:right">sd</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="col-12 row text-center">
                 <div class="col-lg-3 pb-2">
@@ -296,101 +302,152 @@
                     talaba_tarixi Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
                 </div>
                 <div class="tab-pane fade" id="talaba_tulovlari" role="tabpanel" aria-labelledby="profile-tab">
-                    talaba_tulovlariNesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Guruh</th>
+                                    <th>To'lov Summasi</th>
+                                    <th>To'lov turi</th>
+                                    <th>To'lov vaqti</th>
+                                    <th>To'lov xolati</th>
+                                    <th>To'lov haqida</th>
+                                    <th>Operator</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($TalabaTulov as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style="text-align:left;">{{ $item['guruh'] }}</td>
+                                    <td>{{ $item['tulov_summa'] }}</td>
+                                    <td>{{ $item['tulov_type'] }}</td>
+                                    <td>{{ $item['created_at'] }}</td>
+                                    <td>{{ $item['tulov_xolati'] }}</td>
+                                    <td>{{ $item['comment'] }}</td>
+                                    <td>{{ $item['email'] }}</td>
+                                    <td>
+                                        @if($item['tulov_type']=='Chegirma')
+                                            @if(Auth::user()->type=='Admin' || Auth::user()->type=='SuperAdmin')
+                                                <form action="{{ route('chegirmadestroy') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="tulov_id" value="{{ $item['id'] }}">
+                                                    <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                                </form>
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan=9 class="text-center">To'lovlar mavjud emas.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="activ_guruhlar" role="tabpanel" aria-labelledby="contact-tab">
-                    <table class="table bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Guruh</th>
-                                <th>Guruhga qoshildi</th>
-                                <th>Izoh</th>
-                                <th>Operator</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($Activ_guruh as $item)
-                            <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td style='text-align:left'>
-                                    <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
-                                        {{ $item['guruh_name'] }}</a></td>
-                                <td>{{ $item['start_data'] }}</td>
-                                <td style='text-align:left'>{{ $item['start_commit'] }}</td>
-                                <td>{{ $item['start_meneger'] }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan=5 class='text-center'>Talaba guruhlari mavjud emas.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table bordered text-center" style="font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Guruh</th>
+                                    <th>Guruhga qoshildi</th>
+                                    <th>Izoh</th>
+                                    <th>Operator</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($Activ_guruh as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style='text-align:left'>
+                                        <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
+                                            {{ $item['guruh_name'] }}</a></td>
+                                    <td>{{ $item['start_data'] }}</td>
+                                    <td style='text-align:left'>{{ $item['start_commit'] }}</td>
+                                    <td>{{ $item['start_meneger'] }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=5 class='text-center'>Talaba guruhlari mavjud emas.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="delete_guruhlar" role="tabpanel" aria-labelledby="contact-tab">
-                    <table class="table bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Guruh</th>
-                                <th>Guruhga qoshildi</th>
-                                <th>Izoh</th>
-                                <th>Operator</th>
-                                <th>Guruhdan o'chirildi</th>
-                                <th>Guruhdan o'chirish haqida</th>
-                                <th>Operator</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($End_guruh as $item)
-                            <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td style='text-align:left'>
-                                    <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
-                                        {{ $item['guruh_name'] }}</a></td>
-                                <td>{{ $item['start_data'] }}</td>
-                                <td style='text-align:left'>{{ $item['start_commit'] }}</td>
-                                <td>{{ $item['start_meneger'] }}</td>
-                                <td>{{ $item['end_data'] }}</td>
-                                <td>{{ $item['end_commit'] }}</td>
-                                <td>{{ $item['end_meneger'] }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan=8 class='text-center'>Talaba guruhlardan o'chirilmagan.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table bordered text-center" style="font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Guruh</th>
+                                    <th>Guruhga qoshildi</th>
+                                    <th>Izoh</th>
+                                    <th>Operator</th>
+                                    <th>Guruhdan o'chirildi</th>
+                                    <th>Guruhdan o'chirish haqida</th>
+                                    <th>Operator</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($End_guruh as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style='text-align:left'>
+                                        <a href="{{ route('guruh.show', $item['guruh_id'] ) }}">
+                                            {{ $item['guruh_name'] }}</a></td>
+                                    <td>{{ $item['start_data'] }}</td>
+                                    <td style='text-align:left'>{{ $item['start_commit'] }}</td>
+                                    <td>{{ $item['start_meneger'] }}</td>
+                                    <td>{{ $item['end_data'] }}</td>
+                                    <td>{{ $item['end_commit'] }}</td>
+                                    <td>{{ $item['end_meneger'] }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=8 class='text-center'>Talaba guruhlardan o'chirilmagan.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="eslatmalar" role="tabpanel" aria-labelledby="contact-tab">
-                    <table class="table bordered text-center">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Operator</th>
-                                <th>Eslatma matni</th>
-                                <th>Eslatma vaqti</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($Eslatma as $item)
-                            <tr>
-                                <td>{{ $loop->index+1 }}</td>
-                                <td style="text-align:left">{{ $item->email }}</td>
-                                <td style="text-align:left">{{ $item->text }}</td>
-                                <td>{{ $item->created_at }}</td>
-                                <td>{{ $item->status }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table bordered text-center" style="font-size:14px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Operator</th>
+                                    <th>Eslatma matni</th>
+                                    <th>Eslatma vaqti</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($Eslatma as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style="text-align:left">{{ $item->email }}</td>
+                                    <td style="text-align:left">{{ $item->text }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                    <td>{{ $item->status }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan=5 class='text-center'>Eslatmalar mavjud emas.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
