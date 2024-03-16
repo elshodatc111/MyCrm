@@ -32,8 +32,7 @@
                 <h4>{{ $Guruh_plus['user']->name }}</h4>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size:12px;">
                                 <tr>
                                     <th style="text-align:left">Yashash manzili:</th>
                                     <td style="text-align:right">{{ $Guruh_plus['user']->address }}</td>
@@ -55,11 +54,9 @@
                                     <td style="text-align:right">{{ $Guruh_plus['create_admin'] }}</td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" style="font-size:12px;">
                                 <tr>
                                     <th style="text-align:left">Yaqin tanishi:</th>
                                     <td style="text-align:right">{{ $Guruh_plus['user']->Tanish }}</td>
@@ -81,14 +78,12 @@
                                     <td style="text-align:right">{{ $Guruh_plus['user']->created_at }}</td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div> 
             <div class="col-lg-4">
                 <h4><b>Balans:</b> 144 000 so'm</h4>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="font-size:12px;">
                         <tr>
                             <th style="text-align:left">To'lovlar:</th>
                             <td style="text-align:right">sd</td>
@@ -110,7 +105,6 @@
                             <td style="text-align:right">sd</td>
                         </tr>
                     </table>
-                </div>
             </div>
             <div class="col-12 row text-center">
                 <div class="col-lg-3 pb-2">

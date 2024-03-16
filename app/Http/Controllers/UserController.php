@@ -181,6 +181,18 @@ class UserController extends Controller{
                 $StudenHistory->guruh_id = $request->guruh_id;
                 $StudenHistory->tulov_id = $tulov_id;
                 $StudenHistory->save();
+
+                $UserHistory = new UserHistory();
+                $UserHistory->filial_id = intval(request()->cookie('filial_id'));
+                $UserHistory->admin_id = Auth::User()->id;
+                $UserHistory->status = "TulovChegirma";
+                $UserHistory->summa = str_replace(',','',$request->summa);
+                $UserHistory->type = 'false';
+                $UserHistory->student_id = $request->user_id;
+                $UserHistory->izoh = $request->text;
+                $UserHistory->tulov_id = $tulov_id;
+                $UserHistory->save();
+
                 return back()->withInput()->with('success',"Chegirma kiritildi.");
             }else{
                 return back()->withInput()->with('success',"Guruh uchun chegirma max summandan yuqori. Chegirma tasdiqlanmadi.");
