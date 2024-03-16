@@ -62,7 +62,14 @@ class MoliyaController extends Controller{
         return back()->withInput()->with('success',"To'lov tasdiqlandi.");
     }
     public function CheckDestroy(Request $request, string $id){
-
+        $AdminHistory = UserHistory::where('id',$id)->get()->first();
+        $StudenHistory =  StudenHistory::where('tulov_id',$AdminHistory->tulov_id)->get()->first();
+        $Tulov = Tolov::where('id',$AdminHistory->tulov_id)->get()->first();
+        $AdminHistory->delete();
+        $StudenHistory->delete();
+        $Tulov->delete();
+        return back()->withInput()->with('success',"To'lov o'chirildi.");
+        dd($StudenHistory);
     }
 
     public function plastikMoliya(){

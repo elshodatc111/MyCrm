@@ -46,12 +46,14 @@
                   <td>{{ $item['izoh'] }}</td>
                   <td><a href="{{ route('hodim.show',$item['admin_id'] ) }}">{{ $item['admin_email'] }}</a></td>
                   <td>
+                    @if(Auth::user()->type=='Admin' || Auth::user()->type()=='SuperAdmin')
                     <form action="{{ route('CheckEdit',$item['id'] ) }}" method="post" style="display:inline;">
                       @csrf
                       <input type="hidden" name="type" value="naqt">
                       <button class="submit btn btn-primary px-1 py-0" title="Tasdiqlash"><i class="bi bi-check2-all"></i></button>
                     </form>
-                    <form action="{{ route('CheckEdit',$item['id'] ) }}" method="post" style="display:inline;">
+                    @endif
+                    <form action="{{ route('CheckDestroy',$item['id'] ) }}" method="post" style="display:inline;">
                       @csrf
                       <input type="hidden" name="type" value="naqt">
                       <button class="submit btn btn-danger px-1 py-0" title="To'lovni o'chirish"><i class="bi bi-trash"></i></button>
