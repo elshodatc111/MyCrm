@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card info-card sales-card">
-                        <a href="##">
+                        <a href="{{ route('plastikMoliya') }}">
                             <div class="card-body">
                                 <h5 class="card-title" style="font-weight:700;">Pastik to'lovlar</h5>
                                 <div class="d-flex align-items-center row">

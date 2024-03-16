@@ -76,4 +76,10 @@ Route::resource('eslatma', EslatmaController::class);
 Route::resource('tulov', TolovController::class);
 
 Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya');
+Route::post('moliya/edit/{id}', [MoliyaController::class,"CheckEdit"])->name('CheckEdit'); // To'lovni tasdiqlash
+Route::post('moliya/delete/{id}', [MoliyaController::class,"CheckDestroy"])->name('CheckDestroy'); // To'lovni o'chirish
+Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya');
+Route::get('moliya/plastik', [MoliyaController::class,"plastikMoliya"])->name('plastikMoliya');
+Route::get('moliya/qaytarildi', [MoliyaController::class,"qaytarildiMoliya"])->name('qaytarildiMoliya');
+Route::get('moliya/xarajat', [MoliyaController::class,"xarajatMoliya"])->name('xarajatMoliya');
 Route::resource('moliya', MoliyaController::class);

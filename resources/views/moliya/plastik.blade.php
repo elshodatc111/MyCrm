@@ -1,5 +1,5 @@
 @extends('layouts.home')
-@section('title',"Naqt to'lovlar")
+@section('title',"Plastik to'lovlar")
 @section('content')
 
 <main id="main" class="main">
@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
           <li class="breadcrumb-item"><a href="{{ route('moliya.index') }}">Moliya</a></li>
-          <li class="breadcrumb-item active">Naqt to'lovlar</li>
+          <li class="breadcrumb-item active">Plastik to'lovlar</li>
         </ol>
       </nav>
     </div>
@@ -19,9 +19,9 @@
       </div>
     @endif
     <div class="text-center">
-      <div class="card info-card sales-card px-1">
-          <h5 class="card-title" style="font-weight:700;">Tasdiqlanmagan naqt to'lovlar</h5>
-          <div class="table-responsive">
+      <div class="card info-card px-1 sales-card">
+        <h5 class="card-title" style="font-weight:700;">Tasdiqlanmagan plastik to'lovlar</h5>
+        <div class="table-responsive">
             <table class="table table-bordered">
               <thead>
                 <tr>

@@ -27,17 +27,77 @@ class MoliyaController extends Controller{
         $Plastik1 = number_format(($Plastik), 0, '.', ' ');
         return view('moliya.index', compact('Naqt1','Plastik1'));
     }
+
     public function naqtMoliya(){
         $Tulovlar = array();
         $NaqtTulov = UserHistory::where('filial_id', request()->cookie('filial_id'))
         ->where('status', 'TulovNaqt')->where('type', 'false')->get();
         #dd($NaqtTulov->summa);
         foreach ($NaqtTulov as $key => $value) {
-            $Tulovlar[$key]['summa'] = $value->summa;
+            $Tulovlar[$key]['id'] = $value->id;
+            $User_studnemt = User::where('id',$value->student_id)->get()->first();
+            $Tulovlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Tulovlar[$key]['student_id'] = $value->student_id;
+            $Tulovlar[$key]['created_at'] = $value->created_at;
+            $Tulovlar[$key]['admin_id'] = $value->admin_id;
+            $User_admin = User::where('id',$value->admin_id)->get()->first();
+            $Tulovlar[$key]['user_name'] = $User_studnemt->name;
+            $Tulovlar[$key]['admin_email'] = $User_admin->email;
+            $Tulov = Tolov::where('id',$value->tulov_id)->get()->first();
+            if($Tulov->guruh_id==='NULL'){
+                $Tulovlar[$key]['guruh'] = "Guruh tanlanmagan.";
+            }else{
+                $Guruh = Guruh::where('id',$Tulov->guruh_id)->get()->first();
+                $Tulovlar[$key]['guruh'] = $Guruh->guruh_name;
+            }
             $Tulovlar[$key]['izoh'] = $value->izoh;
         }
+        #dd($Tulovlar);
+        return view('moliya.naqt',compact('Tulovlar'));
+    }
+    public function CheckEdit(Request $request, string $id){
+        $AdminHistory = UserHistory::where('id',$id)->get()->first();
+        $AdminHistory->type = 'true';
+        $AdminHistory->update();
+        return back()->withInput()->with('success',"To'lov tasdiqlandi.");
+    }
+    public function CheckDestroy(Request $request, string $id){
 
-        return view('moliya.naqt');
+    }
+
+    public function plastikMoliya(){
+        $Tulovlar = array();
+        $NaqtTulov = UserHistory::where('filial_id', request()->cookie('filial_id'))
+        ->where('status', 'TulovPlastik')->where('type', 'false')->get();
+        #dd($NaqtTulov->summa);
+        foreach ($NaqtTulov as $key => $value) {
+            $Tulovlar[$key]['id'] = $value->id;
+            $User_studnemt = User::where('id',$value->student_id)->get()->first();
+            $Tulovlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $Tulovlar[$key]['student_id'] = $value->student_id;
+            $Tulovlar[$key]['created_at'] = $value->created_at;
+            $Tulovlar[$key]['admin_id'] = $value->admin_id;
+            $User_admin = User::where('id',$value->admin_id)->get()->first();
+            $Tulovlar[$key]['user_name'] = $User_studnemt->name;
+            $Tulovlar[$key]['admin_email'] = $User_admin->email;
+            $Tulov = Tolov::where('id',$value->tulov_id)->get()->first();
+            if($Tulov->guruh_id==='NULL'){
+                $Tulovlar[$key]['guruh'] = "Guruh tanlanmagan.";
+            }else{
+                $Guruh = Guruh::where('id',$Tulov->guruh_id)->get()->first();
+                $Tulovlar[$key]['guruh'] = $Guruh->guruh_name;
+            }
+            $Tulovlar[$key]['izoh'] = $value->izoh;
+        }
+        return view('moliya.plastik',compact('Tulovlar'));
+    }
+
+    public function qaytarildiMoliya(){
+        
+    }
+
+    public function xarajatMoliya(){
+        
     }
 
     /**
