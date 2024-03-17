@@ -82,7 +82,7 @@
                 </div>
             </div> 
             <div class="col-lg-4">
-                <h4><b>Balans:</b> 144 000 so'm</h4>
+                <h4><b>Balans:</b> {{ $Balans }} so'm</h4>
                 <table class="table table-bordered" style="font-size:12px;">
                     <tr>
                         <th style="text-align:left">To'lovlar:</th>
@@ -186,7 +186,7 @@
                                         <select name="guruh_id" id="" class="form-select mb-1">
                                             <option value="">Tanlang</option>
                                             @forelse($Admin_chegirma_guruh as $item)
-                                                <option value="{{ $item->id }}">{{ $item->guruh_name }}(max: {{ $item->admin_chegirma }})</option>
+                                                <option value="{{ $item->id }}">{{ $item->guruh_name }}</option>
                                             @empty
     
                                             @endforelse
@@ -293,7 +293,36 @@
             </ul>
             <div class="tab-content pt-2" id="myTabjustifiedContent">
                 <div class="tab-pane fade show active" id="talaba_tarixi" role="tabpanel" aria-labelledby="home-tab">
-                    talaba_tarixi Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-center" style="font-size:12px;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Operator</th>
+                                    <th>Vaqt</th>
+                                    <th>Status</th>
+                                    <th>Summa</th>
+                                    <th>Xisoblash</th>
+                                    <th>Balans</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($History as $item)
+                                <tr>
+                                    <td>{{ $loop->index+1 }}</td>
+                                    <td style="text-align:left">{{ $item['admin'] }}</td>
+                                    <td style="text-align:left">{{ $item['data'] }}</td>
+                                    <td style="text-align:left">{{ $item['status'] }}</td>
+                                    <td>{{ $item['summa'] }}</td>
+                                    <td style="text-align:left">( {{ $item['xisob1'] }} ) = {{ $item['xisob2'] }}</td>
+                                    <td style="text-align:right;">{{ $item['xisob2'] }}</td>
+                                </tr>
+                                @empty
+
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="talaba_tulovlari" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">

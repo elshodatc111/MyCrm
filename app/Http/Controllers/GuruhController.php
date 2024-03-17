@@ -403,7 +403,7 @@ class GuruhController extends Controller{
         $Tulov->filial_id = request()->cookie('filial_id');
         $Tulov->user_id = $user_id;
         $Tulov->guruh_id = $guruh_id;
-        $Tulov->summa = $summa;
+        $Tulov->summa = -$summa;
         $Tulov->type = "Qaytarildi";
         $Tulov->comment = $Izoh;
         $Tulov->admin_id = Auth::user()->id;
@@ -413,7 +413,7 @@ class GuruhController extends Controller{
         $StudenHistory->filial_id = request()->cookie('filial_id');
         $StudenHistory->student_id	 = $user_id;
         $StudenHistory->status =  "Tulov";
-        $StudenHistory->summa = $summa;
+        $StudenHistory->summa = -$summa;
         $StudenHistory->type = "Qaytarildi";
         $StudenHistory->admin_id = Auth::user()->id;
         $StudenHistory->guruh_id = $guruh_id;
@@ -423,7 +423,7 @@ class GuruhController extends Controller{
         $UserHistory->filial_id = request()->cookie('filial_id');
         $UserHistory->admin_id = Auth::user()->id;
         $UserHistory->status = 'TulovQaytarildi';
-        $UserHistory->summa = $summa;
+        $UserHistory->summa = -$summa;
         $UserHistory->type = 'false';
         $UserHistory->student_id = $user_id;
         $UserHistory->izoh = $Izoh;

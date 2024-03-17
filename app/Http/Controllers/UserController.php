@@ -7,6 +7,7 @@ use App\Models\UserHistory;
 use App\Models\StudenHistory;
 use App\Models\Guruh;
 use App\Models\Tolov;
+use App\Models\Setting;
 use App\Models\GuruhUser;
 use App\Models\Eslatma;
 use Illuminate\Support\Facades\DB;
@@ -231,8 +232,8 @@ class UserController extends Controller{
         ->join('user_histories','user_histories.student_id','users.id')->where('user_histories.status','=','Tashrif')
         ->select('users.id','users.name','users.address','users.phone','users.tkun','users.email','users.created_at','talabas.Tanish','talabas.TanishPhone','talabas.BizHaqimizda','user_histories.admin_id','talabas.TalabaHaqida')->get()->first();
         $Guruh_plus['user'] = $User;
-        $Users = User::where('id','=',$Guruh_plus['user']->admin_id)->get()->first();
-        $Guruh_plus['create_admin'] = $Users->email;
+        $Users = User::where('id','=',$Guruh_plus['user']->admin_id)->get();
+        $Guruh_plus['create_admin'] = $Users->first()->email;
         
         $Eslatma = Eslatma::where('eslatmas.user_guruh_id',$id)
         ->join('users','users.id','eslatmas.admin_id')
@@ -243,6 +244,7 @@ class UserController extends Controller{
         $ActivGuruhUser = GuruhUser::where('guruh_users.user_id', $id)
         ->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')
         ->where('guruh_users.status','true')
+        ->where('guruhs.filial',request()->cookie('filial_id'))
         ->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data',
         'guruh_users.start_commit','guruh_users.start_meneger')
         ->get();
@@ -280,27 +282,25 @@ class UserController extends Controller{
 
         $Guruxx = GuruhUser::where('guruh_users.user_id',$id)
             ->join('guruhs','guruhs.id','guruh_users.guruh_id')
-            ->join('users','users.id','guruhs.techer_id')
-            ->where('guruh_users.status','true')
-            ->join('settings','settings.summa','guruhs.guruh_price')->get();
+            ->select('guruh_users.guruh_id','guruhs.guruh_name','guruhs.guruh_price','guruhs.guruh_start')->get();
         $chegirmaGuruh = array();
+        #dd($Guruxx);
         foreach($Guruxx as $key=>$value){
-            $day = $value->days;
+            $day = Setting::where('summa',$value->guruh_price)->get()->first()->days;
             $thisDay = date("Y-m-d");
             $nextDay = date('Y-m-d',strtotime("+".$day." days", strtotime($value->guruh_start)));
             if($thisDay<=$nextDay){
-                $Guruh_Name = $value->guruh_name."(".$value->name.")";
+                $Guruh_Name = $value->guruh_name."(".$value->guruh_name.")";
                 $Guruh_id = $value->guruh_id;
                 $chegirmaGuruh[$key]['name'] = $Guruh_Name;
                 $chegirmaGuruh[$key]['guruh_id'] = $Guruh_id;
             }
         }
-
+        #dd($chegirmaGuruh);
         $Admin_chegirma_guruh = GuruhUser::where('guruh_users.user_id',$id)
         ->join('guruhs','guruh_users.guruh_id','guruhs.id')
-        ->join('settings','settings.summa','guruhs.guruh_price')
         ->where('guruh_users.status','true')
-        ->select('settings.admin_chegirma','guruhs.id','guruhs.guruh_name')
+        ->select('guruhs.id','guruhs.guruh_name','guruhs.guruh_price')
         ->get();
         #dd($Admin_chegirma_guruh);
         
@@ -331,10 +331,70 @@ class UserController extends Controller{
             $TalabaTulov[$key]['created_at'] = $value->created_at;
         } 
         #dd($TalabaTulov);
+        $StudenHistory = StudenHistory::where('student_id',$id)->get();
+        $i=1;
+        $History = array();
+        $Balans = 0;
+        foreach ($StudenHistory as $key => $value) {
+            $Admin_email = User::where('id',$value->admin_id)->get()->first();
+            $History[$key]['admin'] = $Admin_email->email;
+            $History[$key]['id'] = $value->id;
+            $History[$key]['data'] = $value->created_at;
+            if($value->status=='Tashrif'){
+                $History[$key]['status'] = "Markazga tashrif";
+                $History[$key]['summa'] = "";
+            }else{
+                if($value->status=='GuruhPlus'){
+                    $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                    $History[$key]['status'] = "Guruhga qo'shildi: (".$Guruh.")";
+                }elseif($value->status=='GuruhDelete'){
+                    $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                    $History[$key]['status'] = "Guruhdan o'chirildi: (".$Guruh.")";
+                }elseif($value->status=='GuruhDeleteJarima'){
+                    $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                    $History[$key]['status'] = "Jarima: (".$Guruh.")";
+                }else {
+                    if($value->guruh_id=='NULL'){
+                        if($value->type=='Naqt'){
+                            $History[$key]['status'] = "To'lov: Naqt";
+                        }elseif($value->type=='Plastik'){
+                            $History[$key]['status'] = "To'lov: Plastik";
+                        }
+                    }else{
+                        if($value->type=='Naqt'){
+                            $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                            $History[$key]['status'] = "To'lov: Naqt (".$Guruh.")";
+                        }elseif($value->type=='Plastik'){
+                            $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                            $History[$key]['status'] = "To'lov: Plastik (".$Guruh.")";
+                        }elseif($value->type=='Qaytarildi'){
+                            $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                            $History[$key]['status'] = "To'lov: Qaytarildi (".$Guruh.")";
+                        }elseif($value->type=='Chegirma'){
+                            $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                            $History[$key]['status'] = "To'lov: Chegirma (".$Guruh.")";
+                        }
+                    }
+                }
+                $History[$key]['summa'] = $value->summa;
+            }
+            if($value->status=='Tashrif'){
+                $History[$key]['xisob1'] ="0";
+            }elseif($value->summa>0){
+                $History[$key]['xisob1'] =$Balans."+".$value->summa;
+            }else{
+                $History[$key]['xisob1'] =$Balans."".$value->summa;
+            }
+            $Balans = $Balans+$value->summa;
+            $History[$key]['xisob2'] =$Balans;
+        }
+        $Balans = number_format(($Balans), 0, '.', ' ');
+        #dd($History);
+        
         
         
             
-        return view('users.show', compact('TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
+        return view('users.show', compact('Balans','History','TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
     }
     public function edit(string $id){
         if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
