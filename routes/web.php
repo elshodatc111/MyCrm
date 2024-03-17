@@ -63,6 +63,7 @@ Route::get('guruh_activ', [GuruhController::class, 'indexActiv'])->name('indexAc
 Route::get('guruh_new', [GuruhController::class, 'indexNew'])->name('indexNew');
 Route::get('guruh_create2/{id}', [GuruhController::class, 'create2'])->name('create2');
 Route::post('guruh_store2', [GuruhController::class, 'store2'])->name('store2');
+Route::post('guruh/tulov/qaytarish', [GuruhController::class, 'tulovQaytarish'])->name('tulovQaytarish');
 Route::delete('guruh_delete/{id}', [GuruhController::class, 'distroy2'])->name('distroy2');
 Route::resource('guruh', GuruhController::class);
 

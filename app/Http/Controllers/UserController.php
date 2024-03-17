@@ -331,7 +331,9 @@ class UserController extends Controller{
             $TalabaTulov[$key]['created_at'] = $value->created_at;
         } 
         #dd($TalabaTulov);
-
+        
+        
+            
         return view('users.show', compact('TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
     }
     public function edit(string $id){

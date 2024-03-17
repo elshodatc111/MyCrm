@@ -320,9 +320,10 @@
                         </div>
                         <!-- To'lovni qaytarish -->
                         <div class="modal fade" id="tulov_qaytar" tabindex="-1">
-                            <form action="#" method="post" id="form1">
+                            <form action="{{ route('tulovQaytarish') }}" method="post" id="form1">
                                 @csrf
                                 <input type="hidden" name="guruh_id" value="{{ $guruh['id'] }}">
+                                <input type="hidden" name="NaqtKass" value="{{ $NaqtKass }}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -331,7 +332,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <label for="user_id">Talabani tanlang</label>
-                                            <select name="" class="form-control" required>
+                                            <select name="user_id" class="form-control" required>
                                                 <option value="">Tanlang</option>
                                                 @forelse($AktivStudent as $item)
                                                     <option value="{{ $item['student_id'] }}">{{ $item['student_name'] }}</option>
@@ -340,10 +341,10 @@
                                                 @endforelse
                                             </select>
                                             <label for="summa" class="mt-2">Qaytariladiga summa</label>
-                                            <p class="p-0 m-0 text-danger">Kassada mavjud naqt summa: 1 000 585 so'm</p>
+                                            <p class="p-0 m-0 text-danger">Kassada mavjud naqt summa: {{ $NaqtKass }} so'm</p>
                                             <input type="text" name="summa" id="summa1" class="form-control mb-2" required>
-                                            <label for="summa" class="mt-1">To'lovni qaytarish haqida izoh</label>
-                                            <textarea name="" class="form-control mb-2" required></textarea>
+                                            <label for="Izoh" class="mt-1">To'lovni qaytarish haqida izoh</label>
+                                            <textarea name="Izoh" class="form-control mb-2" required></textarea>
                                             <table class="table">
                                                 <tr>
                                                     <td>
@@ -363,7 +364,9 @@
                 </div>
             </div>
         </div>
-        #### Qarzdorlarga SMS yuborish #### <br> #### Guruhni davom ettirish #### <br> #### Talaba Davomadlari #### <br> ### To'lovni qaytarish ###
+        #### Qarzdorlarga SMS yuborish #### <br>
+        #### Guruhni davom ettirish #### <br> 
+        #### Talaba Davomadlari ####
         <div class="card">
             <div class="card-body mt-3">
               <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">

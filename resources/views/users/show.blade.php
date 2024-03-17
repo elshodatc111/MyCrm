@@ -32,79 +32,79 @@
                 <h4>{{ $Guruh_plus['user']->name }}</h4>
                 <div class="row">
                     <div class="col-lg-6">
-                            <table class="table table-bordered" style="font-size:12px;">
-                                <tr>
-                                    <th style="text-align:left">Yashash manzili:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->address }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Telefon raqami:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Tug'ilgan kuni:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->tkun }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Login:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->email }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Meneger:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['create_admin'] }}</td>
-                                </tr>
-                            </table>
+                        <table class="table table-bordered" style="font-size:12px;">
+                            <tr>
+                                <th style="text-align:left">Yashash manzili:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->address }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Telefon raqami:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->phone }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Tug'ilgan kuni:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->tkun }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Login:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->email }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Meneger:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['create_admin'] }}</td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="col-lg-6">
-                            <table class="table table-bordered" style="font-size:12px;">
-                                <tr>
-                                    <th style="text-align:left">Yaqin tanishi:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->Tanish }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Tanishi telefoni:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->TanishPhone }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Biz haqimizda:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->BizHaqimizda }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Talaba haqida:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->TalabaHaqida }}</td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left">Tashrif vaqti:</th>
-                                    <td style="text-align:right">{{ $Guruh_plus['user']->created_at }}</td>
-                                </tr>
-                            </table>
+                        <table class="table table-bordered" style="font-size:12px;">
+                            <tr>
+                                <th style="text-align:left">Yaqin tanishi:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->Tanish }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Tanishi telefoni:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->TanishPhone }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Biz haqimizda:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->BizHaqimizda }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Talaba haqida:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->TalabaHaqida }}</td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:left">Tashrif vaqti:</th>
+                                <td style="text-align:right">{{ $Guruh_plus['user']->created_at }}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div> 
             <div class="col-lg-4">
                 <h4><b>Balans:</b> 144 000 so'm</h4>
-                    <table class="table table-bordered" style="font-size:12px;">
-                        <tr>
-                            <th style="text-align:left">To'lovlar:</th>
-                            <td style="text-align:right">sd</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Chegirmalar:</th>
-                            <td style="text-align:right">sd</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Qaytarildi:</th>
-                            <td style="text-align:right">sd</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Aktiv guruhlar:</th>
-                            <td style="text-align:right">sd</td>
-                        </tr>
-                        <tr>
-                            <th style="text-align:left">Guruhdan o'chirildi:</th>
-                            <td style="text-align:right">sd</td>
-                        </tr>
-                    </table>
+                <table class="table table-bordered" style="font-size:12px;">
+                    <tr>
+                        <th style="text-align:left">To'lovlar:</th>
+                        <td style="text-align:right">sd</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">Chegirmalar:</th>
+                        <td style="text-align:right">sd</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">Qaytarildi:</th>
+                        <td style="text-align:right">sd</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">Aktiv guruhlar:</th>
+                        <td style="text-align:right">sd</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">Guruhdan o'chirildi:</th>
+                        <td style="text-align:right">sd</td>
+                    </tr>
+                </table>
             </div>
             <div class="col-12 row text-center">
                 <div class="col-lg-3 pb-2">
@@ -145,66 +145,65 @@
                 </div>
                 <div class="col-lg-3 pb-2">
                     <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#send_messege">SMS yuborish</button>                    
-                </div>
-                <div class="modal fade" id="send_messege" tabindex="-1">
-                    <form action="{{ route('userSendMessge') }}" method="post">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $Guruh_plus['user']->id }}">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Talabaga sms yuborish</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <label for="text">SMS matni</label>
-                                    <textarea name="text" class="form-control mb-3"></textarea>
-                                    <div class="div">
-                                        <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
-                                        <button type="submit" class="btn btn-primary" style="width:48%;">SMS yuborish</button>
+                    <div class="modal fade" id="send_messege" tabindex="-1">
+                        <form action="{{ route('userSendMessge') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $Guruh_plus['user']->id }}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Talabaga sms yuborish</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label for="text">SMS matni</label>
+                                        <textarea name="text" class="form-control mb-3"></textarea>
+                                        <div class="div">
+                                            <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
+                                            <button type="submit" class="btn btn-primary" style="width:48%;">SMS yuborish</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
                 @if(Auth::user()->type!='Operator')
                 <div class="col-lg-3 pb-2">
                     <button class="btn btn-info text-white w-100" data-bs-toggle="modal" data-bs-target="#admin_chegirma">Chegirma kiritish</button>                    
-                </div>
-                
-                <div class="modal fade" id="admin_chegirma" tabindex="-1">
-                    <form action="{{ route('userAdminChegirma') }}" id="form1" method="post">
-                        @csrf
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Talabaga chegirma kiritish</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="user_id" value="{{ $Guruh_plus['user']->id }}">
-                                    <label for="chegirma_summasi">Chegirma uchun guruhni tanlang</label>
-                                    <select name="guruh_id" id="" class="form-select mb-1">
-                                        <option value="">Tanlang</option>
-                                        @forelse($Admin_chegirma_guruh as $item)
-                                            <option value="{{ $item->id }}">{{ $item->guruh_name }}(max: {{ $item->admin_chegirma }})</option>
-                                        @empty
-
-                                        @endforelse
-                                    </select>
-                                    <label for="summa">Chegirma summasi</label>
-                                    <input type='text' id="summa1" name="summa" class="form-control mb-1"></textarea>
-                                    <label for="text">Chegirma haqida izoh</label>
-                                    <textarea name="text" required class="form-control mb-1"></textarea>
-                                    <div class="div">
-                                        <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
-                                        <button type="submit" class="btn btn-primary" style="width:48%;">Chegirmani saqlash</button>
+                    <div class="modal fade" id="admin_chegirma" tabindex="-1">
+                        <form action="{{ route('userAdminChegirma') }}" id="form1" method="post">
+                            @csrf
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Talabaga chegirma kiritish</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="user_id" value="{{ $Guruh_plus['user']->id }}">
+                                        <label for="chegirma_summasi">Chegirma uchun guruhni tanlang</label>
+                                        <select name="guruh_id" id="" class="form-select mb-1">
+                                            <option value="">Tanlang</option>
+                                            @forelse($Admin_chegirma_guruh as $item)
+                                                <option value="{{ $item->id }}">{{ $item->guruh_name }}(max: {{ $item->admin_chegirma }})</option>
+                                            @empty
+    
+                                            @endforelse
+                                        </select>
+                                        <label for="summa">Chegirma summasi</label>
+                                        <input type='text' id="summa1" name="summa" class="form-control mb-1"></textarea>
+                                        <label for="text">Chegirma haqida izoh</label>
+                                        <textarea name="text" required class="form-control mb-1"></textarea>
+                                        <div class="div">
+                                            <button type="button" class="btn btn-secondary" style="width:48%;" data-bs-dismiss="modal">Bekor qilish</button>
+                                            <button type="submit" class="btn btn-primary" style="width:48%;">Chegirmani saqlash</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
                 @endif
                 <div class="col-lg-3 pb-2">
@@ -214,6 +213,7 @@
                         <button class="btn btn-info text-white w-100">Parolini yangish</button>                    
                     </form>
                 </div>
+                
             </div>
         </div>
       </div>

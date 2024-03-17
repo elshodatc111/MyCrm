@@ -38,7 +38,7 @@
         @elseif(Session::has('delete'))
           <div class="alert alert-danger">{{ Session::get('delete') }}</div>
         @endif
-        <table class="table table-bordered text-center">
+        <table class="table table-bordered text-center"  style="font-size:14px;">
             <thead>
                 <tr>
                     <th>#</th>

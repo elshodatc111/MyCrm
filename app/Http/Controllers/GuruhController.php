@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Guruh;
 use App\Models\Test;
+use App\Models\Tolov;
 use App\Models\Room;
 use App\Models\Setting;
 use App\Models\Eslatma;
 use App\Models\GuruhUser;
+use App\Models\UserHistory;
 use App\Models\User;
 use App\Models\GuruhJadval;
 use App\Models\StudenHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 
 class GuruhController extends Controller{
     public function index(){
@@ -377,7 +380,56 @@ class GuruhController extends Controller{
         ->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')
         ->orderBy('eslatmas.id', 'DESC')->get();
         #dd($eslatma[0]['name']);
-        return view('guruh.show', compact('guruh','AktivStudent','EndStudent','eslatma'));
+
+        $Kassa = UserHistory::where('status','TulovNaqt')->where('type','false')->get();
+        $NaqtKass = 0;
+        foreach ($Kassa as $key => $value) {
+            $NaqtKass = $NaqtKass+$value->summa;
+        }
+        $NaqtKass = number_format($NaqtKass, 0, '.', ' ');
+
+        return view('guruh.show', compact('guruh','AktivStudent','EndStudent','NaqtKass','eslatma'));
+    }
+    public function tulovQaytarish(Request $request){
+        $guruh_id = $request->guruh_id;
+        $NaqtKass = str_replace(" ","",$request->NaqtKass);
+        $user_id = $request->user_id;
+        $summa = str_replace(",","",$request->summa);
+        $Izoh = $request->Izoh;
+        if($summa>$NaqtKass){
+            return back()->withInput()->with('success',"Kassada mablag' yetarli emas.");
+        }
+        $Tulov = new Tolov();
+        $Tulov->filial_id = request()->cookie('filial_id');
+        $Tulov->user_id = $user_id;
+        $Tulov->guruh_id = $guruh_id;
+        $Tulov->summa = $summa;
+        $Tulov->type = "Qaytarildi";
+        $Tulov->comment = $Izoh;
+        $Tulov->admin_id = Auth::user()->id;
+        $Tulov->chegirma_id = 0;
+        $Tulov->save();
+        $StudenHistory = new StudenHistory();
+        $StudenHistory->filial_id = request()->cookie('filial_id');
+        $StudenHistory->student_id	 = $user_id;
+        $StudenHistory->status =  "Tulov";
+        $StudenHistory->summa = $summa;
+        $StudenHistory->type = "Qaytarildi";
+        $StudenHistory->admin_id = Auth::user()->id;
+        $StudenHistory->guruh_id = $guruh_id;
+        $StudenHistory->tulov_id = $Tulov->id;
+        $StudenHistory->save();
+        $UserHistory = new UserHistory();
+        $UserHistory->filial_id = request()->cookie('filial_id');
+        $UserHistory->admin_id = Auth::user()->id;
+        $UserHistory->status = 'TulovQaytarildi';
+        $UserHistory->summa = $summa;
+        $UserHistory->type = 'false';
+        $UserHistory->student_id = $user_id;
+        $UserHistory->izoh = $Izoh;
+        $UserHistory->tulov_id = $Tulov->id;
+        $UserHistory->save();
+        return back()->withInput()->with('success',"To'lov qaytarildi. Tasdiqlanishi kutilmoqda.");
     }
 
     public function edit(Guruh $guruh){
