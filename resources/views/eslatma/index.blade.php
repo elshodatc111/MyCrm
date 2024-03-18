@@ -30,35 +30,33 @@
                                 <th class="text-center">Eslatma matni</th>
                                 <th class="text-center">Eslatma vaqti</th>
                                 <th class="text-center">Guruh/Talaba</th>
-                                <th class="text-center">Status</th>
+                                <th class="text-center">Tasdiqlash</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($ActivEslatma as $item)
+                            @forelse($Eslatmalar as $key => $value)
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
-                                    <td style="text-align:left;">{{ $item['text'] }}</td>
-                                    <td>{{ $item['created_at'] }}</td>
-                                    @if($item['type']=='guruh')
-                                        <td style="text-align:left;"><a href="{{ route('guruh.show',$item['user_guruh_id']) }}">
-                                            {{ $item['userGuruh'] }}
-                                        </a></td>
-                                    @else
-                                        <td style="text-align:left;"><a href="{{ route('user.show',$item['user_guruh_id']) }}">
-                                            {{ $item['userGuruh'] }}
-                                        </a></td>
-                                    @endif
+                                    <td style="text-align:left">{{ $value['text'] }}</td>
+                                    <td>{{ $value['created_at'] }}</td>
                                     <td>
-                                        <form action="{{ route('eslatma.destroy', $item['id'] ) }}" method="post">
+                                        @if($value['type']=='user')
+                                            {{ $value['type'] }}:<a href="{{ route('user.show',$value['user_guruh_id'] ) }}">{{ $value['name'] }}</a>
+                                        @else
+                                            {{ $value['type'] }}:<a href="{{ route('guruh.show',$value['user_guruh_id'] ) }}">{{ $value['name'] }}</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('eslatma.destroy',$value['id']) }}" method="post">
                                             @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
+                                            @method('delete')
+                                            <button class="btn btn-danger px-1 py-0"><i class="bi bi-check-all"></i></button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan=5 class='text-center'>Aktiv Eslatmalar mavjud emas.</td>
+                                    <td class='text-center' colspan=5>Aktiv Eslatmalar mavjud emas</td>
                                 </tr>
                             @endforelse
                         </tbody>

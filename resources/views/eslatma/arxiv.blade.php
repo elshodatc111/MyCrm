@@ -35,27 +35,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($ActivEslatma as $item)
+                             @forelse($Eslatmalar as $key => $value)
                                 <tr>
                                     <td>{{ $loop->index+1 }}</td>
-                                    <td style="text-align:left;">{{ $item['text'] }}</td>
-                                    <td>{{ $item['created_at'] }}</td>
-                                    @if($item['type']=='guruh')
-                                        <td style="text-align:left;"><a href="{{ route('guruh.show',$item['user_guruh_id']) }}">
-                                            {{ $item['userGuruh'] }}
-                                        </a></td>
-                                    @else
-                                        <td style="text-align:left;"><a href="{{ route('user.show',$item['user_guruh_id']) }}">
-                                            {{ $item['userGuruh'] }}
-                                        </a></td>
-                                    @endif
+                                    <td style="text-align:left">{{ $value['text'] }}</td>
+                                    <td>{{ $value['created_at'] }}</td>
                                     <td>
-                                        {{ $item['updated_at'] }}
+                                        @if($value['type']=='user')
+                                            {{ $value['type'] }}:<a href="{{ route('user.show',$value['user_guruh_id'] ) }}">{{ $value['name'] }}</a>
+                                        @else
+                                            {{ $value['type'] }}:<a href="{{ route('guruh.show',$value['user_guruh_id'] ) }}">{{ $value['name'] }}</a>
+                                        @endif
                                     </td>
+                                    <td>{{ $value['created_at'] }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan=5 class='text-center'>Arxiv Eslatmalar mavjud emas.</td>
+                                    <td class='text-center' colspan=5>Aktiv Eslatmalar mavjud emas</td>
                                 </tr>
                             @endforelse
                         </tbody>
