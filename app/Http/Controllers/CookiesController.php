@@ -15,8 +15,8 @@ class CookiesController extends Controller{
     public function changeFilialEdit($id, $name){
         return redirect()
             ->route('home')
-            ->withCookie('filial_id', $id, 1800)
-            ->withCookie('filial_name', $name, 1800); 
+            ->withCookie('filial_id', $id, 21600)
+            ->withCookie('filial_name', $name, 21600); 
     }
     public function setCookie(){
         if(!request()->cookie('filial_id')){
@@ -27,8 +27,8 @@ class CookiesController extends Controller{
                 $Filial_name = Filial::find($Filial_id)->filial_name;
                 return redirect()
                     ->route('home')
-                    ->withCookie('filial_id', $Filial_id, 1800)
-                    ->withCookie('filial_name', $Filial_name, 1800); 
+                    ->withCookie('filial_id', $Filial_id, 21600)
+                    ->withCookie('filial_name', $Filial_name, 21600); 
             }
         }else{
             return view('home');
@@ -41,6 +41,6 @@ class CookiesController extends Controller{
     }
 
     public function delCookie(){
-        return response('deleted')->cookie('filial_id', null, -1800)->cookie('filial_name', null, -1800);
+        return response('deleted')->cookie('filial_id', null, -21600)->cookie('filial_name', null, -21600);
     }
 }

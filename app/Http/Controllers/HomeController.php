@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\Filial;
 use App\Models\Admin;
+use App\Models\User;
+use App\Models\Guruh;
+use App\Models\Eslatma;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller{
@@ -25,7 +29,15 @@ class HomeController extends Controller{
         }elseif ($user->type=='Techer') {
             return "O'qituvchi profeli tayyor emas";
         }else{
-            return view('home');
+            $Statistika = array();
+            $Statistika['techers'] = count(User::where('filial',request()->cookie('filial_id'))->where('type','Techer')->get());
+            $Statistika['tashriflar'] = count(User::where('filial',request()->cookie('filial_id'))->where('type','user')->get());
+            $Statistika['guruhlar'] = count(Guruh::where('filial',request()->cookie('filial_id'))->get());
+        
+           
+            
+
+            return view('home',compact('Statistika'));
         }
     }
     

@@ -24,14 +24,25 @@
       <a href="{{ route('home') }}" class="logo d-flex align-items-center">
         <img src="https://atko.tech/crm/img/logo.png" alt="">
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      @guest
+      
+      @else
+          <i class="bi bi-list toggle-sidebar-btn"></i>
+      @endguest
     </div>
     @guest
         @if (Route::has('login'))
             <nav class="header-nav ms-auto">
                 <ul class="d-flex align-items-center">
-                    <li class="nav-item pe-3">
-                        <a class="nav-link nav-profile d-flex align-items-center pe-0" 
+                    <li class="nav-item pe-3 text-center">
+                        <a class="
+                          nav-link 
+                          nav-profile 
+                          d-flex 
+                          align-items-center 
+                          text-white 
+                          bg-danger font-weight-bold
+                          px-2 py-1" 
                         href="{{ route('login') }}">Kirish</a>
                     </li>
                 </ul>
@@ -45,13 +56,13 @@
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="{{ route('eslatma.index') }}">
                         <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">4</span>
+                        <span class="badge bg-primary badge-number">@include('layouts.eslatma')</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-icon" href="#ssa">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
+                      <i class="bi bi-cake2"></i>
+                      <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-3">
@@ -151,12 +162,6 @@
       </li>
       @if(Auth::user()->type=='Admin' OR Auth::user()->type=='SuperAdmin')
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Hisobotlar</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link {{ request()->is('techer') ? '':'collapsed' }}" href="{{ route('techer.index') }}">
           <i class="bi bi-dash-circle"></i>
           <span>O'qituvchilar</span>
@@ -173,12 +178,6 @@
         <a class="nav-link {{ request()->is('room') ? '':'collapsed' }}" href="{{ route('room.index') }}">
           <i class="bi bi-door-open"></i>
           <span>Xonalar</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-bar-chart-line"></i>
-          <span>Statistika</span>
         </a>
       </li>
       @if(Auth::user()->filial=='NULL')

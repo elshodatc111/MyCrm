@@ -26,8 +26,8 @@
                   <i class="bi bi-person-arms-up"></i>
                 </div>
                 <div class="ps-3">
-                  <h6>8</h6>
-                  <span class="text-success small pt-1 fw-bold">5</span> <span class="text-muted small pt-2 ps-1">AKTIV O'QITUVCHILAR</span>
+                  <h6>{{ $Statistika['techers'] }}</h6>
+                  <span class="text-success small pt-1 fw-bold">1000</span> <span class="text-muted small pt-2 ps-1">AKTIV O'QITUVCHILAR</span>
                 </div>
               </div>
             </div>
@@ -43,8 +43,8 @@
                   <i class="bi bi-person"></i>
                 </div>
                 <div class="ps-3">
-                  <h6>4516</h6>
-                  <span class="text-success small pt-1 fw-bold">65</span> <span class="text-muted small pt-2 ps-1">AKTIV TASHRIFLAR</span>
+                  <h6>{{ $Statistika['tashriflar'] }}</h6>
+                  <span class="text-success small pt-1 fw-bold">100000</span> <span class="text-muted small pt-2 ps-1">AKTIV TASHRIFLAR</span>
                 </div>
               </div>
             </div>
@@ -60,8 +60,8 @@
                   <i class="bi bi-diagram-3"></i>
                 </div>
                 <div class="ps-3">
-                  <h6>1244</h6>
-                  <span class="text-danger small pt-1 fw-bold">10</span> <span class="text-muted small pt-2 ps-1">AKTIV GURUHLAR</span>
+                  <h6>{{ $Statistika['guruhlar'] }}</h6>
+                  <span class="text-danger small pt-1 fw-bold">100000</span> <span class="text-muted small pt-2 ps-1">AKTIV GURUHLAR</span>
                 </div>
               </div>
             </div>
