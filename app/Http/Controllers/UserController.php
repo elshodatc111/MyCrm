@@ -36,7 +36,43 @@ class UserController extends Controller{
         return view('users.index',compact('User'));
     }
     public function userDebet(){
-        return view('users.debit');
+        $Debs = array();
+        $Summ = array();
+        $User = User::where('type','user')->where('filial',request()->cookie('filial_id'))->get();
+        $i = 1;
+        foreach ($User as $key => $value) {
+            $Student_id = $value->id;
+            $StudenHistory = StudenHistory::where('studen_histories.student_id',$Student_id)->get();
+            $Summa = 0;
+            foreach ($StudenHistory as $key => $val) {
+                if($val->tulov_id=='NULL'){
+                    $Summa = $Summa + $val['summa'];
+                }else{
+                    $UserHistory = count(UserHistory::where('tulov_id',$val->tulov_id)->where('type','false')->get());
+                    if($UserHistory==0){
+                        $Summa = $Summa + $val['summa'];
+                    }
+                }
+            }
+            if($Summa<0){
+                $GuruhUser = count(GuruhUser::where('user_id',$value->id)->where('status','true')->get());
+                $Debs[$i]['id'] = $value->id;
+                $Debs[$i]['name'] = $value->name;
+                $Debs[$i]['phone'] = $value->phone;
+                $Debs[$i]['address'] = $value->address;
+                $Debs[$i]['gutuhlari'] = $GuruhUser;
+                $Debs[$i]['debit'] = number_format(($Summa), 0, '.', ' ');
+                $i++;
+            }
+        }
+        
+        #dd($Debs);
+
+
+
+
+
+        return view('users.debit',compact('Debs'));
     }
     public function userPay(){
         return view('users.pays');

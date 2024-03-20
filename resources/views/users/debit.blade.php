@@ -4,11 +4,11 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Tashriflar</h1>
+      <h1>Qarzdorlar</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
-          <li class="breadcrumb-item active">Tashriflar</li>
+          <li class="breadcrumb-item active">Qarzdorlar</li>
         </ol>
       </nav>
     </div>
@@ -34,27 +34,34 @@
     @endif
     <div class="card">
       <div class="card-body pt-4">
-        @if (Session::has('message'))
-            <div class="alert alert-success">{{ Session::get('message') }}</div>
-        @elseif(Session::has('update'))
-          <div class="alert alert-primary">{{ Session::get('update') }}</div>
-        @elseif(Session::has('delete'))
-          <div class="alert alert-danger">{{ Session::get('delete') }}</div>
-        @endif
-        <table class="table table-bordered text-center">
+        <table class="table datatable table-bordered text-center">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Filial</th>
-                    <th>Hodim ismi</th>
-                    <th>Login</th>
-                    <th>Lavozimi</th>
-                    <th>Telefon raqami</th>
-                    <th>Status</th>
+                    <th>Talaba</th>
+                    <th>Telefon raqam</th>
+                    <th>Yashash manzili</th>
+                    <th>Guruhlar soni</th>
+                    <th>Qarzdorlik</th>
                 </tr>
             </thead>
             <tbody>
-              
+              @forelse($Debs as $item)
+              <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td style="text-align:left;">
+                  <a href="{{ route('user.show',$item['id'] ) }}">{{ $item['name'] }}</a>
+                </td>
+                <td>{{ $item['phone'] }}</td>
+                <td>{{ $item['address'] }}</td>
+                <td>{{ $item['gutuhlari'] }}</td>
+                <td>{{ $item['debit'] }}</td>
+              </tr>
+              @empty
+                <tr>
+                  <td colspan=6 class='text-center'>Qarzdor talabalar mavjud emas.</td>
+                </tr>
+              @endforelse
             </tbody>
         </table>
       </div>
