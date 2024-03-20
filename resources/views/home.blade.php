@@ -72,136 +72,48 @@
 
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Dars jadvali</h5>
-
-        <!-- Bordered Tabs Justified -->
-        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
-          <li class="nav-item flex-fill" role="presentation">
-            <button class="nav-link w-100 active" id="home-tab"
-             data-bs-toggle="tab" data-bs-target="#bordered-justified-home" 
-             type="button" role="tab" aria-controls="home" aria-selected="true">1-xona</button>
-          </li>
-          <li class="nav-item flex-fill" role="presentation">
-            <button class="nav-link w-100" id="profile-tab"
-             data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" 
-             type="button" role="tab" aria-controls="profile" aria-selected="false">2-xona</button>
-          </li>
-        </ul>
-        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-          <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+        @foreach($Rooms as $key => $value)
+          <h5 class="card-title text-center">Dars jadvali: {{ $value['room_name'] }}</h5>
             <div class="table-responsive">
               <table class="table table-bordered text-center">
                 <thaed>
                   <tr>
-                    <th>Soat/Hafta</th>
-                    <th>Dushanba</th>
-                    <th>Seshanba</th>
-                    <th>Chorshanba</th>
-                    <th>Payshanba</th>
-                    <th>Juma</th>
-                    <th>Shanba</th>
+                    <th  class="bg-primary text-white">Soat/Hafta</th>
+                    <th  class="bg-primary text-white">08:00</th>
+                    <th  class="bg-primary text-white">09:30</th>
+                    <th  class="bg-primary text-white">11:00</th>
+                    <th  class="bg-primary text-white">12:30</th>
+                    <th  class="bg-primary text-white">14:00</th>
+                    <th  class="bg-primary text-white">15:30</th>
+                    <th  class="bg-primary text-white">17:00</th>
+                    <th  class="bg-primary text-white">18:30</th>
+                    <th  class="bg-primary text-white">20:00</th>
                   </tr>
                 </thaed>
                 <tbody>
+                  @foreach ($value['hafta_kun'] as $key => $hafta_kun)
                   <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                      @if($key==0)<th style='text-align:left;' class="bg-primary text-white">Dushanba</th>
+                      @elseif($key==1)<th style='text-align:left;' class="bg-primary text-white">Seshanba</th>
+                      @elseif($key==2)<th style='text-align:left;' class="bg-primary text-white">Chorshanba</th>
+                      @elseif($key==3)<th style='text-align:left;' class="bg-primary text-white">Payshanba</th>
+                      @elseif($key==4)<th style='text-align:left;' class="bg-primary text-white">Juma</th>
+                      @elseif($key==5)<th style='text-align:left;' class="bg-primary text-white">Shanba</th>@endif
+                    @foreach ($hafta_kun as $keys => $soat)
+                      @if($soat=='bosh')
+                        <td class="bg-danger text-white">bo'sh</td>
+                      @else
+                        <td class="bg-success text-white" title="{{ $soat['guruh_name'] }}" style="cursor:pointer">
+                          <a href="{{ route('guruh.show',$soat['guruh_id'] ) }}" class="text-white">Band</a>
+                        </td>
+                      @endif
+                    @endforeach
                   </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
-          </div>
-          <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
-            
-            <div class="table-responsive">
-              <table class="table table-bordered text-center">
-                <thaed>
-                  <tr>
-                    <th>Soat/Hafta</th>
-                    <th>Dushanba</th>
-                    <th>Seshanba</th>
-                    <th>Chorshanba</th>
-                    <th>Payshanba</th>
-                    <th>Juma</th>
-                    <th>Shanba</th>
-                  </tr>
-                </thaed>
-                <tbody>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>08:00-09:30</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          
-        </div>
-        
+        @endforeach
 
       </div>
     </div>

@@ -40,33 +40,29 @@ class HomeController extends Controller{
             $weekStart = strtotime('last Monday', $currentTime);
             $Room = Room::where('filial_id',request()->cookie('filial_id'))->get();
             $room_id = 1;
-            $Xonalar = array();
-            foreach($Room as $item){
+            $Rooms = array();
+            foreach($Room as $key => $value ){
+                $Rooms[$key]['guruh_id'] = $value->id;
+                $Rooms[$key]['room_name'] = $value->room_name;
                 $Jadval = array();
                 for ($k = 1; $k <= 9; $k++) {
                     for ($i = 0; $i < 6; $i++) {
                         $day = date('Y-m-d', strtotime("+$i days", $weekStart));
-                        $GuruhJadval = GuruhJadval::where('room_id',$room_id)->where('times',$k)->where('days',$day)->get();
+                        $GuruhJadval = GuruhJadval::where('room_id',$value->id)->where('times',$k)->where('days',$day)->get();
                         if(count($GuruhJadval)>=1){
                             $guruh_id = $GuruhJadval->first()->guruh_id;
                             $guruh_name = Guruh::where('id',$guruh_id)->get()->first()->guruh_name;
                             $Jadval[$i][$k]['guruh_id'] = $guruh_id;
                             $Jadval[$i][$k]['guruh_name'] = $guruh_name;
-                        }else{
-                            $Jadval[$i][$k] = "| Yoq |";
-                        }
-
+                        }else{$Jadval[$i][$k] = 'bosh';}
                     }
                 }
-                $Xonalar[$item->id] = $Jadval;
+                $Rooms[$key]['hafta_kun'] = $Jadval;
             }
-            ### Dars Jadval END ###
-            
-                
+            ### Dars Jadvali END ###
 
-            dd($Xonalar);
             
-            #return view('home',compact('Statistika','Xonalar','Room'));
+            return view('home',compact('Statistika','Rooms'));
         }
     }
     
