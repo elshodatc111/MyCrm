@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use mrmuminov\eskizuz\Eskiz;
+use Carbon\Carbon;
 use mrmuminov\eskizuz\types\sms\SmsSingleSmsType;
 
 class UserController extends Controller{
@@ -250,6 +251,11 @@ class UserController extends Controller{
         }else{
             return back()->withInput()->with('error',"Talaba siz tanlangan guruh uchun chegirma olgan.");
         }
+    }
+    public function tkun(){
+        $today = Carbon::now()->format('m-d');
+        $users = User::where('filial',request()->cookie('filial_id'))->whereRaw("DATE_FORMAT(tkun, '%m-%d') = ?", [$today])->get();
+        return view('users.tkun',compact('users'));
     }
     public function show(string $id){
         $thisDay = date('Y-m-d');

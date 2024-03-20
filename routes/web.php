@@ -37,6 +37,7 @@ Route::resource('hodim', HodimController::class)->middleware('auth');
 
 Route::post('tulov/chegirma/destroy', [UserController::class,"chegirmadestroy"])->name('chegirmadestroy')->middleware('auth');
 Route::get('userDebet', [UserController::class, 'userDebet'])->name('userDebet')->middleware('auth');
+Route::get('tkun', [UserController::class, 'tkun'])->name('tkun')->middleware('auth');
 Route::get('userPay', [UserController::class, 'userPay'])->name('userPay')->middleware('auth');
 Route::post('changePassword', [UserController::class, 'userPasswordUpdate'])->name('userPasswordUpdate')->middleware('auth');
 Route::post('userSmsSenf', [UserController::class, 'userSendMessge'])->name('userSendMessge')->middleware('auth');

@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#ssa" title="Tug'ilgan kunlar">
+                    <a class="nav-link nav-icon" href="{{ route('tkun') }}" title="Tug'ilgan kunlar">
                       <i class="bi bi-cake2"></i>
                       <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
                     </a>
