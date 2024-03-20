@@ -82,27 +82,33 @@
                 </div>
             </div> 
             <div class="col-lg-4">
-                <h4><b>Balans:</b> {{ $Balans }} so'm</h4>
+                <h4><b>Balans:</b>
+                    @if($Ballanss['JamiBalans']>=0)
+                        <p class='text-success' style="display:inline;">{{ $Ballanss['JamiBalans'] }} so'm</p>
+                    @else
+                        <p class='text-danger' style="display:inline;">{{ $Ballanss['JamiBalans'] }} so'm</p>
+                    @endif
+                </h4>
                 <table class="table table-bordered" style="font-size:12px;">
                     <tr>
                         <th style="text-align:left">To'lovlar:</th>
-                        <td style="text-align:right">sd</td>
+                        <td style="text-align:right">{{ $Ballanss['Tulov_tasdiqlandi'] }}</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left">Tasdiqlanmagan to'lovlar:</th>
+                        <td style="text-align:right">{{ $Ballanss['Tulov_tasdiqlanmadi'] }}</td>
                     </tr>
                     <tr>
                         <th style="text-align:left">Chegirmalar:</th>
-                        <td style="text-align:right">sd</td>
-                    </tr>
-                    <tr>
-                        <th style="text-align:left">Qaytarildi:</th>
-                        <td style="text-align:right">sd</td>
+                        <td style="text-align:right">{{ $Ballanss['JamiChegirma'] }}</td>
                     </tr>
                     <tr>
                         <th style="text-align:left">Aktiv guruhlar:</th>
-                        <td style="text-align:right">sd</td>
+                        <td style="text-align:right">{{ $ACTIVNEVguruh }}</td>
                     </tr>
                     <tr>
                         <th style="text-align:left">Guruhdan o'chirildi:</th>
-                        <td style="text-align:right">sd</td>
+                        <td style="text-align:right">{{ $END_guruh }}</td>
                     </tr>
                 </table>
             </div>

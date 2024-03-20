@@ -55,7 +55,7 @@
                 <td>{{ $item['phone'] }}</td>
                 <td>{{ $item['address'] }}</td>
                 <td>{{ $item['gutuhlari'] }}</td>
-                <td>{{ $item['debit'] }}</td>
+                <td><b class="text-danger">{{ $item['debit'] }}</b></td>
               </tr>
               @empty
                 <tr>

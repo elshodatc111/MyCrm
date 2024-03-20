@@ -255,9 +255,7 @@ class UserController extends Controller{
         $thisDay = date('Y-m-d');
         $oldDay = date('Y-m-d',strtotime("-7 days", strtotime($thisDay)));
         ### Guruhga qo'shish uchun guruhlar chiqazish
-        $Guruhlar = Guruh::where('guruh_start','>=',$oldDay)
-        ->where('filial','=',request()->cookie('filial_id'))
-        ->where('status','=','true')->get();
+        $Guruhlar = Guruh::where('guruh_start','>=',$oldDay)->where('filial','=',request()->cookie('filial_id'))->where('status','=','true')->get();
         $Guruh_plus = array();
         $i=1;
         foreach ($Guruhlar as $value) {
@@ -276,27 +274,12 @@ class UserController extends Controller{
         if(empty($Guruh_plus)){
             $Guruh_plus['guruh_plus'][0] = '';
         }
-        #Talaba haqida malumotlar
-        $User = User::where('users.id','=',$id)->join('talabas','talabas.user_id','users.id')
-        ->join('user_histories','user_histories.student_id','users.id')->where('user_histories.status','=','Tashrif')
-        ->select('users.id','users.name','users.address','users.phone','users.tkun','users.email','users.created_at','talabas.Tanish','talabas.TanishPhone','talabas.BizHaqimizda','user_histories.admin_id','talabas.TalabaHaqida')->get()->first();
+        $User = User::where('users.id','=',$id)->join('talabas','talabas.user_id','users.id')->join('user_histories','user_histories.student_id','users.id')->where('user_histories.status','=','Tashrif')->select('users.id','users.name','users.address','users.phone','users.tkun','users.email','users.created_at','talabas.Tanish','talabas.TanishPhone','talabas.BizHaqimizda','user_histories.admin_id','talabas.TalabaHaqida')->get()->first();
         $Guruh_plus['user'] = $User;
         $Users = User::where('id','=',$Guruh_plus['user']->admin_id)->get();
         $Guruh_plus['create_admin'] = $Users->first()->email;
-        
-        $Eslatma = Eslatma::where('eslatmas.user_guruh_id',$id)
-        ->join('users','users.id','eslatmas.admin_id')
-        ->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')
-        ->orderby('eslatmas.created_at','DESC')
-        ->get();
-
-        $ActivGuruhUser = GuruhUser::where('guruh_users.user_id', $id)
-        ->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')
-        ->where('guruh_users.status','true')
-        ->where('guruhs.filial',request()->cookie('filial_id'))
-        ->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data',
-        'guruh_users.start_commit','guruh_users.start_meneger')
-        ->get();
+        $Eslatma = Eslatma::where('eslatmas.user_guruh_id',$id)->join('users','users.id','eslatmas.admin_id')->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')->orderby('eslatmas.created_at','DESC')->get();
+        $ActivGuruhUser = GuruhUser::where('guruh_users.user_id', $id)->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')->where('guruh_users.status','true')->where('guruhs.filial',request()->cookie('filial_id'))->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data','guruh_users.start_commit','guruh_users.start_meneger')->get();
         $Activ_guruh = array();
         foreach($ActivGuruhUser as $key => $item){
             $Activ_guruh[$key]['guruh_name'] = $item->guruh_name;
@@ -307,13 +290,7 @@ class UserController extends Controller{
             $Userssss = User::where('id',$item->start_meneger)->get()->first()->email;
             $Activ_guruh[$key]['start_meneger'] = $Userssss;
         }
-
-        $EndGuruhUser = GuruhUser::where('guruh_users.user_id', $id)
-        ->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')
-        ->where('guruh_users.status','false')
-        ->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data',
-        'guruh_users.start_commit','guruh_users.start_meneger','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data')
-        ->get();
+        $EndGuruhUser = GuruhUser::where('guruh_users.user_id', $id)->join('guruhs', 'guruhs.id', 'guruh_users.guruh_id')->where('guruh_users.status','false')->select('guruhs.id','guruhs.guruh_name','guruh_users.created_at','guruh_users.start_data', 'guruh_users.start_commit','guruh_users.start_meneger','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data')->get();
         $End_guruh = array();
         foreach($EndGuruhUser as $key => $item){
             $End_guruh[$key]['guruh_name'] = $item->guruh_name;
@@ -328,12 +305,8 @@ class UserController extends Controller{
             $Userssss = User::where('id',$item->start_meneger)->get()->first()->email;
             $End_guruh[$key]['start_meneger'] = $Userssss;
         }
-
-        $Guruxx = GuruhUser::where('guruh_users.user_id',$id)
-            ->join('guruhs','guruhs.id','guruh_users.guruh_id')
-            ->select('guruh_users.guruh_id','guruhs.guruh_name','guruhs.guruh_price','guruhs.guruh_start')->get();
+        $Guruxx = GuruhUser::where('guruh_users.user_id',$id)->join('guruhs','guruhs.id','guruh_users.guruh_id')->select('guruh_users.guruh_id','guruhs.guruh_name','guruhs.guruh_price','guruhs.guruh_start')->get();
         $chegirmaGuruh = array();
-        #dd($Guruxx);
         foreach($Guruxx as $key=>$value){
             $day = Setting::where('summa',$value->guruh_price)->get()->first()->days;
             $thisDay = date("Y-m-d");
@@ -345,20 +318,8 @@ class UserController extends Controller{
                 $chegirmaGuruh[$key]['guruh_id'] = $Guruh_id;
             }
         }
-        #dd($chegirmaGuruh);
-        $Admin_chegirma_guruh = GuruhUser::where('guruh_users.user_id',$id)
-        ->join('guruhs','guruh_users.guruh_id','guruhs.id')
-        ->where('guruh_users.status','true')
-        ->select('guruhs.id','guruhs.guruh_name','guruhs.guruh_price')
-        ->get();
-        #dd($Admin_chegirma_guruh);
-        
-        $TalabaTulovlari = Tolov::where('tolovs.user_id',$id)
-        ->join('user_histories','user_histories.tulov_id','tolovs.id')
-        ->join('users','users.id','tolovs.admin_id')
-        ->orderby('tolovs.id','DESC')
-        ->select('users.email','user_histories.type','tolovs.guruh_id','tolovs.summa',
-        'tolovs.type as tulov_type','tolovs.id as tulov_id','tolovs.comment','tolovs.created_at')->get();
+        $Admin_chegirma_guruh = GuruhUser::where('guruh_users.user_id',$id)->join('guruhs','guruh_users.guruh_id','guruhs.id')->where('guruh_users.status','true')->select('guruhs.id','guruhs.guruh_name','guruhs.guruh_price')->get();
+        $TalabaTulovlari = Tolov::where('tolovs.user_id',$id)->join('user_histories','user_histories.tulov_id','tolovs.id')->join('users','users.id','tolovs.admin_id')->orderby('tolovs.id','DESC')->select('users.email','user_histories.type','tolovs.guruh_id','tolovs.summa','tolovs.type as tulov_type','tolovs.id as tulov_id','tolovs.comment','tolovs.created_at')->get();
         $TalabaTulov = array();
         foreach ($TalabaTulovlari as $key => $value) {
             if($value->guruh_id=='NULL'){
@@ -379,7 +340,6 @@ class UserController extends Controller{
             $TalabaTulov[$key]['comment'] = $value->comment;
             $TalabaTulov[$key]['created_at'] = $value->created_at;
         } 
-        #dd($TalabaTulov);
         $StudenHistory = StudenHistory::where('student_id',$id)->get();
         $i=1;
         $History = array();
@@ -437,13 +397,42 @@ class UserController extends Controller{
             $Balans = $Balans+$value->summa;
             $History[$key]['xisob2'] =$Balans;
         }
-        $Balans = number_format(($Balans), 0, '.', ' ');
-        #dd($History);
+        $ACTIVNEVguruh = count($ActivGuruhUser);
+        $END_guruh = count($EndGuruhUser);
         
-        
+        $StudenHistory_balans = StudenHistory::where('student_id',$id)->get();
+        $User_Balans = 0;
+        $Jami_Naqt_Plastik_Tasdiq = 0;
+        $Jami_Naqt_Plastik_Tasdiq_dont = 0;
+        $Jami_chegirma_summa = 0;
+        foreach ($StudenHistory_balans as $key => $value) {
+            if($value->status=='Tulov'){
+                if($value->type=='Chegirma'){
+                    $User_Balans = $User_Balans + $value->summa;
+                    $Jami_chegirma_summa = $Jami_chegirma_summa+$value->summa;
+                }else{
+                    $Tulov_IDS = $value->tulov_id;
+                    $UserHistory_Balans = UserHistory::where('tulov_id',$Tulov_IDS)->get()->first()->type;
+                    if($UserHistory_Balans=='true'){
+                        $User_Balans = $User_Balans + $value->summa;
+                        $Jami_Naqt_Plastik_Tasdiq = $Jami_Naqt_Plastik_Tasdiq+$value->summa;
+                    }else{
+                        $Jami_Naqt_Plastik_Tasdiq_dont = $Jami_Naqt_Plastik_Tasdiq_dont+$value->summa;
+                    }
+                }
+            }else{
+                $User_Balans = $User_Balans + $value->summa;
+            }
+        }
+        $Ballanss = array();
+        $Ballanss['JamiBalans'] = number_format(($User_Balans), 0, '.', ' ');
+        $Ballanss['Tulov_tasdiqlandi'] = number_format(($Jami_Naqt_Plastik_Tasdiq), 0, '.', ' ');
+        $Ballanss['Tulov_tasdiqlanmadi'] = number_format(($Jami_Naqt_Plastik_Tasdiq_dont), 0, '.', ' ');
+        $Ballanss['JamiChegirma'] = number_format(($Jami_chegirma_summa), 0, '.', ' ');
+        #dd($Ballanss);
         
             
-        return view('users.show', compact('Balans','History','TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
+        return view('users.show', compact('Ballanss','ACTIVNEVguruh','END_guruh','History','TalabaTulov','Guruh_plus','Eslatma','Activ_guruh','End_guruh','chegirmaGuruh','Admin_chegirma_guruh'));
     }
     public function edit(string $id){
         if((!request()->cookie('filial_id')) AND (!request()->cookie('filial_name'))){
