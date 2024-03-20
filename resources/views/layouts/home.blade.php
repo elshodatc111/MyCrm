@@ -54,20 +54,27 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="{{ route('eslatma.index') }}">
+                    <a class="nav-link nav-icon" href="{{ route('eslatma.index') }}" title="Eslatmalar">
                         <i class="bi bi-bell"></i>
                         <span class="badge bg-primary badge-number">@include('layouts.eslatma')</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#ssa">
+                    <a class="nav-link nav-icon" href="#ssa" title="Tug'ilgan kunlar">
                       <i class="bi bi-cake2"></i>
                       <span class="badge bg-success badge-number">@include('layouts.tkun')</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-icon" href="#ssa" title="Murojatlar">
+                      <i class="bi bi-envelope"></i>
+                      <span class="badge bg-success badge-number">3</span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown pe-3">
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->email }}</span>
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" title="Shaxsiy kabinet" href="#" data-bs-toggle="dropdown">
+                      <i class="bi bi-person-circle m-0" style="font-size:20px;"></i>
+                      <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->email }}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
@@ -98,7 +105,7 @@
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                            <a class="dropdown-item d-flex align-items-center" href="#######">
                                 <i class="bi bi-coin"></i>
                                 <span>Balans</span>
                             </a>
@@ -149,9 +156,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-chat"></i>
-          <span>Murojatlar</span>
+        <a class="nav-link collapsed" href="####">
+          <i class="bi bi-cart3"></i>
+          <span>Xarajatlar</span>
         </a>
       </li>
       <li class="nav-item">
