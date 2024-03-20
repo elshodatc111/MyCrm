@@ -83,5 +83,4 @@ Route::post('moliya/delete/{id}', [MoliyaController::class,"CheckDestroy"])->nam
 Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya')->middleware('auth');
 Route::get('moliya/plastik', [MoliyaController::class,"plastikMoliya"])->name('plastikMoliya')->middleware('auth');
 Route::get('moliya/qaytarildi', [MoliyaController::class,"qaytarildiMoliya"])->name('qaytarildiMoliya')->middleware('auth');
-Route::get('moliya/xarajat', [MoliyaController::class,"xarajatMoliya"])->name('xarajatMoliya')->middleware('auth');
 Route::resource('moliya', MoliyaController::class)->middleware('auth');

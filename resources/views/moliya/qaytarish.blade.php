@@ -9,15 +9,59 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
           <li class="breadcrumb-item"><a href="{{ route('moliya.index') }}">Moliya</a></li>
-          <li class="breadcrumb-item active">Naqt to'lovlar</li>
+          <li class="breadcrumb-item active">Qaytarilgan to'lovlar</li>
         </ol>
       </nav>
     </div>
     
     <div class="text-center">
-      <div class="card info-card sales-card">
-          <h5 class="card-title" style="font-weight:700;">Tasdiqlanmagan naqt to'lovlar</h5>
-          sr
+      <div class="card info-card sales-card px-2">
+          <h5 class="card-title" style="font-weight:700;">Qaytarilgan to'lovlar(tasdiqlanmagan)</h5>
+          <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Talaba</th>
+                  <th>Tulov summasi</th>
+                  <th>Tulov vaqti</th>
+                  <th>Guruh</th>
+                  <th>To'lov haqida</th>
+                  <th>Operator</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @forelse($Tulovlar as $item)
+                <tr>
+                  <td>{{ $loop->index+1 }}</td>
+                  <td style="text-align:left"><a href="{{ route('user.show', $item['student_id'] ) }}">{{ $item['user_name'] }}</a></td>
+                  <td>{{ $item['summa'] }}</td>
+                  <td>{{ $item['created_at'] }}</td>
+                  <td>{{ $item['guruh'] }}</td>
+                  <td>{{ $item['izoh'] }}</td>
+                  <td><a href="{{ route('hodim.show',$item['admin_id'] ) }}">{{ $item['admin_email'] }}</a></td>
+                  <td>
+                    @if(Auth::user()->type=='Admin' || Auth::user()->type=='SuperAdmin')
+                    <form action="{{ route('CheckEdit',$item['id'] ) }}" method="post" style="display:inline;">
+                      @csrf
+                      <input type="hidden" name="type" value="naqt">
+                      <button class="submit btn btn-primary px-1 py-0" title="Tasdiqlash"><i class="bi bi-check2-all"></i></button>
+                    </form>
+                    @endif
+                    <form action="{{ route('CheckDestroy',$item['id'] ) }}" method="post" style="display:inline;">
+                      @csrf
+                      <input type="hidden" name="type" value="naqt">
+                      <button class="submit btn btn-danger px-1 py-0" title="To'lovni o'chirish"><i class="bi bi-trash"></i></button>
+                    </form>
+                  </td>
+                </tr>
+                @empty
+                <tr>
+                  <td colspan=8 class="text-center">Tasdiqlanmagan to'lovlar mavjud emas</td>
+                </tr>
+                @endforelse
+              </tbody>
+            </table>
       </div>
     </div>
     
