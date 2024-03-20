@@ -65,17 +65,30 @@ class UserController extends Controller{
                 $i++;
             }
         }
-        
-        #dd($Debs);
-
-
-
-
-
         return view('users.debit',compact('Debs'));
     }
     public function userPay(){
-        return view('users.pays');
+        $Tulovlar = array();
+        $Tolov = Tolov::join('users','users.id','tolovs.user_id')
+            ->orderby('tolovs.created_at','desc')
+            ->select('users.name','users.id as talaba_id','tolovs.summa','tolovs.type','tolovs.created_at','tolovs.comment','tolovs.admin_id','tolovs.id')
+            ->get();
+        foreach ($Tolov as $key => $value) {
+            $Tulovlar[$key]['talaba_id']=$value->talaba_id;
+            $Tulovlar[$key]['talaba']=$value->name;
+            $Tulovlar[$key]['summa']=number_format(($value->summa), 0, '.', ' ');
+            $Tulovlar[$key]['type']=$value->type;
+            $Tulovlar[$key]['created_at']=$value->created_at;
+            $Tulovlar[$key]['comment']=$value->comment;
+            $Tulovlar[$key]['admin']=User::where('id',$value->admin_id)->get()->first()->email;
+            $UserHistory = UserHistory::where('tulov_id',$value->id)->get()->first();
+            if($UserHistory->type=='true'){
+                $Tulovlar[$key]['status']="true";
+            }else{
+                $Tulovlar[$key]['status']="false";
+            }
+        }
+        return view('users.pays',compact('Tulovlar'));
     }
     public function create(){
         return view('users.create');

@@ -4,11 +4,11 @@
 
 <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Tashriflar</h1>
+      <h1>To'lovlar</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('home') }}">Bosh sahifa</a></li>
-          <li class="breadcrumb-item active">Tashriflar</li>
+          <li class="breadcrumb-item active">To'lovlar</li>
         </ol>
       </nav>
     </div>
@@ -27,34 +27,42 @@
             <a href="{{ route('user.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi tashrif</a>
         </div>
     </div>
-    @if(session()->has('success'))
-      <div class="alert alert-success">
-        {{ session()->get('success') }}
-      </div>
-    @endif
     <div class="card">
       <div class="card-body pt-4">
-        @if (Session::has('message'))
-            <div class="alert alert-success">{{ Session::get('message') }}</div>
-        @elseif(Session::has('update'))
-          <div class="alert alert-primary">{{ Session::get('update') }}</div>
-        @elseif(Session::has('delete'))
-          <div class="alert alert-danger">{{ Session::get('delete') }}</div>
-        @endif
-        <table class="table table-bordered text-center">
+        <table class="table datatable table-bordered text-center" style="font-size:14px;">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Filial</th>
-                    <th>Hodim ismi</th>
-                    <th>Login</th>
-                    <th>Lavozimi</th>
-                    <th>Telefon raqami</th>
-                    <th>Status</th>
+                    <th>Talaba</th>
+                    <th>To'lov summasi</th>
+                    <th>To'lov turi</th>
+                    <th>To'lov vaqti</th>
+                    <th>To'lov haqida</th>
+                    <th>Operator</th>
+                    <th>To'lov holati</th>
                 </tr>
             </thead>
             <tbody>
-              
+              @forelse($Tulovlar as $item)
+                <tr>
+                  <td>{{ $loop->index+1 }}</td>
+                  <td style="text-align:left;"><a href="{{ route('user.show',$item['talaba_id']) }}">{{ $item['talaba'] }}</a></td>
+                  <td>{{ $item['summa'] }}</td>
+                  <td style="text-align:left;">{{ $item['type'] }}</td>
+                  <td>{{ $item['created_at'] }}</td>
+                  <td style="text-align:left;">{{ $item['comment'] }}</td>
+                  <td>{{ $item['admin'] }}</td>
+                  <td style="text-align:right;">  
+                    @if($item['status']=='true')
+                      <i class="bg-success text-white p-1">Tasdiq</i>
+                    @else
+                      <i class="bg-danger text-white p-1">Kutilmoqda</i>
+                    @endif
+                  </td>
+                </tr>
+              @empty
+
+              @endforelse
             </tbody>
         </table>
       </div>
