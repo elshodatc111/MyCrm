@@ -46,7 +46,7 @@
                   <td>{{ $item['izoh'] }}</td>
                   <td><a href="{{ route('hodim.show',$item['admin_id'] ) }}">{{ $item['admin_email'] }}</a></td>
                   <td>
-                    @if(Auth::user()->type=='Admin' || Auth::user()->type()=='SuperAdmin')
+                    @if(Auth::user()->type=='Admin' || Auth::user()->type=='SuperAdmin')
                     <form action="{{ route('CheckEdit',$item['id'] ) }}" method="post" style="display:inline;">
                       @csrf
                       <input type="hidden" name="type" value="naqt">

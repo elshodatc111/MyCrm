@@ -237,7 +237,7 @@ class UserController extends Controller{
                 $UserHistory->admin_id = Auth::User()->id;
                 $UserHistory->status = "TulovChegirma";
                 $UserHistory->summa = str_replace(',','',$request->summa);
-                $UserHistory->type = 'false';
+                $UserHistory->type = 'true';
                 $UserHistory->student_id = $request->user_id;
                 $UserHistory->izoh = $request->text;
                 $UserHistory->tulov_id = $tulov_id;

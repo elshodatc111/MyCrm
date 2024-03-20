@@ -130,9 +130,7 @@ class TolovController extends Controller{
             $this->SendMessege($phone, $SMS);
             return back()->withInput()->with('success',"To'lov qabul qilindi.");
         }else{
-            #dd($validated['guruh_id']);
             $Guruh = Guruh::find(intval($validated['guruh_id']));
-            #dd($Guruh);
             $guruh_price = $Guruh->guruh_price;
             $guruh_chegirma = $Guruh->guruh_chegirma;
             $guruh_chegirma_day = $Guruh->guruh_chegirma_day;
@@ -168,7 +166,7 @@ class TolovController extends Controller{
                         $UserHistoryNaqt->admin_id = Auth::User()->id;
                         $UserHistoryNaqt->status = "TulovChegirma";
                         $UserHistoryNaqt->summa = $guruh_chegirma;
-                        $UserHistoryNaqt->type = "false";
+                        $UserHistoryNaqt->type = "true";
                         $UserHistoryNaqt->student_id = $validated['user_id'];
                         $UserHistoryNaqt->izoh = $validated['commit'];
                         $UserHistoryNaqt->tulov_id = $Tulov_id;
