@@ -196,7 +196,7 @@
                         <div class="modal fade" id="eslatmaplus" tabindex="-1">
                             <form action="{{ route('eslatma.store') }}" method="post" id="form">
                                 @csrf
-                                <div class="modal-dialog modal-xl">
+                                <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title">Guruh uchun eslatma qoldirish</h5>
@@ -218,7 +218,9 @@
                         </div>
                         <!-- Guruhni davom ettirish -->
                         <div class="modal fade" id="guruh_next" tabindex="-1">
-                            <form action="" method="post" id="form">
+                            <form action="{{ route('indexNewCreate',$guruh['id'] ) }}" method="post" id="form2">
+                                @csrf
+                                @method('put')
                                 <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -230,33 +232,33 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <label for="guruh_name">Yangi guruh nomi</label>
-                                                        <input type="text" name="guruh_name" class="form-control" required>
+                                                        <input type="text" name="guruh_name" class="form-control mt-2" required>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="test_id" class="mt-2">Guruh uchun test</label>
-                                                        <select name="test_id" class="form-select">
+                                                        <select name="test_id" class="form-select mt-2">
                                                             <option value="">Tanlang ...</option>
-                                                            <option value="1">A1</option>
-                                                            <option value="2">A2</option>
-                                                            <option value="3">B1</option>
-                                                            <option value="4">B2</option>
+                                                            @foreach($NewGroups['testlar'] as $item)
+                                                                <option value="{{ $item['id'] }}">{{ $item['test_name'] }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="room_id" class="mt-2">Darslar xonasi</label>
-                                                        <select name="room_id" class="form-select">
+                                                        <select name="room_id" class="form-select mt-2">
                                                             <option value="">Tanlang ...</option>
-                                                            <option value="2">1-xona Sig'imi: 15</option>
-                                                            <option value="3">2-xona Sig'imi: 17</option>
+                                                            @foreach($NewGroups['rooms'] as $item)
+                                                                <option value="{{ $item['id'] }}">{{ $item['room_name'] }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="guruh_start" class="mt-2">Dars boshlanish vaqti</label>
-                                                        <input type="date" name="guruh_start" value="" class="form-control" required>
+                                                        <input type="date" name="guruh_start" value="" class="form-control mt-2" required>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="guruh_juft_toq" class="mt-2">Dars kunlari</label>
-                                                        <select name="guruh_juft_toq" class="form-select">
+                                                        <select name="guruh_juft_toq" class="form-select mt-2">
                                                             <option value="">Tanlang</option>
                                                             <option value="toq">Toq kunlar</option>
                                                             <option value="juft">Juft kunlar</option>
@@ -264,49 +266,42 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="guruh_price" class="mt-2">Kurs narxi</label>
-                                                        <select name="guruh_price" class="form-select">
+                                                        <select name="guruh_price" class="form-select mt-2">
                                                             <option value="">Tanlang ...</option>
-                                                            <option value="5">400000 so'm</option>
-                                                            <option value="6">1000000 so'm</option>
+                                                            @foreach($NewGroups['narxi'] as $item)
+                                                                <option value="{{ $item['id'] }}">{{ $item['summa'] }} so'm</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="techer_id" class="mt-2">O'qituvchi</label>
-                                                        <select name="techer_id" class="form-select">
+                                                        <select name="techer_id" class="form-select mt-2">
                                                             <option value="">Tanlang ...</option>
-                                                            <option value="16">Test Techer so'm</option>
-                                                            <option value="18">Test Techers so'm</option>
-                                                            <option value="19">Uchuinchi Oqituvchi so'm</option>
+                                                            @foreach($NewGroups['techers'] as $item)
+                                                                <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="techer_tulov" class="mt-2">O'qituvchiga to'lov</label>
-                                                        <input type="text" id="summa2" value="0" name="techer_tulov" class="form-control" required>
+                                                        <input type="text" id="summa1" value="0" name="techer_tulov" class="form-control mt-2" required>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="techer_bonus" class="mt-2">O'qituvchiga bonus</label>
-                                                        <input type="text" id="summa" value="0" name="techer_bonus" class="form-control" required>
+                                                        <input type="text" id="summa2" value="0" name="techer_bonus" class="form-control mt-2" required>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-4">
                                                 <h5>Yangi guruhga o'tadigan talabalar.</h5>
-                                                <div class="input-group-text p-0 px-2 mb-2">
-                                                    <input type="checkbox" class="p-0 mr-2"> 
-                                                    <p class="p-0 m-0 pl-3 ml-3">Elshod Musurmonov</p>
+                                                @foreach($NewGroups['talaba'] as $item)
+                                                <div class="form-check py-1" style="text-align:left;">
+                                                    <input class="form-check-input" type="checkbox" name="users{{ $item->id }}" id="{{ $item->id }}">
+                                                    <label class="form-check-label" for="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </label>
                                                 </div>
-                                                <div class="input-group-text p-0 px-2 mb-2">
-                                                    <input type="checkbox" class="p-0 mr-2"> 
-                                                    <p class="p-0 m-0 pl-3 ml-3">Elshod Musurmonov</p>
-                                                </div>
-                                                <div class="input-group-text p-0 px-2 mb-2">
-                                                    <input type="checkbox" class="p-0 mr-2"> 
-                                                    <p class="p-0 m-0 pl-3 ml-3">Elshod Musurmonov</p>
-                                                </div>
-                                                <div class="input-group-text p-0 px-2 mb-2">
-                                                    <input type="checkbox" class="p-0"> 
-                                                    <p class="p-0 m-0 pl-3 ml-3">Elshod Musurmonov</p>
-                                                </div>  
+                                                @endforeach 
                                             </div>
                                             <div class="col-12 mb-2 pt-3">
                                                 <button type="button" class="btn btn-secondary" style="width:48.5%" 
@@ -365,7 +360,6 @@
             </div>
         </div>
         #### Qarzdorlarga SMS yuborish #### <br>
-        #### Guruhni davom ettirish #### <br> 
         #### Talaba Davomadlari ####
         <div class="card">
             <div class="card-body mt-3">

@@ -22,7 +22,7 @@
       <div class="card info-card sales-card px-1">
           <h5 class="card-title" style="font-weight:700;">Tasdiqlanmagan naqt to'lovlar</h5>
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="font-size:14px;">
               <thead>
                 <tr>
                   <th>#</th>

@@ -61,6 +61,9 @@ Route::resource('setting', SettingController::class)->middleware('auth');
 
 Route::get('guruh_activ', [GuruhController::class, 'indexActiv'])->name('indexActiv')->middleware('auth');
 Route::get('guruh_new', [GuruhController::class, 'indexNew'])->name('indexNew')->middleware('auth');
+Route::PUT('guruh_new/create/{id}', [GuruhController::class, 'indexNewCreate'])->name('indexNewCreate')->middleware('auth');
+Route::get('guruh_new/NewGuruh', [GuruhController::class, 'NewGuruh'])->name('NewGuruh')->middleware('auth');
+Route::put('guruh_new/NewGuruh', [GuruhController::class, 'NewGuruhUpdate'])->name('NewGuruhUpdate')->middleware('auth');
 Route::get('guruh_create2/{id}', [GuruhController::class, 'create2'])->name('create2')->middleware('auth');
 Route::post('guruh_store2', [GuruhController::class, 'store2'])->name('store2')->middleware('auth');
 Route::post('guruh/tulov/qaytarish', [GuruhController::class, 'tulovQaytarish'])->name('tulovQaytarish')->middleware('auth');

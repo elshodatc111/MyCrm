@@ -21,7 +21,7 @@
                         <h5 class="card-title" style="font-weight:700;">Naqt to'lovlar</h5>
                         <div class="d-flex align-items-center row">
                             <div class="col-3">
-                                <i class="bi bi-person-arms-up bg-success text-white p-4"
+                                <i class="bi bi-cash bg-success text-white p-4"
                                     style="border-radius:50%;"></i>
                             </div>
                             <div class="col-9">
@@ -43,7 +43,7 @@
                         <h5 class="card-title" style="font-weight:700;">Pastik to'lovlar</h5>
                         <div class="d-flex align-items-center row">
                             <div class="col-3">
-                                <i class="bi bi-person-arms-up bg-primary text-white p-4" style="border-radius:50%;"></i>
+                                <i class="bi bi-credit-card bg-primary text-white p-4" style="border-radius:50%;"></i>
                             </div>
                             <div class="col-9">
                                 <h4 class="text-danger mb-1">{{ $Plastik1 }}</h4>
@@ -64,7 +64,7 @@
                         <h5 class="card-title" style="font-weight:700;">Qaytarilgan to'lovlar</h5>
                         <div class="d-flex align-items-center row">
                             <div class="col-3">
-                                <i class="bi bi-person-arms-up bg-danger text-white p-4"
+                                <i class="bi bi-currency-exchange bg-danger text-white p-4"
                                     style="border-radius:50%;"></i>
                             </div>
                             <div class="col-9">

@@ -24,7 +24,7 @@
             <div class="card-body pt-4 text-center">
                 <h5>Arxiv Eslarmalar</h5>
                 <div class="table-responsive">
-                    <table class="table datatable table-bordered table-striped text-center">
+                    <table class="table datatable table-bordered table-striped text-center" style="font-size:14px;">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>

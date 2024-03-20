@@ -23,7 +23,6 @@ class GuruhController extends Controller{
         $endDay = date('Y-m-d',strtotime("-10 days", strtotime(date("Y-m-d"))));
         $Guruh = Guruh::where('guruh_end','>=',$endDay)->orderby('guruh_start','DESC')
         ->where('filial', request()->cookie('filial_id'))->get();
-        
         $i=1;
         $items = array();
         foreach ($Guruh as $key=>  $value) {
@@ -46,10 +45,7 @@ class GuruhController extends Controller{
             $items[$i] = $Guruhlar;
             $i++;
         }
-        #dd($items);
         return view('guruh.index',compact('items'));
-
-        
     }
 
     public function indexNew(){
@@ -223,7 +219,6 @@ class GuruhController extends Controller{
         $Testlar = Test::where('id',$Guruh->test_id)->get()->first()->test_name;
         $Room = Room::where('id',$Guruh->room_id)->get()->first()->room_name;
         $Techer = User::where('id',$Guruh->techer_id)->get()->first()->name;
-        #dd($Testlar);
         $Javob = array();
         $Javob['guruh'] = $Guruh;
         $Javob['kunlar'] = $kunlar;
@@ -232,7 +227,6 @@ class GuruhController extends Controller{
         $Javob['Testlar'] = $Testlar;
         $Javob['Room'] = $Room;
         $Javob['Techer'] = $Techer;
-        #dd($Javob);
         return view('guruh.create2',compact('Javob'));
     }
     public function clock($cloc_id){
@@ -295,12 +289,8 @@ class GuruhController extends Controller{
 
     public function show($id){
         $Guruhlar = Guruh::where('id',$id)->get()->first();
-        if(empty($Guruhlar)){
-            return back()->withInput();
-        }
-        if($Guruhlar['status']==false){
-            return back()->withInput();
-        }   
+        if(empty($Guruhlar)){return back()->withInput();}
+        if($Guruhlar['status']==false){return back()->withInput();}   
         $guruh=array();
         $guruh['guruh_price'] = number_format(($Guruhlar->guruh_price), 0, '.', ' ');
         $guruh['guruh_price2'] = $Guruhlar->guruh_price;
@@ -315,9 +305,7 @@ class GuruhController extends Controller{
         $guruh['id'] = $id;
         $GuruhJadval = GuruhJadval::where('guruh_id',$id)->get();
         $Jadval = array();
-        foreach ($GuruhJadval as $key => $value){
-            $Jadval[$key] = $value->days;
-        }
+        foreach ($GuruhJadval as $key => $value){$Jadval[$key] = $value->days;}
         $guruh['jadval'] = $Jadval;
         if($guruh['guruh_start']>=date('Y-m-d') AND $guruh['guruh_start']<=date('Y-m-d')){$guruh['status'] = "Aktiv guruh";}elseif($guruh['guruh_start']>date('Y-m-d')){$guruh['status'] = "Yangi guruh";}else{$guruh['status'] = "Yakunlangan";}
         $UserAdmin = User::where('id',$Guruhlar->admin_id);
@@ -330,13 +318,7 @@ class GuruhController extends Controller{
         $guruh['activ_user'] = count($AktivUser);
         $NeAktivUser = GuruhUser::where('guruh_id',$id)->where('status','false')->get();
         $guruh['nd_activ_user'] = count($NeAktivUser);
-
-        $AUser = GuruhUser::where('guruh_id',$id)
-            ->join('users', 'users.id', 'guruh_users.user_id')
-            ->where('guruh_users.status','true')
-            ->select('users.name','users.id','guruh_users.start_data',
-                'guruh_users.start_commit','guruh_users.start_meneger')
-            ->get();
+        $AUser = GuruhUser::where('guruh_id',$id)->join('users', 'users.id', 'guruh_users.user_id')->where('guruh_users.status','true')->select('users.name','users.id','guruh_users.start_data','guruh_users.start_commit','guruh_users.start_meneger')->get();
         $AktivStudent = array();
         foreach ($AUser as $key => $value) {
             $Meneger = User::where('id',$value->start_meneger)->get()->first()->email;
@@ -347,12 +329,7 @@ class GuruhController extends Controller{
             $AktivStudent[$key]['meneger_email'] = $Meneger;
             $AktivStudent[$key]['student_balans'] = number_format(1000, 0, '.', ' ');
         }
-        $DUser = GuruhUser::where('guruh_id',$id)
-            ->join('users', 'users.id', 'guruh_users.user_id')
-            ->where('guruh_users.status','false')
-            ->select('users.name','users.id','guruh_users.start_data',
-                'guruh_users.start_commit','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data','guruh_users.start_meneger')
-            ->get();
+        $DUser = GuruhUser::where('guruh_id',$id)->join('users', 'users.id', 'guruh_users.user_id')->where('guruh_users.status','false')->select('users.name','users.id','guruh_users.start_data','guruh_users.start_commit','guruh_users.end_meneger','guruh_users.end_commit','guruh_users.end_data','guruh_users.start_meneger')->get();
         $EndStudent = array();
         foreach ($DUser as $key => $value) {
             $Meneger = User::where('id',$value->start_meneger)->get()->first()->email;
@@ -367,29 +344,171 @@ class GuruhController extends Controller{
             $EndStudent[$key]['meneger_end_email'] = $EndMeneger;
             $Jarima = StudenHistory::where('student_id',$DUser[$key]->id)->where('guruh_id',$id)->where('status','GuruhDeleteJarima')->get();
             $JarimaSumma = 0;
-            foreach ($Jarima as $value) {
-                $JarimaSumma = $JarimaSumma + $value['summa'];
-            }
+            foreach ($Jarima as $value) {$JarimaSumma = $JarimaSumma + $value['summa'];}
             $EndStudent[$key]['jarima'] = number_format($JarimaSumma, 0, '.', ' ');
         }
-
-        
-        $eslatma = Eslatma::where('eslatmas.type','guruh')
-        ->join('users','users.id','eslatmas.admin_id')
-        ->where('eslatmas.user_guruh_id',$id)
-        ->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')
-        ->orderBy('eslatmas.id', 'DESC')->get();
-        #dd($eslatma[0]['name']);
-
+        $eslatma = Eslatma::where('eslatmas.type','guruh')->join('users','users.id','eslatmas.admin_id')->where('eslatmas.user_guruh_id',$id)->select('users.email','eslatmas.text','eslatmas.created_at','eslatmas.status')->orderBy('eslatmas.id', 'DESC')->get();
         $Kassa = UserHistory::where('status','TulovNaqt')->where('type','false')->get();
         $NaqtKass = 0;
-        foreach ($Kassa as $key => $value) {
-            $NaqtKass = $NaqtKass+$value->summa;
-        }
+        foreach ($Kassa as $key => $value) {$NaqtKass = $NaqtKass+$value->summa;}
         $NaqtKass = number_format($NaqtKass, 0, '.', ' ');
-
-        return view('guruh.show', compact('guruh','AktivStudent','EndStudent','NaqtKass','eslatma'));
+        $NewGroups = array();
+        $Testlar = Test::where('status','true')->get();  // Testlar
+        $NewGroups['testlar'] = $Testlar;
+        $Rooms = Room::where('filial_id',request()->cookie('filial_id'))->where('status','true')->get();
+        $NewGroups['rooms'] = $Rooms;
+        $TulovSumma = Setting::where('filial_id',request()->cookie('filial_id'))->get();
+        $NewGroups['narxi'] = $TulovSumma;
+        $Techers = User::where('filial',request()->cookie('filial_id'))->where('type','Techer')->where('status','true')->get();
+        $NewGroups['techers'] = $Techers;
+        $Talaba = GuruhUser::where('guruh_users.guruh_id',$id)->where('guruh_users.status','true')->join('users','guruh_users.user_id','users.id')->select('users.id','users.name')->get();
+        $NewGroups['talaba'] = $Talaba;
+        return view('guruh.show', compact('NewGroups','guruh','AktivStudent','EndStudent','NaqtKass','eslatma'));
     }
+
+    public function indexNewCreate(Request $request, $id){
+        $nowData = date('Y-m-d');
+        if($request->guruh_start>=date('Y-m-d')){
+            $GuruhUser = GuruhUser::where('guruh_id',$id)->where('status','true')->get();
+            $NewGuruh = array();
+            $i=1;
+            foreach ($GuruhUser as $key => $value) {
+                if($request['users'.$value->user_id]=='on'){
+                    $User = User::where('id',$value->user_id)->where('status','true')->get()->first();
+                    $NewGuruh['talaba'][$i]['id'] = $User->id;
+                    $NewGuruh['talaba'][$i]['name'] = $User->name;
+                    $i++;
+                }
+            }
+            if($i==1){
+                $NewGuruh['talaba']="NULL";
+            }
+            $validated = $request->validate([
+                "guruh_name" => ['required'],
+                "test_id" => ['required'],
+                "room_id" => ['required'],
+                "guruh_start" => ['required'],
+                "guruh_juft_toq" => ['required'],
+                "guruh_price" => ['required'],
+                "techer_id" => ['required'],
+                "techer_tulov" => ['required'],
+                "techer_bonus" => ['required']
+            ]);
+            $Setting = Setting::where('id',$request->guruh_price)->get()->first();
+            $validated['filial'] = intval(request()->cookie('filial_id'));
+            $validated['guruh_dars_vaqt']='NULL';
+            $validated['guruh_end']='NULL';
+            $validated['guruh_price']=$Setting->summa;
+            $validated['guruh_chegirma']=$Setting->chegirma;
+            $validated['guruh_chegirma_day']=$Setting->days;
+            $validated['admin_id']=Auth::user()->id;
+            $validated['admin_chegirma']=$Setting->admin_chegirma;
+            $validated['status']='false';
+            $validated['techer_tulov']=str_replace(',','',$request->techer_tulov);
+            $validated['techer_bonus']=str_replace(',','',$request->techer_bonus);
+            $Create = Guruh::create($validated);
+            $NewGuruh['guruh_id'] = $Create->id;
+            return redirect()->route('NewGuruh',$NewGuruh)->with('NewGuruh',$NewGuruh);
+        }else{
+            return back()->withInput()->with('error','Dars boshlanish vaqtini bugungi kun va bugungi kundan kiyingi kunlarga ochish mumkun.');
+        }
+    }
+    public function NewGuruh(Request $request){
+        $Guruh = Guruh::find($request->guruh_id);
+        $start = $Guruh->guruh_start;
+        $nextDay = date('Y-m-d',strtotime("+40 days", strtotime($start)));
+        if($Guruh->guruh_juft_toq == 'juft'){
+            $kunlar = $this->juftKunlar($start,$nextDay);
+        }else{
+            $kunlar = $this->toqKunlar($start,$nextDay);
+        }
+        $guruh_end = $kunlar[12];
+        $dars_vaqti = array(1,2,3,4,5,6,7,8,9);
+        $room_id = $Guruh->room_id;
+        foreach ($dars_vaqti as $value) {
+            $K = 0;
+            foreach($kunlar as $item){
+                $GuruhJadval = GuruhJadval::where('room_id',$room_id)
+                ->where('days',$item)
+                ->where('times',$value)->get();
+                if(count($GuruhJadval)>0){
+                    $K++;
+                }
+            }
+            if($K>0){
+                unset($dars_vaqti[$value-1]);
+            }
+        }
+        $boshSoatlar = $this->boshSoatlar($dars_vaqti);
+        $Testlar = Test::where('id',$Guruh->test_id)->get()->first()->test_name;
+        $Room = Room::where('id',$Guruh->room_id)->get()->first()->room_name;
+        $Techer = User::where('id',$Guruh->techer_id)->get()->first()->name;
+        $Javob = array();
+        $Javob['guruh'] = $Guruh;
+        $Javob['kunlar'] = $kunlar;
+        $Javob['clock'] = $boshSoatlar;
+        $Javob['guruh_end'] = $guruh_end;
+        $Javob['Testlar'] = $Testlar;
+        $Javob['Room'] = $Room;
+        $Javob['Techer'] = $Techer;
+        $Javob['Talaba'] = $request->talaba;
+        foreach($Javob['Talaba'] as $item){
+            $NewUser = new GuruhUser;
+            $NewUser->guruh_id = $Guruh->id;
+            $NewUser->user_id = $item['id'];
+            $NewUser->start_data = date('Y-m-d');
+            $NewUser->start_commit = $Guruh->name." guruh davom ettirdi.";
+            $NewUser->start_meneger = Auth::user()->id;
+            $NewUser->status = 'false';
+            $NewUser->end_data = 'NULL';
+            $NewUser->end_commit = 'NULL';
+            $NewUser->end_meneger = 'NULL';
+            $NewUser->save();
+        }
+        return view('guruh.newCreate',compact('Javob'));
+    }
+    public function NewGuruhUpdate(Request $request){
+        $Guruh = Guruh::where('id',$request->id)->get()->first();
+        $validated = $request->validate([
+            "status" => ['required'],
+            "guruh_end" => ['required']
+        ]);
+        $validated['guruh_dars_vaqt'] = $this->clock($request->guruh_dars_vaqt);
+        $Guruh->update($validated);
+        $start = $Guruh->guruh_start;
+        $nextDay = date('Y-m-d',strtotime("+40 days", strtotime($start)));
+        if($Guruh->guruh_juft_toq == 'juft'){
+            $kunlar = $this->juftKunlar($start,$nextDay);
+        }else{
+            $kunlar = $this->toqKunlar($start,$nextDay);
+        }
+        $GuruhUser = GuruhUser::where('guruh_id',$request->id)->where('status','false')->get();
+        foreach ($GuruhUser as $key => $value) {
+            $value->status = 'true';
+            $value->update();
+            $StudenHistory = new StudenHistory;
+            $StudenHistory->filial_id = request()->cookie('filial_id');
+            $StudenHistory->student_id = $value->user_id;
+            $StudenHistory->summa = -$Guruh->guruh_price;
+            $StudenHistory->status = 'GuruhPlus';
+            $StudenHistory->type = 0;
+            $StudenHistory->admin_id = Auth::user()->id;
+            $StudenHistory->guruh_id = $Guruh->id;
+            $StudenHistory->tulov_id = 'NULL';
+            $StudenHistory->save();
+        }
+        foreach ($kunlar as $value) {
+            $Kunlar = new GuruhJadval();
+            $Kunlar->filial_id = $Guruh->filial;
+            $Kunlar->room_id = $Guruh->room_id;
+            $Kunlar->guruh_id = $Guruh->id;
+            $Kunlar->days = $value;
+            $Kunlar->times = $request->guruh_dars_vaqt;
+            $Kunlar->save();
+        }
+        return redirect()->route('guruh.show',$request->id)->with('success',"Yangi guruh yaratildi.");
+    }
+
     public function tulovQaytarish(Request $request){
         $guruh_id = $request->guruh_id;
         $NaqtKass = str_replace(" ","",$request->NaqtKass);

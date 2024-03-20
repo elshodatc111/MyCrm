@@ -21,7 +21,7 @@
     <div class="text-center">
       <div class="card info-card sales-card px-2">
           <h5 class="card-title" style="font-weight:700;">Qaytarilgan to'lovlar(tasdiqlanmagan)</h5>
-          <table class="table table-bordered">
+          <table class="table table-bordered" style="font-size:14px;">
               <thead>
                 <tr>
                   <th>#</th>

@@ -291,6 +291,17 @@
                     input3 = input3 ? parseInt( input3, 10 ) : 0;
                     $this.val( function() {return ( input3 === 0 ) ? "" : input3.toLocaleString( "en-US" );} );
                 } );
+                var $input4 = $form3.find( "#summa2" );
+                $input4.on( "keyup", function( event ) {
+                    var selection = window.getSelection().toString();
+                    if ( selection !== '' ) {return;}
+                    if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {return;}
+                    var $this = $( this );
+                    var input4 = $this.val();
+                    var input4 = input4.replace(/[\D\s\._\-]+/g, "");
+                    input4 = input4 ? parseInt( input4, 10 ) : 0;
+                    $this.val( function() {return ( input4 === 0 ) ? "" : input4.toLocaleString( "en-US" );} );
+                } );
             });
         })(jQuery);
   </script>
