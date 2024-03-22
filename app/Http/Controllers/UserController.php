@@ -374,6 +374,8 @@ class UserController extends Controller{
                             $History[$key]['status'] = "To'lov: Naqt";
                         }elseif($value->type=='Plastik'){
                             $History[$key]['status'] = "To'lov: Plastik";
+                        }elseif($value->type=='Payme'){
+                            $History[$key]['status'] = "To'lov: Payme";
                         }
                     }else{
                         if($value->type=='Naqt'){
@@ -388,6 +390,9 @@ class UserController extends Controller{
                         }elseif($value->type=='Chegirma'){
                             $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
                             $History[$key]['status'] = "To'lov: Chegirma (".$Guruh.")";
+                        }elseif($value->type=='Payme'){
+                            $Guruh = Guruh::where('id',$value->guruh_id)->get()->first()->guruh_name;
+                            $History[$key]['status'] = "To'lov: Payme (".$Guruh.")";
                         }
                     }
                 }
