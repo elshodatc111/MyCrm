@@ -23,6 +23,7 @@ Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMes
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/user/guruh/{id}', [HomeController::class, 'userGuruh'])->name('userGuruh')->middleware('auth');
 Route::get('/setCookie', [CookiesController::class, 'setCookie'])->name('setCookie')->middleware('auth');
 Route::get('/delCookie', [CookiesController::class, 'delCookie'])->name('delCookie')->middleware('auth');
 Route::get('/changeFilial', [CookiesController::class, 'changeFilial'])->name('changeFilial')->middleware('auth');

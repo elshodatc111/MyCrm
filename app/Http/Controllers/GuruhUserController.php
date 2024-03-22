@@ -139,7 +139,7 @@ class GuruhUserController extends Controller
         $validated2['summa']=$request->guruh_summa;
         $validated2['type']=0;
         $validated2['admin_id']=Auth::user()->id;
-        $validated2['guruh_id']=$GuruhUser->id;
+        $validated2['guruh_id']=$GuruhUser->guruh_id;
         $validated2['tulov_id']="NULL";
         $validated3 = array();
         $validated3['filial_id']=request()->cookie('filial_id');
@@ -148,7 +148,7 @@ class GuruhUserController extends Controller
         $validated3['summa']=-$validated['summa'];
         $validated3['type']=0;
         $validated3['admin_id']=Auth::user()->id;
-        $validated3['guruh_id']=$GuruhUser->id;
+        $validated3['guruh_id']=$GuruhUser->guruh_id;
         $validated3['tulov_id']="NULL";
         #dd($request);
         StudenHistory::create($validated2);
