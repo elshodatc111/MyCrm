@@ -17,6 +17,10 @@ use App\Http\Controllers\EslatmaController;
 use App\Http\Controllers\TolovController; 
 use App\Http\Controllers\MoliyaController; 
 use App\Http\Controllers\ContactController; 
+use App\Http\Controllers\PaymeController; 
+
+
+Route::post('/payme', [PaymeController::class, 'index']);
 
 Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege')->middleware('auth');
