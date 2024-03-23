@@ -242,67 +242,57 @@
         <h2>Contact</h2>
         <p>Bog'lanish</p>
       </div>
+      @if (Session::has('success'))
+        <div class="alert alert-danger">{{ Session::get('success') }}</div>
+      @endif
       <div class="info-box">
-        <!-- LEFT -->
-        <div class="my-2 text-white w-100">
-          <div class="row p-3" style="width:70%;background-color: rgba(255, 255, 255, 0.09);">
-            <div class="col-2 text-center">
-              <img src="https://atko.tech/crm/user/css/01.png" style="width:70%;border-radius:50%;padding:5%">
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-7">
-                  <h4>Elshod Musurmonov</h4>
-                </div>
-                <div class="col-5" style="text-align:right">
-                  <i>2024-03-20 00:00:00</i>
-                </div>
-                <div class="col-12">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem similique sapiente corporis adipisci ex minima quibusdam deleniti neque excepturi nihil error dolorem. Totam architecto, deserunt eum harum veniam iure!
-                </div>
-                <div class="col-12" style="text-align:right">
-                  <i class="bi bi-check2"></i>
-                  <i class="bi bi-check2-all"></i>
+        @foreach($Contacts as $item)
+          @if($item['status']=='user')
+          <div class="my-2 text-white w-100">
+            <div class="row p-3" style="width:70%;background-color: rgba(255, 255, 255, 0.09);margin-left: 30%;">
+              <div class="col-2 text-center">
+                <img src="https://atko.tech/crm/user/css/01.png" style="width:70%;border-radius:50%;padding:5%">
+              </div>
+              <div class="col-10">
+                <div class="row">
+                  <div class="col-7"><h4>{{ Auth::user()->name }}</h4></div>
+                  <div class="col-5" style="text-align:right"><i>{{ $item['created_at'] }}</i></div>
+                  <div class="col-12">{{ $item['text'] }}</div>
+                  <div class="col-12" style="text-align:right">
+                    @if($item['admin_type']=='false')<i class="bi bi-check2"></i>
+                    @else<i class="bi bi-check2-all"></i>@endif
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- RIGHT -->
-        <div class="my-2 text-white w-100">
-          <div class="row p-3" style="width:70%;background-color: rgba(255, 255, 255, 0.09);margin-left: 30%;">
-            <div class="col-2 text-center">
-              <img src="https://atko.tech/crm/user/css/01.png" style="width:70%;border-radius:50%;padding:5%">
-            </div>
-            <div class="col-10">
-              <div class="row">
-                <div class="col-7">
-                  <h4>Elshod Musurmonov</h4>
-                </div>
-                <div class="col-5" style="text-align:right">
-                  <i>2024-03-20 00:00:00</i>
-                </div>
-                <div class="col-12">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, rem 
-                  similique sapiente corporis adipisci ex minima quibusdam deleniti neque 
-                  excepturi nihil error dolorem. Totam architecto, deserunt eum harum veniam iure!
-                </div>
-                <div class="col-12" style="text-align:right">
-                  <i class="bi bi-check2"></i>
-                  <i class="bi bi-check2-all"></i>
+          @else
+          <div class="my-2 text-white w-100">
+            <div class="row p-3" style="width:70%;background-color: rgba(255, 255, 255, 0.09);">
+              <div class="col-2 text-center"><img src="https://atko.tech/crm/user/css/01.png" style="width:70%;border-radius:50%;padding:5%"></div>
+              <div class="col-10">
+                <div class="row">
+                  <div class="col-7"><h4>{{ $item['name'] }}</h4></div>
+                  <div class="col-5" style="text-align:right"><i>{{ $item['created_at'] }}</i></div>
+                  <div class="col-12">{{ $item['text'] }}</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          @endif
+        @endforeach
       </div>
       
-      <form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4">
+      <form action="{{ route('contact.store') }}" method="post">
+        @csrf
         <h3>Bizga savollaringizni qoldiring va biz sizga javob beramiz.</h3>
         <div class="form-group mt-3">
-          <textarea class="form-control" name="message" rows="5" placeholder="Murojat matni" required></textarea>
+          <textarea class="form-control text-white" name="text" style="background-color:rgba(255,255,255,0.05);border-radius:0;" placeholder="Murojat matni" required></textarea>
         </div>
-        <div class="text-center mt-3"><button type="submit"><i class="bi bi-send"></i> Yuborish</button></div>
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-warning text-white" style="border-radius:0;">
+          <i class="bi bi-send"></i> Yuborish</button>
+        </div>
       </form>
 
     </div>

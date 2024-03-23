@@ -16,6 +16,7 @@ use App\Http\Controllers\GuruhUserController;
 use App\Http\Controllers\EslatmaController; 
 use App\Http\Controllers\TolovController; 
 use App\Http\Controllers\MoliyaController; 
+use App\Http\Controllers\ContactController; 
 
 Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege')->middleware('auth');
@@ -89,3 +90,5 @@ Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMol
 Route::get('moliya/plastik', [MoliyaController::class,"plastikMoliya"])->name('plastikMoliya')->middleware('auth');
 Route::get('moliya/qaytarildi', [MoliyaController::class,"qaytarildiMoliya"])->name('qaytarildiMoliya')->middleware('auth');
 Route::resource('moliya', MoliyaController::class)->middleware('auth');
+
+Route::resource('contact', ContactController::class)->middleware('auth');

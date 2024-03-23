@@ -15,6 +15,7 @@ use App\Models\GuruhUser;
 use App\Models\GuruhJadval;
 use App\Models\StudenHistory;
 use App\Models\UserHistory;
+use App\Models\Contact;
 use App\Models\Eslatma;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -110,10 +111,25 @@ class HomeController extends Controller{
                 }
                 $History[$key]['type'] = $value->type;
             }
-            
-            #dd($History);
+            ### Contact ####
+            $Contact = Contact::where('user_id',Auth::user()->id)->get();
+            $Contacts = array();
+            foreach ($Contact as $key => $value) {
+                $Contacts[$key]['status'] = $value->status;
+                $Contacts[$key]['admin_id'] = $value->admin_id;
+                $Contacts[$key]['user_id'] = $value->user_id;
+                $Contacts[$key]['text'] = $value->text;
+                $Contacts[$key]['user_type'] = $value->user_type;
+                $Contacts[$key]['admin_type'] = $value->admin_type;
+                $Contacts[$key]['created_at'] = $value->created_at;
+                if($value->status=='admin'){
+                    $User = User::where('id',$value->admin_id)->get()->first();
+                    $Contacts[$key]['name'] = $User->name;
+                }
+            }
+            #dd($Contacts);
 
-            return view('student.index',compact('Users','Guruhlar','Chegirmalar','History'));
+            return view('student.index',compact('Users','Guruhlar','Chegirmalar','History','Contacts'));
         }elseif ($user->type=='Techer') {
             return "O'qituvchi profeli tayyor emas";
         }else{
