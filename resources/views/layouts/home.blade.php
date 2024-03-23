@@ -66,9 +66,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-icon" href="#ssa" title="Murojatlar">
+                    <a class="nav-link nav-icon" href="{{ route('contact.index') }}" title="Murojatlar">
                       <i class="bi bi-envelope"></i>
-                      <span class="badge bg-success badge-number">3</span>
+                      <span class="badge bg-success badge-number">@include('layouts.contact')</span>
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-3">

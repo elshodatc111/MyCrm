@@ -111,7 +111,6 @@ class HomeController extends Controller{
                 }
                 $History[$key]['type'] = $value->type;
             }
-            ### Contact ####
             $Contact = Contact::where('user_id',Auth::user()->id)->get();
             $Contacts = array();
             foreach ($Contact as $key => $value) {
@@ -127,9 +126,13 @@ class HomeController extends Controller{
                     $Contacts[$key]['name'] = $User->name;
                 }
             }
-            #dd($Contacts);
+            $Typing = Contact::where('user_id',Auth::user()->id)->where('user_type','false')->get();
+            foreach ($Typing as $key => $value) {$value->update(['user_type'=>'true']);}
 
-            return view('student.index',compact('Users','Guruhlar','Chegirmalar','History','Contacts'));
+            $MessCount = count(Contact::where('user_id',Auth::user()->id)->where('user_type','false')->get());
+
+            return view('student.index',compact('Users','Guruhlar','Chegirmalar','History','Contacts','MessCount'));
+
         }elseif ($user->type=='Techer') {
             return "O'qituvchi profeli tayyor emas";
         }else{

@@ -17,7 +17,7 @@
   <!--Bosh sahifa-->
   <header id="header">
     <div class="container">
-      <h1><a href="index.html">{{ Auth::user()->name }}</a></h1>
+      <h1><a href="{{ route('home') }}">{{ Auth::user()->name }}</a></h1>
       <h2><span>ATKO </span>Koreys tili markaziga xush kelibsiz!!!</h2>
       <nav id="navbar" class="navbar">
         <ul>
@@ -25,7 +25,9 @@
           <li><a class="nav-link" href="#about">Kabinet</a></li>
           <li><a class="nav-link" href="#resume">Tarix</a></li>
           <li><a class="nav-link" href="#services">Kurslarim</a></li>
-          <li><a class="nav-link" href="#contact">Bog'lanish</a></li>
+          <li><a class="nav-link" href="#contact">Bog'lanish
+              <span class="text-primary"><i class="bi bi-chat-dots"></i></span>
+          </a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>

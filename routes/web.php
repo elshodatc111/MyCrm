@@ -91,4 +91,5 @@ Route::get('moliya/plastik', [MoliyaController::class,"plastikMoliya"])->name('p
 Route::get('moliya/qaytarildi', [MoliyaController::class,"qaytarildiMoliya"])->name('qaytarildiMoliya')->middleware('auth');
 Route::resource('moliya', MoliyaController::class)->middleware('auth');
 
+Route::post('contact/create/admin', [ContactController::class,"AdminSendMurojat"])->name('AdminSendMurojat')->middleware('auth');
 Route::resource('contact', ContactController::class)->middleware('auth');
