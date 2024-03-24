@@ -115,7 +115,8 @@ class HodimController extends Controller{
             $phone = str_replace(" ","",$request->phone);
             $login = $request->email;
             $parol = $request->password;
-            $text = $request->name." ".request()->cookie('filial_name')." o'quv markaziga ishga olindingiz. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: ".$parol."\n".config('api.messege_text');
+            $text = $request->name." ".request()->cookie('filial_name').
+            " o'quv markaziga ishga olindingiz. Shaxsiy kabinetga kirish uchun sizning\nLogin:".$login."\nParol: ".$parol."\n".config('api.messege_text');
             $this->SendMessege($phone, $text);
             User::create($validated);
             return redirect()->route('hodim.index')->with('success','Yangi hodim qo\'shildi.');

@@ -105,10 +105,10 @@
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#######">
-                                <i class="bi bi-coin"></i>
-                                <span>Balans</span>
-                            </a>
+                          <a class="dropdown-item d-flex align-items-center" href="#######">
+                            <i class="bi bi-coin"></i>
+                            <span>Balans</span>
+                          </a>
                         </li>
                         @endif
                         <li><hr class="dropdown-divider"></li>
@@ -156,7 +156,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="####">
+        <a class="nav-link {{ request()->is('xarajat') ? '':'collapsed' }}" href="{{ route('xarajat') }}">
           <i class="bi bi-cart3"></i>
           <span>Xarajatlar</span>
         </a>

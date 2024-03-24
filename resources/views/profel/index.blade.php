@@ -12,59 +12,94 @@
         </ol>
       </nav>
     </div>
-    
+    @if(session()->has('success'))
+      <div class="alert alert-success">
+        {{ session()->get('success') }}
+      </div>
+    @endif
+    @if(session()->has('error'))
+      <div class="alert alert-danger">
+        {{ session()->get('error') }}
+      </div>
+    @endif
+    @if ($errors->any())
+        <div class="alert alert-danger">Parol 8 belgidan kam.</div>
+    @endif
     <div class="row">
-        <div class="col-lg-6">
-            <div class="card">
+        <div class="col-lg-4">
+            <div class="card" style="min-height:280px">
                 <div class="card-body pt-4 text-center">
                     <h5>{{ Auth::user()->name }}</h5>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" style="font-size:14px;">
                         <tr>
                             <th style="text-align:left;">Yashash manzil</th>
-                            <td>{{ Auth::user()->address }}</td>
+                            <td style="text-align:left;">{{ Auth::user()->address }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Telefon raqam</th>
-                            <td>{{ Auth::user()->phone }}</td>
+                            <td style="text-align:left;">{{ Auth::user()->phone }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Tug'ilgan kun</th>
-                            <td>{{ Auth::user()->tkun }}</td>
+                            <td style="text-align:left;">{{ Auth::user()->tkun }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Login</th>
-                            <td>{{ Auth::user()->email }}</td>
+                            <td style="text-align:left;">{{ Auth::user()->email }}</td>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Ishga olindi</th>
-                            <td>{{ Auth::user()->created_at }}</td>
+                            <td style="text-align:left;">{{ Auth::user()->created_at }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card" style="min-height:280px">
+                <div class="card-body pt-4 text-center">
+                    <h5>Tasdiqlanmagan to'lovlar</h5>
+                    <table class="table table-bordered" style="font-size:14px;">
+                        <tr>
+                            <th style="text-align:left;">Naqt to'lovlar</th>
+                            <td style="text-align:right;">{{ $Summa['Naqt'] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">Plastik to'lovlar</th>
+                            <td style="text-align:right;">{{ $Summa['Plastik'] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">Qaytarilgan to'lovlar</th>
+                            <td style="text-align:right;">{{ $Summa['Qaytar'] }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">Xarajatlar</th>
+                            <td style="text-align:right;">{{ $Summa['Xarajat'] }}</td>
                         </tr>
                     </table>
                     <div class="row">
                         <div class="col-6">
-                            <a href="{{ route('Statistika') }}" class="btn btn-primary w-100">Statistika</a>
+                            <a href="{{ route('Statistika') }}" class="btn btn-primary w-100" style="border-radius:0;">Statistika</a>
                         </div>
                         <div class="col-6">
-                            <a href="{{ route('IshHaqi') }}" class="btn btn-primary w-100">Ish haqi</a>
+                            <a href="{{ route('IshHaqi') }}" class="btn btn-primary w-100" style="border-radius:0;">Ish haqi</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-lg-6">
-            <div class="card">
+        <div class="col-lg-4">
+            <div class="card" style="min-height:280px">
                 <div class="card-body pt-4 text-center">
                     <h5>Parolni yangilash</h5>
-                    <form action="" method="post">
+                    <form action="{{ route('profel.update',Auth::user()->id) }}" method="post">
                         @csrf
-                        <label for="">Joriy parol</label>
-                        <input type="password" required class="form-control">
-                        <label for="" class="mt-2">Yangi parol</label>
-                        <input type="password" required class="form-control">
-                        <label for="" class="mt-2">Yangi parolni takrorlang</label>
-                        <input type="password" required class="form-control">
-                        <button class="btn btn-primary w-100 mt-3">Parolni yangilash</button>
+                        @method('put')
+                        <input type="password" style="border-radius:0;" name="thispassword" required class="form-control mb-2" placeholder="Joriy parol">
+                        <input type="password" style="border-radius:0;" name="newpassword" required class="form-control mb-2" placeholder="Yangi parol">
+                        <input type="password" style="border-radius:0;" name="repetpassword" required class="form-control mb-2" placeholder="Parolni takrorlang">
+                        <button class="btn btn-primary w-100 mt-3" style="border-radius:0;">Parolni yangilash</button>
                     </form>
                 </div>
             </div>

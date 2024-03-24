@@ -46,7 +46,7 @@
                 </a>
             </div>
             @empty
-
+              <div class="col-lg-12 text-center">Murojatlar mavjud emas</div>
             @endforelse
             
             

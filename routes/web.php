@@ -18,9 +18,14 @@ use App\Http\Controllers\TolovController;
 use App\Http\Controllers\MoliyaController; 
 use App\Http\Controllers\ContactController; 
 use App\Http\Controllers\PaymeController; 
+use App\Http\Controllers\XarajatController; 
 
 
 Route::post('/payme', [PaymeController::class, 'index']);
+
+Route::get('/xarajat', [XarajatController::class, 'index'])->name('xarajat')->middleware('auth');
+Route::post('/xarajat/create', [XarajatController::class, 'store'])->name('store')->middleware('auth');
+Route::delete('/xarajat/delete/{id}', [XarajatController::class, 'delete'])->name('delete')->middleware('auth');
 
 Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/SendMessege/{phone}/{text}', [SendMessgeController::class, 'SendMessege'])->name('SendMessege')->middleware('auth');

@@ -47,11 +47,13 @@
                                         @endif
                                     </td>
                                     <td>
+                                        @if(Auth::user()->type!='Operator')
                                         <form action="{{ route('eslatma.destroy',$value['id']) }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger px-1 py-0"><i class="bi bi-check-all"></i></button>
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

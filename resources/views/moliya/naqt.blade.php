@@ -46,11 +46,13 @@
                   <td>{{ $item['izoh'] }}</td>
                   <td><a href="{{ route('hodim.show',$item['admin_id'] ) }}">{{ $item['admin_email'] }}</a></td>
                   <td>
+                    @if(Auth::user()->type!='Operator')
                     <form action="{{ route('CheckEdit',$item['id'] ) }}" method="post" style="display:inline;">
                       @csrf
                       <input type="hidden" name="type" value="naqt">
                       <button class="submit btn btn-primary px-1 py-0" title="Tasdiqlash"><i class="bi bi-check2-all"></i></button>
                     </form>
+                    @endif
                     <form action="{{ route('CheckDestroy',$item['id'] ) }}" method="post" style="display:inline;">
                       @csrf
                       <input type="hidden" name="type" value="naqt">
