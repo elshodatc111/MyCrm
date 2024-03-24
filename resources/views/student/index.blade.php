@@ -25,9 +25,8 @@
           <li><a class="nav-link" href="#about">Kabinet</a></li>
           <li><a class="nav-link" href="#resume">Tarix</a></li>
           <li><a class="nav-link" href="#services">Kurslarim</a></li>
-          <li><a class="nav-link" href="#contact">Bog'lanish
-              <span class="text-primary"><i class="bi bi-chat-dots"></i></span>
-          </a></li>
+          <li><a class="nav-link" href="#contact">Bog'lanish</a></li>
+          <li><a href="https://atko.uz/cours" class="btn btn-danger p-2">Online kurslar</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -36,7 +35,6 @@
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
       </div>
-      
     </div>
   </header>
   <!-- Kabinet -->
