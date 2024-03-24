@@ -70,6 +70,7 @@ class HomeController extends Controller{
                     $Chegirmalar[$key]['id'] = $item->id;
                     $Chegirmalar[$key]['guruh_name'] = $item->guruh_name;
                     $Chegirmalar[$key]['guruh_tulov'] = number_format(($item->guruh_price-$item->guruh_chegirma), 0, '.', ' ');
+                    $Chegirmalar[$key]['summa'] = ($item->guruh_price-$item->guruh_chegirma)*100;
                     $Chegirmalar[$key]['guruh_chegirma'] = number_format(($item->guruh_chegirma), 0, '.', ' ');
                     $Chegirmalar[$key]['guruh_start'] = $value->guruh_start;
                     $Chegirmalar[$key]['days'] = date("Y-m-d",strtotime('+'.$value->guruh_chegirma_day.' day',strtotime($value->guruh_start)));
@@ -131,7 +132,21 @@ class HomeController extends Controller{
 
             $MessCount = count(Contact::where('user_id',Auth::user()->id)->where('user_type','false')->get());
 
-            return view('student.index',compact('Users','Guruhlar','Chegirmalar','History','Contacts','MessCount'));
+            $Tolov_qilindi = 0;
+            $Kutilmoqda = 0;
+            $Balans = array();
+            foreach ($StudenHistory as $key => $value) {
+                $UserHistory2 = UserHistory::where('tulov_id',$value->tulov_id)->first()->type;
+                if($UserHistory2=='false'){
+                    $Kutilmoqda = $Kutilmoqda + $value->summa;
+                }else{
+                    $Tolov_qilindi = $Tolov_qilindi + $value->summa;
+                }
+            }
+            $Balans['balans'] = number_format(($Tolov_qilindi), 0, '.', ' ')." so'm";
+            $Balans['kutilmoqda'] = number_format(($Kutilmoqda), 0, '.', ' ')." so'm";
+            
+            return view('student.index',compact('Balans','Users','Guruhlar','Chegirmalar','History','Contacts','MessCount'));
 
         }elseif ($user->type=='Techer') {
             return "O'qituvchi profeli tayyor emas";

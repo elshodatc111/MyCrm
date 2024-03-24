@@ -36,6 +36,7 @@
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
       </div>
+      
     </div>
   </header>
   <!-- Kabinet -->
@@ -43,7 +44,14 @@
     <div class="about-me container">
       <div class="section-title">
         <h2>Kabinet</h2>
-        <p>Balans: 150 000 so'm</p>
+        <div class="row">
+          @if($Balans['balans'] < 0 )
+          <p class='col-lg-6 text-danger' style="font-size:24px">Balans: {{ $Balans['balans'] }} </p>
+          @else
+          <p class='col-lg-6 text-success' style="font-size:24px">Balans: {{ $Balans['balans'] }} </p>
+          @endif
+          <p class='col-lg-6 text-warning' style="font-size:24px">Kutilmoqda: {{ $Balans['kutilmoqda'] }} </p>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-6">
@@ -78,8 +86,17 @@
             </li></ul>
         </div>
       </div> 
-      <div class="w-100 text-center">
-        <button class="btn btn-success"><i class="bi bi-cash-coin"></i> Balansni toldirish</button>
+      <div class="w-100 text-center row">
+        <p>Hisobni to'ldirish</p>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+        
+          <button type="submit" class="btn btn-success text-white w-100 mt-2">
+            <i class="bi bi-cash-coin"></i> To'lov qolish
+          </button>
+        
+        </div>
+        
       </div>
       <br><br>   
       <div class="section-title">
@@ -92,7 +109,17 @@
             <i class="text-white bg-danger p-1 w-100 text-center" style="font-size:12px;">Chegirma muddati: {{ $item['guruh_start'] }}</i><br/>
             <b>{{ $item['guruh_name'] }}</b><br>
             Guruhga {{ $item['guruh_tulov'] }} so'm to'lov qiling. <br> {{ $item['guruh_chegirma'] }} so'm chegirma oling.<br>
-            <button class="btn btn-success mt-3 text-center text-white"><i class="bi bi-cash-coin"></i> To'lov qolish</button>
+            <form method="POST" action="https://test.paycom.uz">
+              <input type="hidden" name="merchant" value="65f14418a929127d44bcb5d1"/>
+              <input type="hidden" name="amount" value="{{ $item['summa'] }}"/>
+              <input type="hidden" name="account[onwer_id]" value="{{ Auth::user()->id }}"/>
+              <input type="hidden" name="lang" value="uz"/>
+              <input type="hidden" name="callback_timeout" value="15"/>
+              <input type="hidden" name="description" value="ATKO o'quv markaz kurslari uchun to'lov"/>
+              <button type="submit" class="btn btn-success text-white w-100 m-0">
+                <i class="bi bi-cash-coin"></i> To'lov qolish
+              </button>
+            </form>
           </p>
         </div>
         @empty
