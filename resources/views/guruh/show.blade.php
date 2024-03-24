@@ -458,6 +458,7 @@
                             </table>
                         </div>
                         <hr>
+                        @if(Auth::user()->type=='Admin' || Auth::user()->type=='SuperAdmin')
                         <form action="{{ route('guruh_setting.update',$guruh['id']) }}" method="post" id="form">
                             @csrf
                             @method('put')
@@ -487,6 +488,7 @@
                                 </div>
                             </div>
                         </form>
+                        @endif
                     </div>
                     <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="table-responsive">

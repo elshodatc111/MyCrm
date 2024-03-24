@@ -95,6 +95,15 @@
                             </a>
                         </li>
                         <li>
+                        @if(Auth::user()->type=='SuperAdmin' OR Auth::user()->type=='Admin')
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center" href="#######">
+                            <i class="bi bi-coin"></i>
+                            <span>Balans</span>
+                          </a>
+                        </li>
+                        @endif
                         @if(Auth::user()->type=='SuperAdmin')
                         <hr class="dropdown-divider"></li>
                         <li>
@@ -102,13 +111,6 @@
                                 <i class="bi bi-gear"></i>
                                 <span>Sozlamalar</span>
                             </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center" href="#######">
-                            <i class="bi bi-coin"></i>
-                            <span>Balans</span>
-                          </a>
                         </li>
                         @endif
                         <li><hr class="dropdown-divider"></li>
@@ -174,20 +176,20 @@
           <span>O'qituvchilar</span>
         </a>
       </li>
-      @if(Auth::user()->type=='SuperAdmin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('hodim') ? '':'collapsed' }}" href="{{ route('hodim.index')}}">
           <i class="bi bi-person-arms-up"></i>
           <span>Hodimlar</span>
         </a>
       </li>
+      @if(Auth::user()->type=='SuperAdmin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('room') ? '':'collapsed' }}" href="{{ route('room.index') }}">
           <i class="bi bi-door-open"></i>
           <span>Xonalar</span>
         </a>
       </li>
-      @if(Auth::user()->filial=='NULL')
+      @if(Auth::user()->filial=='NULL' )
       <li class="nav-item">
         <a class="nav-link {{ request()->is('filial') ? '':'collapsed' }}" href="{{ route('filial.index') }}">
             <i class="bi bi-house-check"></i>

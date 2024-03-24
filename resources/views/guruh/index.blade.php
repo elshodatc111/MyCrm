@@ -69,14 +69,16 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('guruh.show', $item['id'] ) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-eye"></i></a>
-                                    @if(Auth::user()->type!='Operator')
+                                    <a href="{{ route('guruh.show', $item['id'] ) }}" class="btn btn-success px-1 py-0"><i class="bi bi-eye"></i></a>
+                                    @if(Auth::user()->type=='Admin' OR Auth::user()->type=='SuperAdmin')
                                     <a href="{{ route('guruh.edit',$item['id']) }}" class="btn btn-primary px-1 py-0"><i class="bi bi-pencil"></i></a>
+                                    @if(Auth::user()->type=='SuperAdmin')
                                     <form action="{{ route('distroy2',$item['id'] ) }}" method="post" style='display:inline'>
                                         @csrf
                                         @method('delete')
                                         <button type="sublit" class="btn btn-danger px-1 py-0"><i class="bi bi-trash"></i></button>
                                     </form>
+                                    @endif
                                     @endif
                                 </td>
                             </tr>
