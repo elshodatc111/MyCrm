@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Guruh;
+use App\Models\GuruhUser;
 use App\Models\Transaction;
+use App\Models\Tolov;
+use App\Models\StudenHistory;
+use App\Models\PaymePay;
+use App\Models\UserHistory;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
@@ -312,9 +318,104 @@ class PaymeController extends Controller{
             $transaction->state=2;
             $transaction->perform_time = $this->microtime();
             $transaction->save();
-
-            ### BU JOYDA TO"LOV AMALGA OSHIRILGANDANDAN KIYINGI AMALLAR BAJARILADI ###
-
+            $user_id = $transaction->owner_id;
+            $filial_id = User::where('id',$user_id)->first()->filial;
+            $GuruhUser = GuruhUser::where('user_id',$user_id)->where('status','true')->get();
+            $Tolov = Tolov::create([
+                'filial_id'=>$filial_id,
+                'user_id'=>$user_id,
+                'guruh_id'=>'NULL',
+                'summa'=>$transaction->amount,
+                'type'=>'Payme',
+                'comment'=>"Shaxsiy kabinet orqali to'lov",
+                'admin_id'=>1,
+                'chegirma_id'=>0,
+            ]);
+            $UserHistory = UserHistory::create([
+                'filial_id'=>$filial_id,
+                'admin_id'=>1,
+                "status"=>'Payme',
+                'summa'=>$transaction->amount,
+                'type'=>'true',
+                'student_id'=>$user_id,
+                'izoh'=>"Payme orqali to'lov",
+                'tulov_id'=>$Tolov->id
+            ]);
+            $StudenHistory = StudenHistory::create([
+                'filial_id'=>$filial_id,
+                'student_id'=>$user_id,
+                'status'=>'Tulov',
+                'summa'=>$transaction->amount,
+                'type'=>'Payme',
+                'admin_id'=>1,
+                'guruh_id'=>'NULL',
+                'tulov_id'=>$Tolov->id,
+            ]);    
+            $PaymePay = PaymePay::create([
+                'tulov_id'=>$Tolov->id,
+                'history_id'=>$StudenHistory->id,
+                'history_chegirma_id'=>0,
+                'chegirma_id'=>0,
+                'admin_history'=>$UserHistory->id,
+                'transaction_id'=>$transaction->id,
+            ]);
+            foreach ($GuruhUser as $key => $value) {
+                $Guruh = Guruh::where('id',$value->guruh_id)->first();
+                $ChegirmaTulov = $Guruh->guruh_price-$Guruh->guruh_chegirma;
+                $guruh_chegirma_day = $Guruh->guruh_chegirma_day;
+                $guruh_start = $Guruh->guruh_start;
+                $thisDay = date("Y-m-d");
+                $Chegirma_Muddat = date('Y-m-d', strtotime("+".$guruh_chegirma_day." day", strtotime($guruh_start)));
+                if($Chegirma_Muddat>=$thisDay){
+                    if($transaction->amount == $ChegirmaTulov){
+                        $Tolovlar = Tolov::where('user_id',$user_id)->where('guruh_id',$value->guruh_id)->first();
+                        if(!$Tolovlar){
+                            $Tolov2 = Tolov::create([
+                                'filial_id'=>$filial_id,
+                                'user_id'=>$user_id,
+                                'guruh_id'=>$Guruh->id,
+                                'summa'=>$Guruh->guruh_chegirma,
+                                'type'=>'Chegirma',
+                                'comment'=>"Payme orqali to'lov",
+                                'admin_id'=>1,
+                                'chegirma_id'=>0,
+                            ]);
+                            $UserHistory2 = UserHistory::create([
+                                'filial_id'=>$filial_id,
+                                'admin_id'=>1,
+                                "status"=>'Chegirma',
+                                'summa'=>$Guruh->guruh_chegirma,
+                                'type'=>'true',
+                                'student_id'=>$user_id,
+                                'izoh'=>"Payme orqali to'lov",
+                                'tulov_id'=>$Tolov2->id
+                            ]);
+                            $StudenHistory2 = StudenHistory::create([
+                                'filial_id'=>$filial_id,
+                                'student_id'=>$user_id,
+                                'status'=>'Tulov',
+                                'summa'=>$Guruh->guruh_chegirma,
+                                'type'=>'Chegirma',
+                                'admin_id'=>1,
+                                'guruh_id'=>$Guruh->id,
+                                'tulov_id'=>$Tolov2->id,
+                            ]);
+                            StudenHistory::where('id',$StudenHistory->id)->update([
+                                'guruh_id'=>$Guruh->id,
+                            ]);   
+                            Tolov::where('id',$Tolov->id)->update([
+                                'guruh_id'=>$Guruh->id,
+                            ]);
+                            PaymePay::where('id',$PaymePay->id)->update([
+                                'history_chegirma_id'=>$UserHistory2->id,
+                                'history_chegirma_id'=>$StudenHistory2->id,
+                                'chegirma_id'=>$Tolov2->id
+                            ]);
+                            break;
+                        }
+                    }
+                }
+            }
             $response = [
                 'result'=>[
                     'state'=>$transaction->state,
@@ -406,9 +507,26 @@ class PaymeController extends Controller{
                     'cancel_time' => $cancel_time,
                     'reason' => $reason
                 ]);
-
-                #### To'lov Qaytarilganda balansdan minus qilish kerak ####
-
+                $PaymePay = PaymePay::where('transaction_id',$transaction->id)->first();
+                $admin_history = $PaymePay->admin_history;
+                $tulov_id1 = $PaymePay->tulov_id;
+                $Tulov1 = Tolov::where('id',$tulov_id1)->first();
+                $Tulov1->delete();
+                $UserHistory = UserHistory::where('id',$admin_history)->first();
+                $UserHistory->delete();
+                $history_id1 = $PaymePay->history_id;
+                $StudenHistory1 = StudenHistory::where('id',$history_id1)->first();
+                $StudenHistory1->delete();
+                $tulov_id2 = $PaymePay->chegirma_id;
+                if($tulov_id2 != 0){
+                    $Tulov2 = Tolov::where('id',$tulov_id2)->first();
+                    $Tulov2->delete();
+                }
+                $history_id2 = $PaymePay->history_chegirma_id;
+                if($history_id2 != 0){
+                    $StudenHistory2 = StudenHistory::where('id',$history_id2)->first();
+                    $StudenHistory2->delete();
+                }
                 $response = [
                     'result' =>[
                         'state' => intval($transaction->state),
@@ -462,6 +580,7 @@ class PaymeController extends Controller{
             return json_encode($response);
         }
     }
+
     protected function microtime():int{
         return (time() * 1000);
     }
