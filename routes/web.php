@@ -19,9 +19,12 @@ use App\Http\Controllers\MoliyaController;
 use App\Http\Controllers\ContactController; 
 use App\Http\Controllers\PaymeController; 
 use App\Http\Controllers\XarajatController; 
+use App\Http\Controllers\BalansController; 
 
 
 Route::post('/payme', [PaymeController::class, 'index']);
+
+Route::get('/balans', [BalansController::class, 'index'])->name('balans')->middleware('auth');
 
 Route::get('/xarajat', [XarajatController::class, 'index'])->name('xarajat')->middleware('auth');
 Route::post('/xarajat/create', [XarajatController::class, 'store'])->name('store')->middleware('auth');
