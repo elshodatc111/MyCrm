@@ -95,7 +95,6 @@ Route::resource('eslatma', EslatmaController::class)->middleware('auth');
 
 Route::resource('tulov', TolovController::class)->middleware('auth');
 
-Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya')->middleware('auth');
 Route::post('moliya/edit/{id}', [MoliyaController::class,"CheckEdit"])->name('CheckEdit')->middleware('auth'); // To'lovni tasdiqlash
 Route::post('moliya/delete/{id}', [MoliyaController::class,"CheckDestroy"])->name('CheckDestroy')->middleware('auth'); // To'lovni o'chirish
 Route::get('moliya/naqt', [MoliyaController::class,"naqtMoliya"])->name('naqtMoliya')->middleware('auth');
