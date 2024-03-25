@@ -13,23 +13,23 @@
       </nav>
     </div>
     
-    <div class="row py-2">
-        <div class="col-lg-3 mt-2 col-6 text-center">
-            <a href="{{ route('user.index') }}" class="btn btn-primary w-100"><i class="bi bi-people"></i> Barcha tashriflar</a>
-        </div>
-        <div class="col-lg-3 mt-2 col-6 text-center">
-            <a href="{{ route('userDebet') }}" class="btn btn-primary w-100"><i class="bi bi-cash-coin"></i> Qarzdorlar</a>
-        </div>
-        <div class="col-lg-3 mt-2 col-6 text-center">
-            <a href="{{ route('userPay') }}" class="btn btn-primary w-100"><i class="bi bi-cart-check"></i> To'lovlar</a>
-        </div>
-        <div class="col-lg-3 mt-2 col-6 text-center">
-            <a href="{{ route('user.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi tashrif</a>
-        </div>
-    </div>
     <div class="card">
-      <div class="card-body pt-4">
-        <table class="table datatable table-bordered text-center" style="font-size:14px;">
+      <div class="card-body">
+        <div class="row py-2">
+          <div class="col-lg-3 mt-1 col-6 text-center">
+              <a href="{{ route('user.index') }}" class="btn btn-Secondary text-primary w-100"><i class="bi bi-people"></i> Barcha tashriflar</a>
+          </div>
+          <div class="col-lg-3 mt-1 col-6 text-center">
+              <a href="{{ route('userDebet') }}" class="btn btn-Secondary text-primary w-100"><i class="bi bi-cash-coin"></i> Qarzdorlar</a>
+          </div>
+          <div class="col-lg-3 mt-1 col-6 text-center">
+              <a href="{{ route('userPay') }}" class="btn btn-primary w-100"><i class="bi bi-cart-check"></i> To'lovlar</a>
+          </div>
+          <div class="col-lg-3 mt-1 col-6 text-center">
+              <a href="{{ route('user.create') }}" class="btn btn-Secondary text-primary w-100"><i class="bi bi-person-plus"></i> Yangi tashrif</a>
+          </div>
+        </div><hr class="p-0 m-0">
+        <table class="table datatable text-center" style="font-size:10px;">
             <thead>
                 <tr>
                     <th>#</th>
