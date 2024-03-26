@@ -22,17 +22,28 @@
 
     @if ($errors->any())
       <div class="alert alert-danger">
-              @foreach ($errors->all() as $error)
-                @if($error=='The email has already been taken.')
-                  Login band. Boshqa login kiriting.
-                @else
-                  Parol 8 belgidan kam bo'lmasigi kerak.
-                @endif
-              @endforeach
+            @foreach ($errors->all() as $error)
+            @if($error=='The email has already been taken.')
+                Login band. Boshqa login kiriting.
+            @else
+                Parol 8 belgidan kam bo'lmasigi kerak.
+            @endif
+            @endforeach
       </div>
     @endif
     <div class="card">
-        <div class="card-body pt-4">
+        <div class="card-body">
+            <div class="row py-2">
+                <div class="col-4 text-center">
+                    <a href="{{ route('techer.index') }}" class="btn btn-muted w-100  card-title py-1"><i class="bi bi-people"></i> Aktiv o'qituvchilar</a>
+                </div>
+                <div class="col-4 text-center">
+                    <a href="{{ route('techerLock') }}" class="btn btn-muted w-100  card-title py-1"><i class="bi bi-person-lock"></i> Bloklangan o'qituvchilar</a>
+                </div>
+                <div class="col-4 text-center">
+                    <a href="{{ route('techer.create') }}" class="btn btn-primary text-white w-100  card-title py-1"><i class="bi bi-person-plus"></i> Yangi o'qituvchi</a>
+                </div>
+            </div>
             <form action="{{ route('techer.store') }}" method="post" class="row">
                 @csrf
                 <div class="col-lg-6">

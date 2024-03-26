@@ -20,8 +20,15 @@
     @endif
                 
         <div class="card">
-            <div class="card-body pt-4 text-center">
-                <h5>Aktiv Eslarmalar</h5>
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-6 pt-2">
+                        <a href="{{ route('eslatma.index') }}" class="btn btn-primary text-white card-title py-1 w-100">Aktiv Eslatmalar</a>
+                    </div>
+                    <div class="col-6 pt-2">
+                        <a href="{{ route('arxivEslatma') }}" class="btn btn-muted card-title py-1 w-100">Aktiv Eslatmalar</a>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table datatable table-bordered table-striped text-center" style="font-size:14px;">
                         <thead>
@@ -63,7 +70,6 @@
                             @endforelse
                         </tbody>
                     </table>
-                    <div class="w-100 text-center"><a href="{{ route('arxivEslatma') }}" class="btn btn-primary">Arxiv Eslatmalar</a></div>
                 </div>
             </div>
         </div>

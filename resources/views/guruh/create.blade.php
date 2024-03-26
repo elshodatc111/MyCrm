@@ -21,8 +21,21 @@
                 
                 
         <div class="card">
-            <div class="card-body pt-4 text-center">
-                <h5>Yangi guruh</h5>
+            <div class="card-body text-center">
+                <div class="row mt-2">
+                    <div class="col-lg-3 col-6 mt-1">
+                        <a href="{{ route('guruh.index') }}" class="btn btn-muted p-1 w-100 card-title"><i class="bi bi-list-check"> Barcha guruhlar</i></a>
+                    </div>
+                    <div class="col-lg-3 col-6 mt-1">
+                        <a href="{{ route('indexNew') }}" class="btn btn-muted p-1 w-100 card-title"><i class="bi bi-list-stars"> Yangi guruhlar</i></a>
+                    </div>
+                    <div class="col-lg-3 col-6 mt-1">
+                        <a href="{{ route('indexActiv') }}" class="btn btn-muted p-1 w-100 card-title"><i class="bi bi-list-ul"> Aktiv guruhlar</i></a>
+                    </div>
+                    <div class="col-lg-3 col-6 mt-1">
+                        <a href="{{ route('guruh.create') }}" class="btn btn-primary text-white p-1 w-100 card-title"><i class="bi bi-plus"> Yangi guruh</i></a>
+                    </div>
+                </div>
                 <form action="{{ route('guruh.store') }}" method="post" id="form">
                     @csrf
                     <div class="row pb-4">

@@ -29,7 +29,7 @@
               <a href="{{ route('user.create') }}" class="btn btn-Secondary text-primary w-100"><i class="bi bi-person-plus"></i> Yangi tashrif</a>
           </div>
         </div><hr class="p-0 m-0">
-        <table class="table datatable text-center" style="font-size:10px;">
+        <table class="table datatable table-striped text-center" style="font-size:14px;">
             <thead>
                 <tr>
                     <th>#</th>

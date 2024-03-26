@@ -14,17 +14,6 @@
       </nav>
     </div>
 
-    <div class="row py-2">
-        <div class="col-4 text-center">
-            <a href="{{ route('hodim.index') }}" class="btn btn-success w-100"><i class="bi bi-people"></i> Aktiv hodimlar</a>
-        </div>
-        <div class="col-4 text-center">
-            <a href="{{ route('hodimLock') }}" class="btn btn-danger w-100"><i class="bi bi-person-lock"></i> Bloklangan hodimlar</a>
-        </div>
-        <div class="col-4 text-center">
-            <a href="{{ route('hodim.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi hodim</a>
-        </div>
-    </div>
     @if ($errors->any())
       <div class="alert alert-danger">
               @foreach ($errors->all() as $error)
@@ -38,10 +27,16 @@
     @endif
     <div class="card">
       <div class="card-body">
-        <div class="row">
-            <div class="col-12">
-                <h5 class="card-title pb-0 w-100 text-center">Yangi hodim qo'shish</h5>
-            </div>
+        <div class="row py-2">
+          <div class="col-4 text-center">
+              <a href="{{ route('hodim.index') }}" class="btn btn-muted w-100  card-title py-1"><i class="bi bi-people"></i> Aktiv hodimlar</a>
+          </div>
+          <div class="col-4 text-center">
+              <a href="{{ route('hodimLock') }}" class="btn btn-muted w-100 card-title py-1"><i class="bi bi-person-lock"></i> Bloklangan hodimlar</a>
+          </div>
+          <div class="col-4 text-center">
+              <a href="{{ route('hodim.create') }}" class="btn btn-primary text-white w-100 card-title py-1"><i class="bi bi-person-plus"></i> Yangi hodim</a>
+          </div>
         </div>
         <form action="{{ route('hodim.store') }}" method="post" class="row">
             @csrf

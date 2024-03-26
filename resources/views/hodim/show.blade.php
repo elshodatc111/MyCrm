@@ -19,10 +19,10 @@
       </div>
     @endif
     <div class="card">
-      <div class="card-body pt-4">
+      <div class="card-body">
         <div class="row">
-            <div class="col-lg-6">
-                <table class="table">
+            <div class="col-lg-4 pt-3">
+                <table class="table" style="font-size:14px;">
                     <tr>
                         <th>Hodim FIO:</th>
                         <td style="text-align:right">{{ $Users->name }}</td>
@@ -41,8 +41,8 @@
                     </tr>
                 </table>
             </div>
-            <div class="col-lg-6">
-                <table class="table">
+            <div class="col-lg-4 pt-3">
+                <table class="table" style="font-size:14px;">
                     <tr>
                         <th>Lavozimi:</th>
                         <td style="text-align:right">{{ $Users->type }}</td>
@@ -66,41 +66,41 @@
                     </tr>
                 </table>
             </div>
+            <div class="col-lg-4">
+                <h5 class="w-100 text-center card-title mb-1 pb-1">SMS xabar yuborish</h5>
+                <form action="{{ route('sendmes') }}" method="post" id="form">
+                    @csrf
+                    <input type="hidden" name="phone" value="{{ $phone }}">
+                    <textarea name="text" class="form-control" required></textarea>
+                    <button class="btn btn-primary mt-2 w-100">SMS yuborish</button>
+                </form>
+            </div>
         </div>
       </div>
     </div>
-    <div class="card">
-        <div class="card-body pt-4">
-            <h5 class="w-100 text-center">SMS habar yuborish</h5>
-            <form action="{{ route('sendmes') }}" method="post" id="form">
-                @csrf
-                <input type="hidden" name="phone" value="{{ $phone }}">
-                <textarea name="text" class="form-control" required></textarea>
-                <button class="btn btn-primary mt-3">Send Messege</button>
-            </form>
-        </div>
-    </div>
+    
     @if($Users->status == 'true')
     <div class="card">
-        <div class="card-body pt-4">
-            <h5 class="w-100 text-center">Ish haqi to'lash</h5>
+        <div class="card-body">
+            <h5 class="w-100 card-title text-center">Ish haqi to'lash</h5>
             <form action="" method="post" id="form">
                 @csrf
                 <div class="row">
-                    <div class="col-lg-6">
-                        <label for="" class="mt-2">To'lov summasi</label>
-                        <input type="text" id="summa" class="form-control" required>
-                        <label for="" class="mt-2">To'lov turi</label>
-                        <select name="" id="" class="form-select" required>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control mb-2" placeholder="To'lov summasi" required>
+                    </div>
+                    <div class="col-lg-2">
+                        <select name="" class="form-select mb-2" required>
+                            <option value="">Tanlang</option>
                             <option value="Naqt">Naqt</option>
                             <option value="Plastik">Plastik</option>
                         </select>
                     </div>
-                    <div class="col-lg-6">
-                        <label for="" class="mt-2">To'lov haqida izoh</label>
-                        <input type="text" class="form-control" required>
-                        <label for="" class="mt-2">.</label>
-                        <button type="submit" class="btn btn-success w-100">Ish haqi to'lov qilish</button>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control mb-2" placeholder="To'lov haqida" required>
+                    </div>
+                    <div class="col-lg-2">
+                        <button class="btn btn-primary w-100">To'lov</button>
                     </div>
                 </div>
             </form>
@@ -108,8 +108,8 @@
     </div>
     @endif
     <div class="card">
-        <div class="card-body pt-4">
-            <h5 class="w-100 text-center">Joriy oyda qabul qilgan to'lovlar va tashriflar</h5>
+        <div class="card-body">
+            <h5 class="w-100 text-center card-title">Joriy oyda qabul qilgan to'lovlar va tashriflar</h5>
             <div class="table-responsive">
                 <table class="table text-center table-bordered">
                     <tr>
@@ -133,8 +133,8 @@
 
 
     <div class="card">
-        <div class="card-body pt-4">
-            <h5 class="w-100 text-center">O'tgan oyda qabul qilgan to'lovlar va tashriflar</h5>
+        <div class="card-body">
+            <h5 class="w-100 text-center card-title">O'tgan oyda qabul qilgan to'lovlar va tashriflar</h5>
             <div class="table-responsive">
                 <table class="table text-center table-bordered">
                     <tr>
@@ -157,8 +157,8 @@
     </div>
 
     <div class="card">
-        <div class="card-body pt-4">
-            <h5 class="w-100 text-center">Jami to'langan ish haqi</h5>
+        <div class="card-body">
+            <h5 class="w-100 text-center card-title">Jami to'langan ish haqi</h5>
             <div class="table-responsive">
                 <table class="table text-center table-bordered">
                     <tr>

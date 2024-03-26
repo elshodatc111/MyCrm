@@ -27,7 +27,7 @@
                         <div class="col-6">
                             <span class="badge border-primary border-1 text-primary" 
                                 style="font-size:16px;">
-                                150 000
+                                150 000 
                             </span>
                             <a href="{{ route('naqtMoliya') }}"><span class="badge bg-primary w-100 m-0">Naqt</span></a>
                         </div>
