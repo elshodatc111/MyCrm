@@ -20,11 +20,14 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PaymeController; 
 use App\Http\Controllers\XarajatController; 
 use App\Http\Controllers\BalansController; 
+use App\Http\Controllers\IshHaqiController; 
 
 
 Route::post('/payme', [PaymeController::class, 'index']);
 
 Route::get('/balans', [BalansController::class, 'index'])->name('balans')->middleware('auth');
+
+Route::post('/hodim/ish/haqi', [IshHaqiController::class, 'HodimPayIshHaqi'])->name('HodimPayIshHaqi')->middleware('auth');
 
 Route::get('/xarajat', [XarajatController::class, 'index'])->name('xarajat')->middleware('auth');
 Route::post('/xarajat/create', [XarajatController::class, 'store'])->name('store')->middleware('auth');
@@ -44,7 +47,7 @@ Route::get('/changeFilial/{id}/{name}', [CookiesController::class, 'changeFilial
 
 Route::resource('filial', FilialController::class)->middleware('auth');
 Route::get('hodim-lock', [HodimController::class, 'hodimLock'])->name('hodimLock')->middleware('auth');
-Route::post('sendmes', [HodimController::class, 'sendMessege'])->name('sendmes')->middleware('auth');
+Route::post('sendmes', [HodimController::class, 'sendMessege2'])->name('sendmes')->middleware('auth');
 Route::get('hodim-open/{id}', [HodimController::class, 'LockOpen'])->name('LockOpen')->middleware('auth');
 Route::get('hodim-colse/{id}', [HodimController::class, 'LockClose'])->name('LockClose')->middleware('auth');
 Route::resource('hodim', HodimController::class)->middleware('auth');

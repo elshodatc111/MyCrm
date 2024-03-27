@@ -14,17 +14,6 @@
       </nav>
     </div>
 
-    <div class="row py-2">
-        <div class="col-4 text-center">
-            <a href="{{ route('hodim.index') }}" class="btn btn-success w-100"><i class="bi bi-people"></i> Aktiv hodimlar</a>
-        </div>
-        <div class="col-4 text-center">
-            <a href="{{ route('hodimLock') }}" class="btn btn-danger w-100"><i class="bi bi-person-lock"></i> Bloklangan hodimlar</a>
-        </div>
-        <div class="col-4 text-center">
-            <a href="{{ route('hodim.create') }}" class="btn btn-primary w-100"><i class="bi bi-person-plus"></i> Yangi hodim</a>
-        </div>
-    </div>
     @if ($errors->any())
       <div class="alert alert-danger">
         Parol 8 belgidan kam bo'lmasigi kerak.
@@ -64,8 +53,8 @@
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
             </div>
             <div class="col-12 text-center">
-              
-            <button type="submit" class="btn btn-primary mt-3">Hodim qo'shish</button>
+              <a href="{{ route('hodim.index') }}" class="btn btn-warning mt-3 text-white"><i class="bi bi-reply-all"></i> Orqaga qaytarish</a>
+              <button type="submit" class="btn btn-primary mt-3">O'zgarishlarni saqlash</button>
             </div>
         </form>
       </div>

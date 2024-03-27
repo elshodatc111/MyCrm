@@ -24,7 +24,7 @@
     @endif
     <div class="row">
         <div class="col-6">
-            <div class="card m-1">
+            <div class="card">
                 <div class="card-body pt-3 px-0">
                     <div class="align-items-center">
                         <div class="text-center">
@@ -39,7 +39,7 @@
         </div>
         
         <div class="col-6">
-            <div class="card m-1">
+            <div class="card">
                 <div class="card-body pt-3 px-0">
                     <div class="align-items-center">
                         <div class="text-center">
@@ -53,11 +53,11 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="card m-1">
-                <div class="card-body pt-3 px-0">
+            <div class="card">
+                <div class="card-body px-0">
                     <div class="align-items-center">
-                        <div class="text-center p-1 px-2">
-                            <h5 class="mb-1">Xarajatlar uchun chiqim qilish</h5>
+                        <div class="text-center">
+                            <h5 class="card-title">Xarajatlar uchun chiqim qilish</h5>
                             <form action="{{ route('store') }}" id="form1" class="row" method="post">
                                 @csrf
                                 <div class="col-lg-5">
@@ -76,11 +76,11 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="card m-1">
-                <div class="card-body pt-3 px-0">
+            <div class="card">
+                <div class="card-body">
                     <div class="align-items-center">
-                        <div class="text-center p-1">
-                            <h5 class="text-danger mb-1">Tasdiqlanmagan chiqimlar</h5>
+                        <div class="text-center">
+                            <h5 class="card-title">Tasdiqlanmagan chiqimlar</h5>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

@@ -18,6 +18,11 @@
         {{ session()->get('success') }}
       </div>
     @endif
+    @if(session()->has('error'))
+      <div class="alert alert-danger">
+        {{ session()->get('error') }}
+      </div>
+    @endif
     <div class="card">
       <div class="card-body">
         <div class="row">
@@ -31,7 +36,7 @@
                         <th>Yashash manzili:</th>
                         <td style="text-align:right">{{ $Users->address }}</td>
                     </tr>
-                    <tr>
+                    <tr> 
                         <th>Telefon raqami:</th>
                         <td style="text-align:right">{{ $Users->phone }}</td>
                     </tr>
@@ -79,28 +84,41 @@
       </div>
     </div>
     
+    ### O'tgan Oyda qabul qilgan to'lovlari ####<br>
+    ### Ish haqi to'lovi kassada mavjud Summa ###<br>
+    ### Hodimning tarizini aloxida faylga chiqazish ####
+
+
+
     @if($Users->status == 'true')
     <div class="card">
         <div class="card-body">
-            <h5 class="w-100 card-title text-center">Ish haqi to'lash</h5>
-            <form action="" method="post" id="form">
+            
+            <div class="row pt-3">
+                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Ish haqi to'lash</h5></div>
+                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Naqt: 120 000)</h5></div>
+                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Plastik: 120 000)</h5></div>
+            </div>
+            <hr class="m-0 p-0 mb-2">
+            <form action="{{ route('HodimPayIshHaqi') }}" id="form1" method="post" id="form">
                 @csrf
+                <input type="hidden" name="id" value="{{ $Users->id }}">
                 <div class="row">
                     <div class="col-lg-4">
-                        <input type="text" class="form-control mb-2" placeholder="To'lov summasi" required>
+                        <input type="text" id="summa1" name="summa" class="form-control mb-2" placeholder="To'lov summasi" required>
                     </div>
                     <div class="col-lg-2">
-                        <select name="" class="form-select mb-2" required>
+                        <select name="type" class="form-select mb-2" required>
                             <option value="">Tanlang</option>
                             <option value="Naqt">Naqt</option>
                             <option value="Plastik">Plastik</option>
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <input type="text" class="form-control mb-2" placeholder="To'lov haqida" required>
+                        <input type="text" name="commit" class="form-control mb-2" placeholder="To'lov haqida" required>
                     </div>
                     <div class="col-lg-2">
-                        <button class="btn btn-primary w-100">To'lov</button>
+                        <button type="submit" class="btn btn-primary w-100">To'lov</button>
                     </div>
                 </div>
             </form>
@@ -118,13 +136,15 @@
                         <th>Plastik to'lovlar</th>
                         <th>Chegirmalar</th>
                         <th>Yangi tashriflar</th>
+                        <th>Qaytarilgan to'lov</th>
                     </tr>
                     <tr>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{{ $JoriyOy['JamiTolov'] }}</td>
+                        <td>{{ $JoriyOy['TulovNaqt'] }}</td>
+                        <td>{{ $JoriyOy['TulovPlastik'] }}</td>
+                        <td>{{ $JoriyOy['TulovChegirma'] }}</td>
+                        <td>{{ $JoriyOy['Tashrif'] }}</td>
+                        <td>{{ $JoriyOy['TulovQaytarildi'] }}</td>
                     </tr>
                 </table>
             </div>
@@ -144,13 +164,7 @@
                         <th>Chegirmalar</th>
                         <th>Yangi tashriflar</th>
                     </tr>
-                    <tr>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
+                    
                 </table>
             </div>
         </div>
@@ -169,14 +183,20 @@
                         <th>To'lov haqida</th>
                         <th>Meneger</th>
                     </tr>
+                    @forelse($HodimTulov as $item)
                     <tr>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{{ $loop->index+1 }}</td>
+                        <td>{{ $item['summa'] }}</td>
+                        <td>{{ $item['type'] }}</td>
+                        <td>{{ $item['created_at'] }}</td>
+                        <td>{{ $item['commit'] }}</td>
+                        <td>{{ $item['admin_id'] }}</td>
                     </tr>
+                    @empty
+                        <tr>
+                            <td colspan=6 class='text-center'>Ish haqi to'lovlari mavjud emas.</td>
+                        </tr>
+                    @endforelse
                 </table>
             </div>
         </div>
