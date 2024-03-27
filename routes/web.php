@@ -28,6 +28,7 @@ Route::post('/payme', [PaymeController::class, 'index']);
 Route::get('/balans', [BalansController::class, 'index'])->name('balans')->middleware('auth');
 
 Route::post('/hodim/ish/haqi', [IshHaqiController::class, 'HodimPayIshHaqi'])->name('HodimPayIshHaqi')->middleware('auth');
+Route::post('/hodim/ish/techer', [IshHaqiController::class, 'TecherPayIshHaqi'])->name('TecherPayIshHaqi')->middleware('auth');
 
 Route::get('/xarajat', [XarajatController::class, 'index'])->name('xarajat')->middleware('auth');
 Route::post('/xarajat/create', [XarajatController::class, 'store'])->name('store')->middleware('auth');

@@ -75,6 +75,10 @@
                 </div>
             </div>
         </div>
+
+        ### Kassada mavjud summa <br>
+        ### Xarajatlarni tasdiqlash
+
         <div class="col-12">
             <div class="card">
                 <div class="card-body">

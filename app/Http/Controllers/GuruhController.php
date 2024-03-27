@@ -311,7 +311,7 @@ class GuruhController extends Controller{
         $UserAdmin = User::where('id',$Guruhlar->admin_id);
         $guruh['admin'] = $UserAdmin->get()->first()->email;
         $UserTecher = User::where('id',$Guruhlar->techer_id);
-        $guruh['techer'] = $UserTecher->get()->first()->email;
+        $guruh['techer'] = $UserTecher->get()->first()->name;
         $Room = Room::where('id',$Guruhlar->room_id);
         $guruh['room'] = $Room->get()->first()->room_name;
         $AktivUser = GuruhUser::where('guruh_id',$id)->where('status','true')->get();
@@ -363,9 +363,10 @@ class GuruhController extends Controller{
         $NewGroups['techers'] = $Techers;
         $Talaba = GuruhUser::where('guruh_users.guruh_id',$id)->where('guruh_users.status','true')->join('users','guruh_users.user_id','users.id')->select('users.id','users.name')->get();
         $NewGroups['talaba'] = $Talaba;
+       
         return view('guruh.show', compact('NewGroups','guruh','AktivStudent','EndStudent','NaqtKass','eslatma'));
     }
-
+ 
     public function indexNewCreate(Request $request, $id){
         $nowData = date('Y-m-d');
         if($request->guruh_start>=date('Y-m-d')){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Techer;
+use App\Models\Guruh;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,6 +61,7 @@ class TecherController extends Controller{
         $Techer->update();
         return redirect()->route('techer.index')->with('success','O\'qituvchi bloklandi.');
     }
+
     public function techerLockopen(string $id){
         $Techer = User::find($id);
         $Techer->status = 'false';
@@ -74,6 +76,7 @@ class TecherController extends Controller{
     public function create(){
         return view('techers.create');
     }
+
     public function store(Request $request){
         $validated = $request->validate([
             "name" => ['required'],
@@ -105,7 +108,19 @@ class TecherController extends Controller{
     }
 
     public function show(string $id){
-        return view('techers.show');
+        $Techer = User::where('users.id',$id)->join('techers','users.id','techers.user_id')->first();
+        $setting = array();
+        $setting['phone'] = str_replace(' ','',$Techer->phone); // Telegon Raqami
+        $kun30 = date('Y-m-d', strtotime('-30 day', time()));       
+        $setting['FormGuruh'] = Guruh::where('techer_id',$id)->where('guruh_end','>=',$kun30)->select('id','guruh_name')->get();
+
+
+
+
+
+        $setting['NaqtMavjud'] = number_format((5000), 0, '.', ' ');
+        $setting['PlastikMavjud'] = number_format((5000), 0, '.', ' ');
+        return view('techers.show',compact('Techer','setting'));
     }
 
     public function edit(string $id){
