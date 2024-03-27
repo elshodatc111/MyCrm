@@ -46,7 +46,9 @@ Route::get('/changeFilial', [CookiesController::class, 'changeFilial'])->name('c
 Route::get('/changeFilial/{id}/{name}', [CookiesController::class, 'changeFilialEdit'])->name('changeFilialEdit')->middleware('auth');
 
 Route::resource('filial', FilialController::class)->middleware('auth');
+
 Route::get('hodim-lock', [HodimController::class, 'hodimLock'])->name('hodimLock')->middleware('auth');
+Route::get('hodim-history/{id}', [HodimController::class, 'history'])->name('history')->middleware('auth');
 Route::post('sendmes', [HodimController::class, 'sendMessege2'])->name('sendmes')->middleware('auth');
 Route::get('hodim-open/{id}', [HodimController::class, 'LockOpen'])->name('LockOpen')->middleware('auth');
 Route::get('hodim-colse/{id}', [HodimController::class, 'LockClose'])->name('LockClose')->middleware('auth');

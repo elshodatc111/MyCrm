@@ -21,9 +21,9 @@ class IshHaqiController extends Controller{
         $validated['commit'] = $request->commit;
         $validated['admin_id'] = Auth::user()->id;
         if($validated['type'] == 'Naqt'){
-            $Kassada_Mavjud = 5000;
+            $Kassada_Mavjud = str_replace(' ','',$request['Naqt']);
         }else{
-            $Kassada_Mavjud = 0;
+            $Kassada_Mavjud = str_replace(' ','',$request['Plastik']);
         }
         if($validated['summa']<=$Kassada_Mavjud){
             IshHaqi::create($validated);

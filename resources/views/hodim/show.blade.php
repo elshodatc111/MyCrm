@@ -85,10 +85,6 @@
     </div>
     
     ### O'tgan Oyda qabul qilgan to'lovlari ####<br>
-    ### Ish haqi to'lovi kassada mavjud Summa ###<br>
-    ### Hodimning tarizini aloxida faylga chiqazish ####
-
-
 
     @if($Users->status == 'true')
     <div class="card">
@@ -96,14 +92,16 @@
             
             <div class="row pt-3">
                 <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Ish haqi to'lash</h5></div>
-                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Naqt: 120 000)</h5></div>
-                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Plastik: 120 000)</h5></div>
+                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Naqt: <p class="text-success p-0 m-0" style="display:inline">{{ $Kassa['Naqt'] }})<p></h5></div>
+                <div class="col-lg-4"><h5 class="w-100 p-0 card-title text-center">Kassada mavjud(Plastik: <p class="text-success p-0 m-0" style="display:inline">{{ $Kassa['Plastik'] }})<p></h5></div>
             </div>
             <hr class="m-0 p-0 mb-2">
             <form action="{{ route('HodimPayIshHaqi') }}" id="form1" method="post" id="form">
                 @csrf
                 <input type="hidden" name="id" value="{{ $Users->id }}">
                 <div class="row">
+                    <input type="hidden" name="Naqt" value="{{ $Kassa['Naqt'] }}">
+                    <input type="hidden" name="Plastik" value="{{ $Kassa['Plastik'] }}">
                     <div class="col-lg-4">
                         <input type="text" id="summa1" name="summa" class="form-control mb-2" placeholder="To'lov summasi" required>
                     </div>
@@ -151,7 +149,7 @@
         </div>
     </div>
 
-
+ 
     <div class="card">
         <div class="card-body">
             <h5 class="w-100 text-center card-title">O'tgan oyda qabul qilgan to'lovlar va tashriflar</h5>
@@ -163,8 +161,16 @@
                         <th>Plastik to'lovlar</th>
                         <th>Chegirmalar</th>
                         <th>Yangi tashriflar</th>
+                        <th>Qaytarilgan to'lov</th>
                     </tr>
-                    
+                    <tr>
+                        <td>{{ $OtganOy['JamiTolov'] }}</td>
+                        <td>{{ $OtganOy['TulovNaqt'] }}</td>
+                        <td>{{ $OtganOy['TulovPlastik'] }}</td>
+                        <td>{{ $OtganOy['TulovChegirma'] }}</td>
+                        <td>{{ $OtganOy['Tashrif'] }}</td>
+                        <td>{{ $OtganOy['TulovQaytarildi'] }}</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -189,7 +195,7 @@
                         <td>{{ $item['summa'] }}</td>
                         <td>{{ $item['type'] }}</td>
                         <td>{{ $item['created_at'] }}</td>
-                        <td>{{ $item['commit'] }}</td>
+                        <td style="text-align:left">{{ $item['commit'] }}</td>
                         <td>{{ $item['admin_id'] }}</td>
                     </tr>
                     @empty
@@ -200,6 +206,10 @@
                 </table>
             </div>
         </div>
+    </div>
+
+    <div class="w-100 text-center">
+        <a href="{{ route('history', $Users->id ) }}" class="btn btn-primary">Hodim qilgan ishlari</a>
     </div>
 
 

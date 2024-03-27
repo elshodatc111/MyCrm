@@ -44,6 +44,7 @@ class HodimController extends Controller{
             return view('hodim.home-lock',compact('Users'));
         }
     } 
+
     public function SendMessege2(Request $request){
         $phone = $request->phone;
         $text = $request->text;
@@ -62,6 +63,7 @@ class HodimController extends Controller{
             return back()->withInput()->with('error',"SMS xabar yuborishda xatolik sodir bo'ldi qaytadan urinib ko'tring.");
         }
     }
+
     public function SendMessege(string $phone, string $text){
         $eskiz = new Eskiz(config('api.eskiz_email'),config('api.eskiz_password'));
         $eskiz->requestAuthLogin();
@@ -78,6 +80,7 @@ class HodimController extends Controller{
             return false;
         }
     }
+
     public function LockOpen($id){
         $User = User::find($id);
         $User->status = "true";
@@ -91,6 +94,7 @@ class HodimController extends Controller{
         $User->update();
         return redirect()->route('hodim.index')->with('success','Hodim blokdan chiqazildi.');
     }
+
     public function LockClose($id){
         $User = User::find($id);
         $User->status = "false";
@@ -179,7 +183,63 @@ class HodimController extends Controller{
             $HodimTulov[$key]['type'] = $value->type;
         }
         #dd($HodimTulov);
-        return view('hodim.show',compact("Users","phone","JoriyOy","HodimTulov"));
+        #Kassada Mavjud summa;
+        $Kassa = array();
+        $Kassa['Naqt'] = number_format((5000), 0, '.', ' ');
+        $Kassa['Plastik'] = number_format((5000), 0, '.', ' ');
+        ### O'tgan oy ###
+        $datess = date('Y-m', strtotime('-1 last month', time()));
+        $UserHistory = UserHistory::where('admin_id',$id)
+        ->where('created_at','>=',$datess."-01 00:00:00")
+        ->where('created_at','<=',$datess."-31 23:59:59")->get();
+        $Tashrif1 = 0;
+        $TulovNaqt1 = 0;
+        $TulovPlastik1 = 0;
+        $TulovChegirma1 = 0;
+        $TulovQaytarildi1 = 0;
+        $OtganOy = array();
+        foreach ($UserHistory as $key => $value) {
+            if($value['status']=='Tashrif'){$Tashrif1 = $Tashrif1 + 1;}
+            if($value['status']=='TulovNaqt'){if($value['type']=='true'){$TulovNaqt1 = $TulovNaqt1 + $value['summa'];}}
+            if($value['status']=='TulovPlastik'){if($value['type']=='true'){$TulovPlastik1 = $TulovPlastik1 + $value['summa'];}}
+            if($value['status']=='TulovChegirma'){$TulovChegirma1 = $TulovChegirma1 + $value['summa'];}
+            if($value['status']=='TulovQaytarildi'){if($value['type']=='true'){$TulovQaytarildi1 = $TulovQaytarildi1 + $value['summa'];}}
+        }
+        $OtganOy['Tashrif'] = number_format(($Tashrif1), 0, '.', ' ');
+        $OtganOy['JamiTolov'] = number_format(($TulovNaqt1+$TulovPlastik1), 0, '.', ' ');
+        $OtganOy['TulovNaqt'] = number_format(($TulovNaqt1), 0, '.', ' ');
+        $OtganOy['TulovPlastik'] = number_format(($TulovPlastik1), 0, '.', ' ');
+        $OtganOy['TulovChegirma'] = number_format(($TulovChegirma1), 0, '.', ' ');
+        $OtganOy['TulovQaytarildi'] = number_format(($TulovQaytarildi1*(-1)), 0, '.', ' ');
+        return view('hodim.show',compact("OtganOy","Users","phone","JoriyOy","HodimTulov","Kassa"));
+    } 
+
+    public function history($id){
+        $User = User::find($id);
+        $UserHistory = UserHistory::where('admin_id',$id)->orderby('id','desc')->get();
+        $History = array();
+        foreach ($UserHistory as $key => $value) {
+            $History[$key]['id']=$value->id;
+            $History[$key]['status']=$value->status;
+            if($value->status=='TulovQaytarildi'){
+                $History[$key]['summa']=number_format(($value->summa*(-1)), 0, '.', ' ');
+            }elseif($value->status!='Tashrif'){
+                $History[$key]['summa']=number_format(($value->summa), 0, '.', ' ');
+            }else{
+                $History[$key]['summa']=" ";
+            }
+            if($value->type=='true'){
+                $History[$key]['type']="Tasdqilandi";
+            }elseif($value->type){
+                $History[$key]['type']="Kutilmoqda";
+            }else{
+                $History[$key]['type']=" ";
+            }
+            $History[$key]['izoh'] = $value->izoh;
+            $History[$key]['created_at']=$value->created_at;
+        }
+        #dd($UserHistory);
+        return view('hodim.show-history',compact('User','History'));
     }
 
     public function edit(string $id){
