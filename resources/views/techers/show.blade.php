@@ -133,8 +133,7 @@
         </div>
     </div>
     ### Kassadagi mavjud Naqt Va Plastik Summalar <br>
-    ### Ish Haqi to'lovlar tarixi <br>
-    ### Argiv Guruhlari<br>
+    ### Arxiv Guruhlari<br>
     #Guruhlar 
     <div class="card">
         <div class="card-body">
@@ -154,16 +153,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse($Guruhlar as $item)
                         <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $loop->index+1 }}</td>
+                            <td style="text-align:left;">{{ $item['guruh_name'] }}</td>
+                            <td>{{ $item['guruh_start'] }}</td>
+                            <td>{{ $item['guruh_end'] }}</td>
+                            <td>{{ $item['talabalar'] }}</td>
+                            <td>{{ $item['NewUser'] }}</td>
+                            <td>{{ $item['TechTulov'] }}</td>
+                            <td>{{ $item['Tulov'] }}</td>
                         </tr>
+                        @empty
+
+                        @endforelse
                     </tbody>
                     
                 </table>

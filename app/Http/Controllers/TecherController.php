@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Techer;
+use App\Models\GuruhUser;
 use App\Models\IshHaqiTecher;
 use App\Models\Guruh;
 use Illuminate\Support\Facades\DB;
@@ -128,14 +129,47 @@ class TecherController extends Controller{
         $setting['phone'] = str_replace(' ','',$Techer->phone); // Telegon Raqami
         $kun30 = date('Y-m-d', strtotime('-30 day', time()));       
         $setting['FormGuruh'] = Guruh::where('techer_id',$id)->where('guruh_end','>=',$kun30)->select('id','guruh_name')->get();
+        ### Talaba gutuhlari
+        $Guruh = Guruh::where('techer_id', $id)->where('guruh_end','>=',$kun30)->get();
+
+        $Guruhlar = array();
+        foreach ($Guruh as $key => $value) {
+            $Keys = array();
+            $Keys['guruh_name']=$value->guruh_name;
+            $Keys['guruh_start']=$value->guruh_start;
+            $Keys['techer_tulov']=$value->techer_tulov;
+            $Keys['techer_bonus']=$value->techer_bonus;
+            $Keys['guruh_end']=$value->guruh_end;
+            $UserCount = count(GuruhUser::where('guruh_id',$value->id)->where('status','true')->get());
+            $Keys['talabalar'] = $UserCount;
+            $Talabalar = GuruhUser::where('guruh_id',$value->id)->where('status','true')->get();
+            $User1 = 0;
+            foreach ($Talabalar as $user) {
+                $User_ID = $user->user_id;
+                $Guruh_Start = $value->guruh_start;
+                $GuruhUser = count(GuruhUser::where('start_data','>',$Guruh_Start)->where('user_id',$User_ID)->where('status','true')->get());
+                if($GuruhUser>1){$User1 = $User1 + 1;}
+            }
+            $Keys['NewUser']=$User1;
+            $Keys['TechTulov'] =number_format(($value['techer_tulov']*$UserCount+$value['techer_bonus']*$User1), 0, '.', ' ');
+            $IshHaqiTecher = IshHaqiTecher::where('guruh_id',$value->id)->get();
+            $Tulov = 0;
+            foreach ($IshHaqiTecher as $key => $value) {
+                $Tulov = $Tulov + $value->summa;
+            }
+            $Keys['Tulov']=number_format(($Tulov), 0, '.', ' ');;
+            $Guruhlar[$key] = $Keys;
+                
 
 
+        }
 
+        #dd($Guruhlar);
 
 
         $setting['NaqtMavjud'] = number_format((5000), 0, '.', ' ');
         $setting['PlastikMavjud'] = number_format((5000), 0, '.', ' ');
-        return view('techers.show',compact('Techer','setting'));
+        return view('techers.show',compact('Techer','setting','Guruhlar'));
     }
 
     public function edit(string $id){
