@@ -65,6 +65,7 @@ Route::post('userAdminChegirma', [UserController::class, 'userAdminChegirma'])->
 Route::resource('user', UserController::class)->middleware('auth');
 
 Route::get('techerLock', [TecherController::class, 'techerLock'])->name('techerLock')->middleware('auth');
+Route::get('techer/pays/{id}', [TecherController::class, 'techerPays'])->name('techerPays')->middleware('auth');
 Route::get('techerLockopen/{id}', [TecherController::class, 'techerLockopen'])->name('techerLockopen')->middleware('auth');
 Route::get('techerLockClose/{id}', [TecherController::class, 'techerLockClose'])->name('techerLockClose')->middleware('auth');
 Route::resource('techer', TecherController::class)->middleware('auth');

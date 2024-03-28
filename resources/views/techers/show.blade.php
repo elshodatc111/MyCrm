@@ -126,7 +126,7 @@
                     </form>
                 </div>
                 <div class="col-lg-4">
-                    <a href="" class="btn btn-warning text-white w-100 mt-3">Ish haqi to'lovlari tarixi</a>
+                    <a href="{{ route('techerPays',$Techer->user_id ) }}" class="btn btn-warning text-white w-100 mt-3">Ish haqi to'lovlari tarixi</a>
                     <a href="" class="btn btn-warning text-white w-100 mt-3">Arxiv guruhlari</a>
                 </div>
             </div>

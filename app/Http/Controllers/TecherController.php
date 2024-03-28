@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Techer;
+use App\Models\IshHaqiTecher;
 use App\Models\Guruh;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,20 @@ class TecherController extends Controller{
         return redirect()->route('techer.index')->with('success','O\'qituvchi aktivlashtirildi.');
     }
     
+    public function techerPays(string $id){
+        $IshHaqiTecher = IshHaqiTecher::where('techer_id',$id)->get();
+        $tolovlar = array();
+        foreach ($IshHaqiTecher as $key => $value) {
+            $tolovlar[$key]['tulov_vaqti'] = $value->created_at;
+            $tolovlar[$key]['summa'] = number_format(($value->summa), 0, '.', ' ');
+            $tolovlar[$key]['type'] = $value->type;
+            $tolovlar[$key]['commit'] = $value->commit;
+            $tolovlar[$key]['guruh'] = Guruh::where('id',$value->guruh_id)->first()->guruh_name;
+            $tolovlar[$key]['admin'] = User::where('id',$value->admin_id)->first()->email;
+        }
+        return view('techers.techer_pay', compact('tolovlar'));
+    }
+
     public function create(){
         return view('techers.create');
     }
